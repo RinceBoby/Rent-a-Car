@@ -1,7 +1,6 @@
 import 'package:carmarket/core/constants/colors.dart';
 import 'package:carmarket/core/constants/dimensions.dart';
-import 'package:carmarket/view/home/bottom_nav.dart';
-import 'package:carmarket/view/login/lets_you_in.dart';
+import 'package:carmarket/view/login/login_account.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -117,7 +116,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                         heroTag: "btn2",
                         onPressed: () {
                           if (_currentIndex == 4) {
-                            Get.off(const LetsInPage());
+                            Get.off(LoginAccount());
                           } else {
                             _pageController.nextPage(
                               duration: const Duration(milliseconds: 300),
@@ -136,7 +135,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       GestureDetector(
-                        onTap: () => Get.to(const LetsInPage()),
+                        onTap: () => Get.to(LoginAccount()),
                         child: const Text(
                           "Skip",
                           style: TextStyle(

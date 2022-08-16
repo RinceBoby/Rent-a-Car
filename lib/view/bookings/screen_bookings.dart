@@ -2,14 +2,15 @@ import 'package:carmarket/core/constants/colors.dart';
 import 'package:carmarket/core/constants/dimensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class Orders extends StatelessWidget {
-  const Orders({Key? key}) : super(key: key);
+class Bookings extends StatelessWidget {
+  const Bookings({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
@@ -19,7 +20,7 @@ class Orders extends StatelessWidget {
             size: 30,
           ),
           title: const Text(
-            "My Orders",
+            "Bookings",
             style: TextStyle(
               color: kText,
               fontSize: 26,
@@ -34,36 +35,52 @@ class Orders extends StatelessWidget {
             ),
             kWidth10,
           ],
-          bottom: const TabBar(
+          bottom: TabBar(
             indicatorColor: kText,
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            labelStyle: TextStyle(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            labelStyle: GoogleFonts.philosopher(
               color: kText,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
-            tabs: [
-              Tab(text: "Active"),
+            tabs: const [
+              Tab(text: "Pending"),
               Tab(text: "Completed"),
+              Tab(text: "Cancelled"),
             ],
           ),
         ),
-        body: const TabBarView(children: [
-          Center(
-            child: Text(
-              "data",
-              style: TextStyle(color: kText),
-            ),
-          ),
-          Center(
-            child: Text(
-              "data",
-              style: TextStyle(
-                color: kText,
+        body: const TabBarView(
+          children: [
+            Center(
+              child: Text(
+                "No Pending Trips",
+                style: TextStyle(
+                  color: kText,
+                  fontSize: 20,
+                ),
               ),
             ),
-          ),
-        ]),
+            Center(
+              child: Text(
+                "No Completed Trips",
+                style: TextStyle(
+                  color: kText,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+            Center(
+              child: Text(
+                "No Cancelled Trips",
+                style: TextStyle(
+                  color: kText,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

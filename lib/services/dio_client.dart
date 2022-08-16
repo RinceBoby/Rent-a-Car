@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-class DioClient{
-  final Dio _dio = Dio();
-  final _baseUrl = "";
+class DioClient {
+  static Dio dio =
+      Dio(BaseOptions(baseUrl: "https://roadsterrental.online/api/user"));
 }

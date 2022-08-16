@@ -34,6 +34,7 @@ class CustomAppBar extends StatelessWidget {
                 child: Icon(
                   leadIcon,
                   color: kText,
+                  size: 30,
                 ),
               ),
               kWidth25,

@@ -40,7 +40,7 @@ class Wishlist extends StatelessWidget {
                     physics: const BouncingScrollPhysics(),
                     itemCount: 12,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 1.1 / 1.5,
+                      childAspectRatio: 1.1 / 1.75,
                       crossAxisSpacing: 10,
                       crossAxisCount:
                           (orientation == Orientation.portrait) ? 2 : 4,

@@ -1,12 +1,13 @@
 import 'package:carmarket/core/constants/colors.dart';
 import 'package:carmarket/view/chat/chats.dart';
 import 'package:carmarket/view/home/screen_home.dart';
-import 'package:carmarket/view/home/screen_home.dart';
-import 'package:carmarket/view/orders/screen_orders.dart';
 import 'package:carmarket/view/profile/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+
+import '../bookings/screen_bookings.dart';
 
 class BottomNavBar extends StatefulWidget {
   BottomNavBar({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   final _pages = [
     const ScreenHome(),
-    const Orders(),
+    const Bookings(),
     const Inbox(),
     const Profile(),
   ];
@@ -39,28 +40,28 @@ class _BottomNavBarState extends State<BottomNavBar> {
           SalomonBottomBarItem(
             icon: const Icon(CupertinoIcons.house),
             activeIcon: const Icon(CupertinoIcons.house_alt_fill),
-            title: const Text("Home"),
+            title: Text("Home", style: GoogleFonts.philosopher()),
           ),
 
           //<<<Orders>>>//
           SalomonBottomBarItem(
-            icon: const Icon(CupertinoIcons.cart),
-            activeIcon: const Icon(CupertinoIcons.cart_fill),
-            title: const Text("Orders"),
+            icon: const Icon(CupertinoIcons.checkmark_seal),
+            activeIcon: const Icon(CupertinoIcons.checkmark_seal_fill),
+            title: Text("Bookings", style: GoogleFonts.philosopher()),
           ),
 
           //<<<Inbox>>>//
           SalomonBottomBarItem(
             icon: const Icon(CupertinoIcons.chat_bubble_text),
             activeIcon: const Icon(CupertinoIcons.chat_bubble_text_fill),
-            title: const Text("Inbox"),
+            title: Text("Inbox", style: GoogleFonts.philosopher()),
           ),
 
           //<<<Profile>>>//
           SalomonBottomBarItem(
             icon: const Icon(CupertinoIcons.person_alt_circle),
             activeIcon: const Icon(CupertinoIcons.person_alt_circle_fill),
-            title: const Text("Profile"),
+            title: Text("Profile", style: GoogleFonts.philosopher()),
           ),
         ],
       ),

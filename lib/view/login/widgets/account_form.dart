@@ -171,7 +171,7 @@ class AccountForm extends StatelessWidget {
         ),
         kHeight30,
 
-        const TextInLine(text: "or continue with"),
+        const TextInLine(text: "or continue with",size: 18),
         kHeight50,
 
         //<<<<<Google>>>>>//

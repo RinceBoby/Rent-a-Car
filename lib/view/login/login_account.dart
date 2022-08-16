@@ -1,7 +1,8 @@
 import 'package:carmarket/core/constants/colors.dart';
+import 'package:carmarket/services/user_auth.dart';
+import 'package:carmarket/view/functions/functions.dart';
 import 'package:carmarket/view/home/bottom_nav.dart';
-import 'package:carmarket/view/login/create_account.dart';
-import 'package:carmarket/view/login/widgets/account_form.dart';
+import 'package:carmarket/view/signup.dart/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -40,9 +41,9 @@ class LoginAccount extends StatelessWidget {
               kHeight40,
 
               //<<<<<Title>>>>>//
-              Text(
+              const Text(
                 "Login to Your Account",
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 35,
                   fontWeight: FontWeight.w500,
                   color: kWhite,
@@ -50,13 +51,15 @@ class LoginAccount extends StatelessWidget {
               ),
               kHeight30,
 
-              //<<<<<Text_Form_Field>>>>>//
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Form(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   key: _formKey,
                   child: Column(
                     children: [
+                      //
+                      //<<<<<Email>>>>>//
                       TextFormField(
                         validator: (value) {
                           Pattern pattern =
@@ -65,7 +68,7 @@ class LoginAccount extends StatelessWidget {
                           if (value!.isEmpty) {
                             return "Required Field";
                           } else if (!regex.hasMatch(value)) {
-                            return "Enter a valid email";
+                            return "This is not a valid email";
                           } else {
                             return null;
                           }
@@ -91,16 +94,22 @@ class LoginAccount extends StatelessWidget {
                       kHeight15,
                       TextFormField(
                         validator: (value) {
-                          Pattern pattern =
-                              r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$';
-                          RegExp regex = RegExp(pattern.toString());
+                          
+                          // value!.isEmpty
+                          //     ? "Required Field"
+                          //     : value.length < 6
+                          //         ? "Minimum length is 6 characters"
+                          //         : !regex.hasMatch(value)
+                          //             ? "Enter a valid password"
+                          //             : "Password Ok";
+
                           if (value!.isEmpty) {
-                            return "Required Field";
-                          } else if (!regex.hasMatch(value)) {
                             return "Enter a valid password";
-                          } else {
+                          }else if(value.length < 6){
+                            return "Minimum lenth is 6 characters";
+                          } 
                             return null;
-                          }
+                          
                         },
                         style: const TextStyle(color: kWhite),
                         controller: passController,
@@ -132,13 +141,32 @@ class LoginAccount extends StatelessWidget {
 
               //<<<<<Button>>>>>//
               ElevatedButton(
-                onPressed: () => Get.off(BottomNavBar()),
+                onPressed: () {
+                  print("ontap");
+                  if (_formKey.currentState!.validate()) {
+                    UserAuthServices.loginUser(
+                      email: emailController.text,
+                      password: passController.text,
+                    ).then(
+                      (value) {
+                        if (value == "success") {
+                          Get.offAll(BottomNavBar());
+                          return;
+                        } else if (value.isNotEmpty) {
+                          getSnackBar(value);
+                          return;
+                        }
+                        getSnackBar(value);
+                      },
+                    );
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                   primary: kWhite,
                   shape: RoundedRectangleBorder(borderRadius: kRadius30),
                   fixedSize: Size(size.width * .9, 50),
                 ),
-                child: Text(
+                child: const Text(
                   "Sign In",
                   style: TextStyle(
                     fontSize: 20,
@@ -149,16 +177,16 @@ class LoginAccount extends StatelessWidget {
               kHeight40,
 
               //<<<<<Forget>>>>>//
-              Text(
+              const Text(
                 "Forget the Password?",
-                style: const TextStyle(
+                style: TextStyle(
                   color: kWhite,
                   fontSize: 16,
                 ),
               ),
               kHeight30,
 
-              const TextInLine(text: "or"),
+              const TextInLine(text: "or",size: 18),
               kHeight30,
 
               //<<<<<OTP>>>>>//
@@ -199,7 +227,7 @@ class LoginAccount extends StatelessWidget {
                   kWidth10,
 
                   GestureDetector(
-                    onTap: () => Get.offAll(CreateAccount()),
+                    onTap: () => Get.offAll(Signup()),
                     child: Text(
                       "Sign In",
                       style: const TextStyle(
