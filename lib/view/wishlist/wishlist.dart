@@ -45,9 +45,9 @@ class Wishlist extends StatelessWidget {
                       crossAxisCount:
                           (orientation == Orientation.portrait) ? 2 : 4,
                     ),
-                    itemBuilder: (context, index) => CarCard(
-                      ontap: () => Get.to(DetailsPage()),
-                    ),
+                    itemBuilder: (context, index) {
+                      return Container();
+                    },
                   ),
                 )
               ],

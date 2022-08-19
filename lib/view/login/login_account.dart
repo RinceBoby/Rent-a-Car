@@ -94,22 +94,12 @@ class LoginAccount extends StatelessWidget {
                       kHeight15,
                       TextFormField(
                         validator: (value) {
-                          
-                          // value!.isEmpty
-                          //     ? "Required Field"
-                          //     : value.length < 6
-                          //         ? "Minimum length is 6 characters"
-                          //         : !regex.hasMatch(value)
-                          //             ? "Enter a valid password"
-                          //             : "Password Ok";
-
                           if (value!.isEmpty) {
-                            return "Enter a valid password";
-                          }else if(value.length < 6){
-                            return "Minimum lenth is 6 characters";
-                          } 
-                            return null;
-                          
+                            return "Password required";
+                          } else if (value.length < 6) {
+                            return "Minimum length is 6 characters";
+                          }
+                          return null;
                         },
                         style: const TextStyle(color: kWhite),
                         controller: passController,
@@ -186,7 +176,7 @@ class LoginAccount extends StatelessWidget {
               ),
               kHeight30,
 
-              const TextInLine(text: "or",size: 18),
+              const TextInLine(text: "or", size: 18),
               kHeight30,
 
               //<<<<<OTP>>>>>//

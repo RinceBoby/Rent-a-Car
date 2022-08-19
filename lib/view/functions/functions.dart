@@ -8,7 +8,7 @@ getSnackBar(String value) {
     ..closeAllSnackbars()
     ..showSnackbar(
       GetSnackBar(
-        backgroundColor: kWhite,
+        // backgroundColor: kWhite,
         borderRadius: 30,
         title: "Warning",
         message: value,

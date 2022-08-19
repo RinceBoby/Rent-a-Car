@@ -53,7 +53,7 @@ class UserAuthServices {
     required String address,
     required String district,
     required String password,
-    //required String isBlock,
+    // required String isBlock,
     // required String token,
   }) async {
     try {
@@ -94,4 +94,18 @@ class UserAuthServices {
       return "";
     }
   }
+
+
+  // static Future signupUser()async{
+  //   Map<String, dynamic> headers = {
+  //     "Content-type":"application/json",
+  //     "Accept":"application/json",
+  //   };
+
+  //   try {
+  //     Map signUpData = ProfileModel{}
+  //   } catch (e) {
+      
+  //   }
+  // }
 }

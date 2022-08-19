@@ -1,5 +1,7 @@
+import 'package:carmarket/controllers/car_controller.dart';
 import 'package:carmarket/core/constants/colors.dart';
 import 'package:carmarket/core/constants/dimensions.dart';
+import 'package:carmarket/models/car/car_model.dart';
 import 'package:carmarket/view/bookings/booking_details.dart';
 import 'package:carmarket/view/login/widgets/line_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,11 +10,12 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:readmore/readmore.dart';
 
-import '../widgets/custom_appBar.dart';
 import '../wishlist/wishlist.dart';
 
 class DetailsPage extends StatefulWidget {
+  carDetails id;
   DetailsPage({
+    required this.id,
     Key? key,
   }) : super(key: key);
 
@@ -22,22 +25,15 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage> {
   TextEditingController dateController = TextEditingController();
-  double rating = 0;
 
   @override
   Widget build(BuildContext context) {
+    CarController carController = Get.find<CarController>();
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: kBlack,
-          leading: GestureDetector(
-            onTap: () => Get.back(),
-            child: const Icon(
-              CupertinoIcons.arrow_left,
-              size: 25,
-            ),
-          ),
         ),
         body: Column(
           children: [
@@ -56,32 +52,25 @@ class _DetailsPageState extends State<DetailsPage> {
                             width: size.width,
                             decoration: BoxDecoration(
                               borderRadius: kRadius05,
-                              image: const DecorationImage(
-                                image: NetworkImage(
-                                    "https://wallpaperaccess.com/full/1288141.jpg"),
-                                fit: BoxFit.cover,
+                              image: DecorationImage(
+                                image:
+                                    NetworkImage(widget.id.imgUrl.toString()),
+                                fit: BoxFit.fill,
                               ),
                             ),
                           ),
                           kHeight20,
                           Row(
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  //
-                                  //<<<<<Car_Name>>>>>//
-                                  Text(
-                                    "Lamborgini",
-                                    style: TextStyle(
-                                      color: kText,
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  kHeight10,
-                                ],
+                               Text(
+                                widget.id.brand,
+                                style: TextStyle(
+                                  color: kText,
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
+                              kHeight10,
                               const Spacer(),
 
                               //<<<<<Review>>>>>//
@@ -112,26 +101,15 @@ class _DetailsPageState extends State<DetailsPage> {
                           ),
                           kHeight15,
 
-                          //<<<<<Seat_Fuel_Milage>>>>>//
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              DetailCard(size, "Seats: ", "4"),
-                              DetailCard(size, "Fuel: ", "P"),
-                              DetailCard(size, "Milage: ", "12"),
-                            ],
-                          ),
-                          kHeight10,
-
                           //<<<<<Location_Number_Date>>>>>//
                           VehicleDetailsCard(
-                              size, "Pick Up Location", "Cochin"),
-                          kHeight10,
+                              size, "Pick Up Location", widget.id.location),
+                          kHeight15,
                           VehicleDetailsCard(
-                              size, "Vehicle Number", "KL 38 G 7571"),
-                          kHeight10,
+                              size, "Vehicle Number", widget.id.regNo),
+                          kHeight15,
                           VehicleDetailsCard(
-                              size, "Registred Date", "11-Nov-2021"),
+                              size, "Registred Date", widget.id.register),
                           kHeight15,
 
                           //<<<<<Booking_Date>>>>>//
@@ -245,8 +223,8 @@ class _DetailsPageState extends State<DetailsPage> {
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Text(
+                                children:  [
+                                  const Text(
                                     "Description",
                                     style: TextStyle(
                                       color: kText,
@@ -256,17 +234,17 @@ class _DetailsPageState extends State<DetailsPage> {
                                   ),
                                   kHeight05,
                                   ReadMoreText(
-                                    "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.",
+                                    widget.id.description,
                                     trimLines: 3,
                                     trimMode: TrimMode.Line,
                                     trimCollapsedText: "Show more",
                                     trimExpandedText: "Show less",
-                                    style: TextStyle(
+                                    style:const TextStyle(
                                       color: kText,
                                       fontSize: 18,
                                       fontWeight: FontWeight.w300,
                                     ),
-                                    moreStyle: TextStyle(
+                                    moreStyle:const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500,
                                       color: kText,
@@ -300,8 +278,8 @@ class _DetailsPageState extends State<DetailsPage> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
+                          children:  [
+                            const Text(
                               "Rent per Day",
                               style: TextStyle(
                                 color: kText,
@@ -309,8 +287,8 @@ class _DetailsPageState extends State<DetailsPage> {
                               ),
                             ),
                             Text(
-                              "₹ 56,000",
-                              style: TextStyle(
+                              "₹ ${widget.id.price}",
+                              style:const TextStyle(
                                 color: kText,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 28,
@@ -381,43 +359,6 @@ class _DetailsPageState extends State<DetailsPage> {
       ),
     );
   }
-
-  //<<<<Seat_Fuel_Milage>>>>//
-  DetailCard(
-    Size size,
-    String title,
-    String subtitle,
-  ) {
-    return Container(
-      height: 40,
-      width: size.width * .305,
-      decoration: BoxDecoration(
-        color: fieldColor,
-        borderRadius: kRadius30,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 18,
-              color: kWhite,
-            ),
-          ),
-          kHeight05,
-          Text(
-            subtitle,
-            style: const TextStyle(
-              fontSize: 22,
-              color: kWhite,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 //Vehicle_Details_card//
@@ -427,7 +368,7 @@ VehicleDetailsCard(
   String ans,
 ) {
   return Container(
-    height: 40,
+    height: 50,
     decoration: BoxDecoration(
       color: fieldColor,
       borderRadius: kRadius30,

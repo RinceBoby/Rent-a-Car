@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.black,
         textTheme:
-            GoogleFonts.philosopherTextTheme(Theme.of(context).textTheme),
+            GoogleFonts.robotoFlexTextTheme(Theme.of(context).textTheme),
       ),
       home: const OnBoardingPage(),
       //BottomNavBar(),

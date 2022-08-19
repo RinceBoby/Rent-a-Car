@@ -91,10 +91,10 @@ class _SignupState extends State<Signup> {
                           keyboardType: TextInputType.emailAddress,
                           obscureText: false,
                           validator: (String? value) {
-                            if (value!.isEmail) {
-                              return "Not a valid email";
-                            } else if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return "Email required";
+                            } else if (!value.isEmail) {
+                              return "Not a valid email";
                             }
                             return null;
                           },
@@ -293,11 +293,15 @@ class _SignupState extends State<Signup> {
                           prefixIcon: CupertinoIcons.lock,
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
-                          validator: (value) => value!.isEmpty
-                              ? "Password required"
-                              : value.length < 6
-                                  ? "Minimum 6 characters"
-                                  : null,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Password required";
+                            } else if (value.length < 6) {
+                              return "Minimum 6 characters required";
+                            } else {
+                              return null;
+                            }
+                          },
                         ),
                         kHeight15,
 
@@ -309,12 +313,16 @@ class _SignupState extends State<Signup> {
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
                           // ignore: unrelated_type_equality_checks
-                          validator: (value) =>
-                              cPassController != passController
-                                  ? "Password doesn't match"
-                                  : value!.isEmpty
-                                      ? "Confirm password required"
-                                      : null,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Confirm password required";
+                            } else if (passController.text !=
+                                cPassController.text) {
+                              return "Password doesn't match";
+                            } else {
+                              return null;
+                            }
+                          },
                         ),
                       ],
                     ),

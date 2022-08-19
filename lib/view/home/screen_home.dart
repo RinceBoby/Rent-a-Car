@@ -1,35 +1,22 @@
+import 'package:carmarket/controllers/car_controller.dart';
+import 'package:carmarket/models/car/car_model.dart';
 import 'package:carmarket/view/login/widgets/line_text.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carmarket/view/widgets/carousel.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../core/constants/colors.dart';
 import '../../core/constants/dimensions.dart';
 import '../details/car_details.dart';
-import '../widgets/car_card.dart';
 import '../wishlist/wishlist.dart';
 
-class ScreenHome extends StatefulWidget {
+class ScreenHome extends StatelessWidget {
   const ScreenHome({Key? key}) : super(key: key);
 
   @override
-  State<ScreenHome> createState() => _ScreenHomeState();
-}
-
-class _ScreenHomeState extends State<ScreenHome> {
-  int activeIndex = 0;
-  final urlImages = [
-    "https://wallpaperaccess.com/full/1465186.jpg",
-    "https://wallpaperaccess.com/full/156869.jpg",
-    "https://wallpaperaccess.com/full/950124.jpg",
-    "https://www.bmw.in/content/dam/bmw/marketIN/bmw_in/all-models/m-series/m5-sedan/2021/Home_Header_Banner_1680x756_02%20(1).jpg/jcr:content/renditions/cq5dam.resized.img.1680.large.time1625117918034.jpg",
-    "https://wallpaperaccess.com/full/1288141.jpg",
-  ];
-
-  @override
   Widget build(BuildContext context) {
-    final orientation = MediaQuery.of(context).orientation;
+    CarController carController = Get.put(CarController());
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: NestedScrollView(
@@ -45,60 +32,207 @@ class _ScreenHomeState extends State<ScreenHome> {
               child: Column(
                 children: [
                   kHeight10,
-                  Column(
-                    children: [
-                      CarouselSlider.builder(
-                        options: CarouselOptions(
-                          autoPlay: true,
-                          aspectRatio: 10 / 6,
-                          pageSnapping: true,
-                          viewportFraction: 1,
-                          enlargeCenterPage: true,
-                          onPageChanged: (index, reason) {
-                            setState(() {
-                              activeIndex = index;
-                            });
-                          },
-                        ),
-                        itemCount: urlImages.length,
-                        itemBuilder: (context, index, realIndex) {
-                          final urlImage = urlImages[index];
-                          return carouselImage(size, urlImage, index);
-                        },
-                      ),
-                      kHeight05,
-                      carouselIndiactor(),
-                    ],
-                  ),
+
+                  //<<<<<Carousel>>>>>//
+                  const CarCarousel(),
                   kHeight15,
-                  //
+
                   //<<<<<Choose_Your_Car>>>>>//
                   const TextInLine(
                     text: "CHOOSE YOUR CAR",
                     size: 24,
                     thickness: 3,
                   ),
-
                   kHeight20,
 
                   // <<<<<Car_Card>>>>>//
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5),
-                    child: GridView.builder(
+                  Obx(() {
+                    if (carController.loading.value) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    return ListView.builder(
                       shrinkWrap: true,
                       physics: const BouncingScrollPhysics(),
-                      itemCount: 12,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: 1.1 / 1.75,
-                        crossAxisSpacing: 10,
-                        crossAxisCount:
-                            (orientation == Orientation.portrait) ? 2 : 4,
-                      ),
-                      itemBuilder: (context, index) => CarCard(
-                        ontap: () => Get.to(DetailsPage()),
-                      ),
-                    ),
-                  ),
+                      itemCount: carController.allCars.length,
+                      itemBuilder: (context, index) {
+                        final data = carController.allCars[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: GestureDetector(
+                            onTap: () => Get.to(
+                              DetailsPage(id: data),
+                            ),
+                            child: Container(
+                              height: 340,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: kWhite),
+                                color: fieldColor,
+                                borderRadius: kRadius20,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Stack(
+                                    children: [
+                                      Container(
+                                        height: 200,
+                                        width: size.width * .99,
+                                        decoration: BoxDecoration(
+                                          color: fieldColor,
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(20),
+                                            topRight: Radius.circular(20),
+                                          ),
+                                          image: DecorationImage(
+                                            image: NetworkImage(data.imgUrl),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+
+                                        //<<<<<Fav_Icon>>>>>//
+                                        child: Align(
+                                          alignment: Alignment.topRight,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 10,
+                                              right: 10,
+                                            ),
+                                            child: GestureDetector(
+                                              onTap: () {},
+                                              child: Image.asset(
+                                                "assets/fav-icon.png",
+                                                height: 25,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  kHeight10,
+
+                                  //<<<<<Bottom>>>>>//
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      //<<<<<Car_Name>>>>>//
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              data.brand,
+                                              style: const TextStyle(
+                                                fontSize: 24,
+                                                fontWeight: FontWeight.bold,
+                                                color: kText,
+                                                letterSpacing: 1,
+                                              ),
+                                            ),
+
+                                            //<<<<<Price>>>>>//
+                                            Chip(
+                                              avatar: const Icon(
+                                                  Icons.currency_rupee_rounded),
+                                              label: Text(
+                                                "${data.price} / day",
+                                                style: const TextStyle(
+                                                  color: kBlack,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 18,
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      kHeight05,
+
+                                      //<<<<<Divider>>>>>//
+                                      const Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Divider(
+                                          thickness: 1,
+                                          color: kWhite,
+                                        ),
+                                      ),
+                                      kHeight05,
+
+                                      //<<<<<Details>>>>>//
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: SizedBox(
+                                          height: 45,
+                                          child: ListView.separated(
+                                            shrinkWrap: true,
+                                            physics:
+                                                const BouncingScrollPhysics(),
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: 1,
+                                            separatorBuilder:
+                                                (context, index) => kWidth05,
+                                            itemBuilder: (context, index) =>
+                                                Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                //
+                                                //<<<<Seats>>>>//
+                                                DetailChip(
+                                                  data,
+                                                  data.seats.toString(),
+                                                  Icons
+                                                      .airline_seat_recline_extra_sharp,
+                                                ),
+                                                kWidth10,
+
+                                                //<<<<<Fuel>>>>>//
+                                                DetailChip(
+                                                  data,
+                                                  data.fueltype.name,
+                                                  Icons
+                                                      .local_gas_station_rounded,
+                                                ),
+                                                kWidth10,
+
+                                                //<<<<<Mileage>>>>>//
+                                                DetailChip(
+                                                  data,
+                                                  "${data.mileage} / Km",
+                                                  CupertinoIcons.drop_fill,
+                                                ),
+                                                kWidth10,
+
+                                                //<<<<<Location>>>>>//
+                                                DetailChip(
+                                                  data,
+                                                  data.location,
+                                                  CupertinoIcons
+                                                      .map_pin_ellipse,
+                                                ),
+                                                kWidth10,
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }),
                 ],
               ),
             ),
@@ -162,22 +296,23 @@ class _ScreenHomeState extends State<ScreenHome> {
     );
   }
 
-  Widget carouselImage(Size size, String urlImage, int index) => Container(
-        width: size.width * .95,
-        color: kGrey,
-        child: Image.network(
-          urlImage,
-          fit: BoxFit.cover,
+  //<<<<<<<<<<<<<Detail_chip>>>>>>>>>>>>>//
+  // ignore: non_constant_identifier_names
+  DetailChip(
+    carDetails data,
+    String text,
+    IconData icon,
+  ) {
+    return Chip(
+      label: Text(
+        text,
+        style: const TextStyle(
+          fontSize: 18,
+          color: kBlack,
+          fontWeight: FontWeight.bold,
         ),
-      );
-
-  Widget carouselIndiactor() => AnimatedSmoothIndicator(
-        activeIndex: activeIndex,
-        count: urlImages.length,
-        effect: const JumpingDotEffect(
-          activeDotColor: kWhite,
-          dotWidth: 6,
-          dotHeight: 6,
-        ),
-      );
+      ),
+      avatar: Icon(icon),
+    );
+  }
 }

@@ -10,28 +10,28 @@ String signupToJson(Signup data) => json.encode(data.toJson());
 
 class Signup {
     Signup({
-        this.id,
-        this.name,
-        this.email,
-        this.phone,
-        this.age,
-        this.gender,
-        this.address,
-        this.district,
-        this.isBlock,
-        this.token,
+        required this.id,
+        required this.name,
+        required this.email,
+        required this.phone,
+        required this.age,
+        required this.gender,
+        required this.address,
+        required this.district,
+        required this.isBlock,
+        required this.token,
     });
 
-    String? id;
-    String? name;
-    String? email;
-    int? phone;
-    int? age;
-    String? gender;
-    String? address;
-    String? district;
-    bool? isBlock;
-    String? token;
+    String id;
+    String name;
+    String email;
+    int phone;
+    int age;
+    String gender;
+    String address;
+    String district;
+    bool isBlock;
+    String token;
 
     factory Signup.fromJson(Map<String, dynamic> json) => Signup(
         id: json["_id"],

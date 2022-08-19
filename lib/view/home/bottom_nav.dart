@@ -18,6 +18,7 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   int _currentSelectedIndex = 0;
+  bool fab = false;
 
   final _pages = [
     const ScreenHome(),
@@ -65,6 +66,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
         ],
       ),
+      // floatingActionButton: FloatingActionButton(onPressed: () {}),
     );
   }
 }
