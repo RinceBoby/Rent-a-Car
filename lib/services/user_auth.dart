@@ -1,7 +1,10 @@
 // ignore_for_file: avoid_print
 
+import 'package:carmarket/models/local_storage/local_storage.dart';
 import 'package:carmarket/services/dio_client.dart';
+import 'package:carmarket/view/home/bottom_nav.dart';
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
 
 class UserAuthServices {
   //
@@ -10,13 +13,22 @@ class UserAuthServices {
     required String email,
     required String password,
   }) async {
+    print(email);
+    print(password);
     try {
       var response = await DioClient.dio.post("/login", data: {
         "email": email,
         "password": password,
       });
-      print("Success");
+
       print(response.data);
+
+      //<<<<<Saving_Id_Token>>>>>//
+      Map<String, String> user = {
+        "uId": response.data['_id'],
+        "token": response.data['token'],
+      };
+    GetLocalStorage.saveToken(user);
 
       return "success";
     } on DioError catch (e) {
@@ -39,7 +51,7 @@ class UserAuthServices {
       return "something";
     } catch (e) {
       print(e);
-      return "";
+      return "something went wrong";
     }
   }
 
@@ -65,8 +77,16 @@ class UserAuthServices {
         "gender": gender,
         "address": address,
         "district": district,
-        "password" : password,
+        "password": password,
       });
+
+      Map<String, String> user = {
+        "uId": response.data['_id'],
+        "token": response.data['token'],
+      };
+      GetLocalStorage.saveToken(user);
+      Get.offAll(const BottomNavBar());
+
       print("Success");
       print(response.data);
 
@@ -95,7 +115,6 @@ class UserAuthServices {
     }
   }
 
-
   // static Future signupUser()async{
   //   Map<String, dynamic> headers = {
   //     "Content-type":"application/json",
@@ -105,7 +124,7 @@ class UserAuthServices {
   //   try {
   //     Map signUpData = ProfileModel{}
   //   } catch (e) {
-      
+
   //   }
   // }
 }

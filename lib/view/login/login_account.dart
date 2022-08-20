@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/constants/dimensions.dart';
+import '../../models/local_storage/local_storage.dart';
 import 'widgets/line_text.dart';
 
 class LoginAccount extends StatelessWidget {
@@ -21,6 +22,9 @@ class LoginAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+  
+
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -136,17 +140,18 @@ class LoginAccount extends StatelessWidget {
                   if (_formKey.currentState!.validate()) {
                     UserAuthServices.loginUser(
                       email: emailController.text,
-                      password: passController.text,
+                      password: passController.text.trim(),
                     ).then(
                       (value) {
                         if (value == "success") {
-                          Get.offAll(BottomNavBar());
+                          Get.offAll(const BottomNavBar());
                           return;
-                        } else if (value.isNotEmpty) {
+                        } 
+                        else if (value.isNotEmpty) {
                           getSnackBar(value);
                           return;
                         }
-                        getSnackBar(value);
+                        getSnackBar("is empty");
                       },
                     );
                   }

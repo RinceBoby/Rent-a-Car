@@ -1,5 +1,6 @@
 import 'package:carmarket/controllers/car_controller.dart';
 import 'package:carmarket/models/car/car_model.dart';
+import 'package:carmarket/models/local_storage/local_storage.dart';
 import 'package:carmarket/view/login/widgets/line_text.dart';
 import 'package:carmarket/view/widgets/carousel.dart';
 import 'package:flutter/cupertino.dart';
@@ -59,9 +60,12 @@ class ScreenHome extends StatelessWidget {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 10),
                           child: GestureDetector(
-                            onTap: () => Get.to(
-                              DetailsPage(id: data),
-                            ),
+                            onTap: () {
+                            //   Get.to(
+                            //   DetailsPage(id: data),
+                            // );
+                            // print(GetLocalStorage.getUserIdAndToken("token"));
+                            },
                             child: Container(
                               height: 340,
                               decoration: BoxDecoration(

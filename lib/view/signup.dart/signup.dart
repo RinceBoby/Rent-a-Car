@@ -348,13 +348,13 @@ class _SignupState extends State<Signup> {
                       ).then(
                         (value) {
                           if (value == "success") {
-                            Get.offAll(BottomNavBar());
+                            Get.offAll(const BottomNavBar());
                             return;
                           } else if (value.isNotEmpty) {
                             getSnackBar(value);
                             return;
                           }
-                          getSnackBar(value);
+                          getSnackBar("is empty");
                         },
                       );
                     }

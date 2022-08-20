@@ -4,13 +4,14 @@ import 'package:carmarket/view/home/screen_home.dart';
 import 'package:carmarket/view/profile/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import '../bookings/screen_bookings.dart';
 
 class BottomNavBar extends StatefulWidget {
-  BottomNavBar({Key? key}) : super(key: key);
+  const BottomNavBar({Key? key}) : super(key: key);
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
@@ -66,7 +67,25 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
         ],
       ),
-      // floatingActionButton: FloatingActionButton(onPressed: () {}),
+      // floatingActionButton: SpeedDial(
+      //   animatedIcon: AnimatedIcons.menu_close,
+      //   backgroundColor: kBlack,
+      //   // overlayColor: ,
+      //   children: [
+      //     SpeedDialChild(
+      //       child: const Icon(CupertinoIcons.search),
+      //       label: "Search",
+      //     ),
+      //     SpeedDialChild(
+      //       child: const Icon(CupertinoIcons.slider_horizontal_3),
+      //       label: "Filter",
+      //     ),
+      //     SpeedDialChild(
+      //       child: const Icon(CupertinoIcons.arrow_up_arrow_down),
+      //       label: "Sort",
+      //     ),
+      //   ],
+      // ),
     );
   }
 }

@@ -48,7 +48,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           //
                           //<<<<<Car_Image>>>>>//
                           Container(
-                            height: 300,
+                            height: 230,
                             width: size.width,
                             decoration: BoxDecoration(
                               borderRadius: kRadius05,
@@ -64,7 +64,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             children: [
                                Text(
                                 widget.id.brand,
-                                style: TextStyle(
+                                style:const TextStyle(
                                   color: kText,
                                   fontSize: 28,
                                   fontWeight: FontWeight.bold,
