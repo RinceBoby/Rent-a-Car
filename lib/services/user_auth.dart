@@ -28,7 +28,8 @@ class UserAuthServices {
         "uId": response.data['_id'],
         "token": response.data['token'],
       };
-    GetLocalStorage.saveToken(user);
+      GetLocalStorage.saveToken(user);
+      Get.offAll(const BottomNavBar());
 
       return "success";
     } on DioError catch (e) {

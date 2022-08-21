@@ -67,25 +67,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
         ],
       ),
-      // floatingActionButton: SpeedDial(
-      //   animatedIcon: AnimatedIcons.menu_close,
-      //   backgroundColor: kBlack,
-      //   // overlayColor: ,
-      //   children: [
-      //     SpeedDialChild(
-      //       child: const Icon(CupertinoIcons.search),
-      //       label: "Search",
-      //     ),
-      //     SpeedDialChild(
-      //       child: const Icon(CupertinoIcons.slider_horizontal_3),
-      //       label: "Filter",
-      //     ),
-      //     SpeedDialChild(
-      //       child: const Icon(CupertinoIcons.arrow_up_arrow_down),
-      //       label: "Sort",
-      //     ),
-      //   ],
-      // ),
     );
   }
 }
