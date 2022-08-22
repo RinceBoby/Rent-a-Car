@@ -4,7 +4,7 @@ import 'package:carmarket/models/car/car_model.dart';
 import 'package:carmarket/services/dio_client.dart';
 import 'package:dio/dio.dart';
 
-class carServices {
+class CarServices {
   static Future<List<carDetails>?> carDetailsService(String url) async {
     try {
       var response = await DioClient.dio.get(url);

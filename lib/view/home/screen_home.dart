@@ -1,5 +1,7 @@
 import 'package:carmarket/controllers/car_controller.dart';
+import 'package:carmarket/controllers/profile_controller.dart';
 import 'package:carmarket/models/car/car_model.dart';
+import 'package:carmarket/models/signup/profile_model.dart';
 import 'package:carmarket/view/login/widgets/line_text.dart';
 import 'package:carmarket/view/widgets/carousel.dart';
 import 'package:flutter/cupertino.dart';
@@ -298,14 +300,19 @@ class ScreenHome extends StatelessWidget {
   //<<<<<App_Bar>>>>>//
   // ignore: non_constant_identifier_names
   SliverAppBar HomeSliverAppBar() {
+    ProfileController profileController = Get.put(ProfileController());
+    ProfileModel? userData = profileController.profileModel.value;
+    // if(userData ==null){
+    //   return "";
+    // }
     return SliverAppBar(
       backgroundColor: Colors.transparent,
       floating: true,
       pinned: false,
       automaticallyImplyLeading: false,
       title: Row(
-        children: const [
-          CircleAvatar(
+        children: [
+          const CircleAvatar(
             backgroundColor: kWhite,
             radius: 27,
             child: CircleAvatar(
@@ -317,8 +324,8 @@ class ScreenHome extends StatelessWidget {
           ),
           kWidth15,
           Text(
-            "User Name",
-            style: TextStyle(
+            userData!.name!.capitalize!,
+            style: const TextStyle(
               color: kText,
               fontSize: 23,
               fontWeight: FontWeight.bold,

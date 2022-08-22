@@ -10,9 +10,9 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/constants/dimensions.dart';
-import '../../models/local_storage/local_storage.dart';
 import 'widgets/line_text.dart';
 
+// ignore: must_be_immutable
 class LoginAccount extends StatelessWidget {
   LoginAccount({Key? key}) : super(key: key);
   TextEditingController emailController = TextEditingController();

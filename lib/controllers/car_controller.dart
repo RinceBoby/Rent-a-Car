@@ -10,7 +10,7 @@ class CarController extends GetxController {
   Future<List<carDetails>> getCars(String url) async {
     loading.value = true;
     try {
-      var data = await carServices.carDetailsService(url);
+      var data = await CarServices.carDetailsService(url);
       loading.value = false;
       return data!;
     } catch (e) {

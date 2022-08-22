@@ -61,9 +61,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
           //<<<Profile>>>//
           SalomonBottomBarItem(
-            icon: const Icon(CupertinoIcons.person_alt_circle),
-            activeIcon: const Icon(CupertinoIcons.person_alt_circle_fill),
-            title: Text("Profile", style: GoogleFonts.philosopher()),
+            icon: const Icon(CupertinoIcons.gear_alt),
+            activeIcon: const Icon(CupertinoIcons.gear_alt_fill),
+            title: Text("Settings", style: GoogleFonts.philosopher()),
           ),
         ],
       ),

@@ -1,7 +1,7 @@
 import 'package:carmarket/core/constants/colors.dart';
 import 'package:carmarket/core/constants/dimensions.dart';
-import 'package:carmarket/view/address/address.dart';
-import 'package:carmarket/view/profile/profile_form.dart';
+import 'package:carmarket/view/login/login_account.dart';
+import 'package:carmarket/view/profile/user_details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,12 +17,12 @@ class Profile extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: kBlack,
         leading: const Icon(
-          CupertinoIcons.profile_circled,
+          CupertinoIcons.gear_alt,
           color: kText,
           size: 30,
         ),
         title: const Text(
-          "Profile",
+          "Settings",
           style: TextStyle(
             color: kText,
             fontSize: 26,
@@ -72,15 +72,6 @@ class Profile extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    kHeight10,
-                    const Text(
-                      "+91 86 06 00 4313",
-                      style: TextStyle(
-                        color: kText,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
                     kHeight20,
 
                     //<<<<<Details>>>>>//
@@ -94,27 +85,20 @@ class Profile extends StatelessWidget {
                             ProfileDetails(
                                 size,
                                 CupertinoIcons.person,
-                                "Edit Profile",
-                                () => Get.to(const ProfileForm())),
-                            kHeight15,
-                            ProfileDetails(
-                              size,
-                              CupertinoIcons.map_pin_ellipse,
-                              "Address",
-                              () => Get.to(Addresses()),
-                            ),
-                            kHeight15,
-                            ProfileDetails(
-                              size,
-                              CupertinoIcons.creditcard,
-                              "Payment",
-                              () {},
-                            ),
+                                "User Details",
+                                () => Get.to(const UserDetails())),
                             kHeight15,
                             ProfileDetails(
                               size,
                               CupertinoIcons.lock,
                               "Privacy Policy",
+                              () {},
+                            ),
+                            kHeight15,
+                            ProfileDetails(
+                              size,
+                              CupertinoIcons.square_line_vertical_square_fill,
+                              "Terms and conditions",
                               () {},
                             ),
                             kHeight15,
@@ -129,22 +113,25 @@ class Profile extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10),
-                                  child: Row(
-                                    children: const [
-                                      Icon(
-                                        CupertinoIcons.square_arrow_left,
-                                        color: kText,
-                                        size: 30,
-                                      ),
-                                      kWidth25,
-                                      Text(
-                                        "Logout",
-                                        style: TextStyle(
-                                          color: kRed,
-                                          fontSize: 22,
+                                  child: GestureDetector(
+                                    onTap: () => Get.offAll(LoginAccount()),
+                                    child: Row(
+                                      children: const [
+                                        Icon(
+                                          CupertinoIcons.square_arrow_left,
+                                          color: kText,
+                                          size: 30,
                                         ),
-                                      ),
-                                    ],
+                                        kWidth25,
+                                        Text(
+                                          "Logout",
+                                          style: TextStyle(
+                                            color: kRed,
+                                            fontSize: 22,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
