@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:carmarket/services/car_services.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +11,7 @@ class CarController extends GetxController {
   RxBool loading = true.obs;
   Future<List<carDetails>> getCars(String url) async {
     loading.value = true;
+
     try {
       var data = await CarServices.carDetailsService(url);
       loading.value = false;

@@ -1,5 +1,6 @@
 import 'package:carmarket/controllers/car_controller.dart';
 import 'package:carmarket/controllers/profile_controller.dart';
+import 'package:carmarket/controllers/signup_controller.dart';
 import 'package:carmarket/models/car/car_model.dart';
 import 'package:carmarket/models/signup/profile_model.dart';
 import 'package:carmarket/view/login/widgets/line_text.dart';
@@ -20,6 +21,7 @@ class ScreenHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CarController carController = Get.put(CarController());
+    SignupController signupController = Get.put(SignupController());
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -252,6 +254,8 @@ class ScreenHome extends StatelessWidget {
           animatedIcon: AnimatedIcons.menu_close,
           backgroundColor: kBlack,
           children: [
+            //
+            //<<<<<Search>>>>>//
             SpeedDialChild(
               backgroundColor: kBlack,
               child: const Icon(
@@ -263,6 +267,8 @@ class ScreenHome extends StatelessWidget {
               labelBackgroundColor: kBlack,
               onTap: () {},
             ),
+
+            //<<<<<Filter>>>>>//
             SpeedDialChild(
               backgroundColor: kBlack,
               child: const Icon(
@@ -272,8 +278,91 @@ class ScreenHome extends StatelessWidget {
               label: "Filter",
               labelStyle: const TextStyle(color: kWhite),
               labelBackgroundColor: kBlack,
-              onTap: () {},
+              onTap: () {
+                showModalBottomSheet(
+                  backgroundColor: kWhite,
+                  shape: RoundedRectangleBorder(borderRadius: kRadius10),
+                  context: context,
+                  builder: (context) {
+                    return SizedBox(
+                      height: 200,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Chip(
+                            backgroundColor: kBlack,
+                            label: const Text(
+                              "FILTER",
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: kWhite,
+                              ),
+                            ),
+                            shape:
+                                RoundedRectangleBorder(borderRadius: kRadius05),
+                          ),
+                          kHeight15,
+                          //<<<<<L2H>>>>>//
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              print("ontap");
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: fieldColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: kRadius05),
+                              fixedSize: Size(size.width * .9, 50),
+                            ),
+                            icon: const Icon(
+                              CupertinoIcons.tray_arrow_up_fill,
+                              color: kWhite,
+                              size: 30,
+                            ),
+                            label: const Text(
+                              "Low to High",
+                              style: TextStyle(
+                                color: kWhite,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                          kHeight15,
+
+                          //<<<<<H2L>>>>>//
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              print("ontap");
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: fieldColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: kRadius05),
+                              fixedSize: Size(size.width * .9, 50),
+                            ),
+                            icon: const Icon(
+                              CupertinoIcons.tray_arrow_down_fill,
+                              color: kWhite,
+                              size: 30,
+                            ),
+                            label: const Text(
+                              "High to Low",
+                              style: TextStyle(
+                                color: kWhite,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
             ),
+
+            //<<<<<Sort>>>>>//
             SpeedDialChild(
               backgroundColor: kBlack,
               child: const Icon(
@@ -283,7 +372,77 @@ class ScreenHome extends StatelessWidget {
               label: "Sort",
               labelStyle: const TextStyle(color: kWhite),
               labelBackgroundColor: kBlack,
-              onTap: () {},
+              onTap: () {
+                showModalBottomSheet(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: kRadius10,
+                  ),
+                  context: context,
+                  builder: (context) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      children: [
+                        kHeight10,
+                        Chip(
+                          backgroundColor: kBlack,
+                          label: const Text(
+                            "SORT BY DISTRICT",
+                            style: TextStyle(
+                              fontSize: 22,
+                              color: kWhite,
+                            ),
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: kRadius05,
+                          ),
+                        ),
+                        kHeight15,
+                        //<<<<<Districts>>>>>//
+                        GetBuilder<SignupController>(
+                          builder: (controller) {
+                            return Expanded(
+                              child: ListView.separated(
+                                physics: const BouncingScrollPhysics(),
+                                itemCount: controller.districtItems.length,
+                                separatorBuilder: (context, index) => kHeight10,
+                                itemBuilder: (context, index) =>
+                                    GestureDetector(
+                                  onTap: () {
+                                    print("ontap");
+                                  },
+                                  child: Container(
+                                    height: 60,
+                                    width: size.width * .9,
+                                    decoration: BoxDecoration(
+                                      color: fieldColor,
+                                      borderRadius: kRadius10,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          controller.districtItems[index],
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                            color: kWhite,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        kHeight10,
+                      ],
+                    ),
+                  ),
+                );
+              },
             )
           ],
         ),

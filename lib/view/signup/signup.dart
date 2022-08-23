@@ -1,10 +1,8 @@
 import 'package:carmarket/controllers/signup_controller.dart';
 import 'package:carmarket/core/constants/colors.dart';
 import 'package:carmarket/services/user_auth.dart';
-import 'package:carmarket/view/functions/functions.dart';
-import 'package:carmarket/view/home/bottom_nav.dart';
 import 'package:carmarket/view/login/login_account.dart';
-import 'package:carmarket/view/signup.dart/widget/signup_textfield.dart';
+import 'package:carmarket/view/signup/widget/signup_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

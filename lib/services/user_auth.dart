@@ -29,16 +29,15 @@ class UserAuthServices {
         "token": response.data['token'],
       };
       GetLocalStorage.saveToken(user);
-      Get.offAll(const BottomNavBar());
 
+      Get.offAll(const BottomNavBar());
       return "success";
+
+      //<<<<<Dio_Error>>>>>//
     } on DioError catch (e) {
       print("Dio error");
-
       print(e.error);
-
       print(e.response!.data);
-
       print(e.response!.statusMessage);
 
       if (e.type == DioErrorType.other) {
@@ -81,24 +80,23 @@ class UserAuthServices {
         "password": password,
       });
 
+      //<<<<<Registering_User_Details>>>>>//
       Map<String, String> user = {
         "uId": response.data['user'],
         "token": response.data['token'],
       };
       GetLocalStorage.saveToken(user);
-      // Get.offAll(const BottomNavBar());
 
       print("Success");
       print(response.data);
 
       return "success";
+      //
+      //<<<<<Dio_Error>>>>>//
     } on DioError catch (e) {
       print("Dio Error");
-
       print(e.error);
-
       print(e.response!.data);
-
       print(e.response!.statusMessage);
 
       if (e.type == DioErrorType.other) {
@@ -110,9 +108,7 @@ class UserAuthServices {
         return e.response!.data['message'];
       }
       return 'something went wrong';
-
     } catch (e) {
-      
       print(e);
       return "";
     }
