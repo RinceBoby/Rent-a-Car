@@ -82,11 +82,11 @@ class UserAuthServices {
       });
 
       Map<String, String> user = {
-        "uId": response.data['_id'],
+        "uId": response.data['user'],
         "token": response.data['token'],
       };
       GetLocalStorage.saveToken(user);
-      Get.offAll(const BottomNavBar());
+      // Get.offAll(const BottomNavBar());
 
       print("Success");
       print(response.data);
@@ -110,22 +110,11 @@ class UserAuthServices {
         return e.response!.data['message'];
       }
       return 'something went wrong';
+
     } catch (e) {
+      
       print(e);
       return "";
     }
   }
-
-  // static Future signupUser()async{
-  //   Map<String, dynamic> headers = {
-  //     "Content-type":"application/json",
-  //     "Accept":"application/json",
-  //   };
-
-  //   try {
-  //     Map signUpData = ProfileModel{}
-  //   } catch (e) {
-
-  //   }
-  // }
 }

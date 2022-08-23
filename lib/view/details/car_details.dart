@@ -300,7 +300,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
                         //<<<<<Book_Now>>>>//
                         ElevatedButton(
-                          onPressed: () => Get.to(BookingDetails()),
+                          onPressed: () => Get.to(const BookingDetails()),
                           style: ElevatedButton.styleFrom(
                               primary: kWhite,
                               shape: RoundedRectangleBorder(

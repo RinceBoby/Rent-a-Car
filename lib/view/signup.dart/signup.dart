@@ -345,18 +345,20 @@ class _SignupState extends State<Signup> {
                         address: addressController.text,
                         district: controller.districtSelectedValue!,
                         password: passController.text,
-                      ).then(
-                        (value) {
-                          if (value == "success") {
-                            Get.offAll(const BottomNavBar());
-                            return;
-                          } else if (value.isNotEmpty) {
-                            getSnackBar(value);
-                            return;
-                          }
-                          getSnackBar("is empty");
-                        },
                       );
+                      Get.offAll(LoginAccount());
+                      // .then(
+                      //   (value) {
+                      //     if (value == "success") {
+                      //       Get.offAll(const BottomNavBar());
+                      //       return;
+                      //     } else if (value.isNotEmpty) {
+                      //       getSnackBar(value);
+                      //       return;
+                      //     }
+                      //     getSnackBar("is empty");
+                      //   },
+                      // );
                     }
                   },
                   style: ElevatedButton.styleFrom(

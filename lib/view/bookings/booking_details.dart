@@ -74,6 +74,25 @@ class BookingDetails extends StatelessWidget {
                   ),
                 ),
               ),
+              kHeight30,
+
+              //<<<<<Pay>>>>>//
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  primary: kWhite,
+                  shape: RoundedRectangleBorder(borderRadius: kRadius30),
+                  fixedSize: Size(size.width * .9, 50),
+                ),
+                child: const Text(
+                  "Pay",
+                  style: TextStyle(
+                    color: kBlack,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              kHeight30,
             ],
           ),
         ),

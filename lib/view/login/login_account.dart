@@ -22,235 +22,221 @@ class LoginAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-  
-
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-          body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              //<<<<<Image>>>>>//
-              SizedBox(
-                width: size.width * 08,
-                child: const Icon(
-                  CupertinoIcons.car_detailed,
-                  size: 150,
-                  color: kWhite,
+        body: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //<<<<<Image>>>>>//
+                SizedBox(
+                  width: size.width * 08,
+                  child: const Icon(
+                    CupertinoIcons.car_detailed,
+                    size: 150,
+                    color: kWhite,
+                  ),
                 ),
-              ),
-              kHeight40,
+                kHeight40,
 
-              //<<<<<Title>>>>>//
-              const Text(
-                "Login to Your Account",
-                style: TextStyle(
-                  fontSize: 35,
-                  fontWeight: FontWeight.w500,
-                  color: kWhite,
+                //<<<<<Title>>>>>//
+                const Text(
+                  "Login to Your Account",
+                  style: TextStyle(
+                    fontSize: 35,
+                    fontWeight: FontWeight.w500,
+                    color: kWhite,
+                  ),
                 ),
-              ),
-              kHeight30,
+                kHeight30,
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Form(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      //
-                      //<<<<<Email>>>>>//
-                      TextFormField(
-                        validator: (value) {
-                          Pattern pattern =
-                              r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                          RegExp regex = RegExp(pattern.toString());
-                          if (value!.isEmpty) {
-                            return "Required Field";
-                          } else if (!regex.hasMatch(value)) {
-                            return "This is not a valid email";
-                          } else {
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Form(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        //
+                        //<<<<<Email>>>>>//
+                        TextFormField(
+                          validator: (value) {
+                            Pattern pattern =
+                                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                            RegExp regex = RegExp(pattern.toString());
+                            if (value!.isEmpty) {
+                              return "Required Field";
+                            } else if (!regex.hasMatch(value)) {
+                              return "This is not a valid email";
+                            } else {
+                              return null;
+                            }
+                          },
+                          style: const TextStyle(color: kWhite),
+                          controller: emailController,
+                          decoration: InputDecoration(
+                            labelText: "Email",
+                            labelStyle:
+                                TextStyle(color: kWhite.withOpacity(.5)),
+                            border: const OutlineInputBorder(),
+                            prefixIcon: Icon(CupertinoIcons.mail,
+                                color: kWhite.withOpacity(.5)),
+                            filled: true,
+                            fillColor: fieldColor,
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: kWhite),
+                            ),
+                            errorBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: kRed),
+                            ),
+                          ),
+                        ),
+                        kHeight15,
+                        TextFormField(
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Password required";
+                            } else if (value.length < 6) {
+                              return "Minimum length is 6 characters";
+                            }
                             return null;
-                          }
-                        },
-                        style: const TextStyle(color: kWhite),
-                        controller: emailController,
-                        decoration: InputDecoration(
-                          labelText: "Email",
-                          labelStyle: TextStyle(color: kWhite.withOpacity(.5)),
-                          border: const OutlineInputBorder(),
-                          prefixIcon: Icon(CupertinoIcons.mail,
-                              color: kWhite.withOpacity(.5)),
-                          filled: true,
-                          fillColor: fieldColor,
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: kWhite),
-                          ),
-                          errorBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: kRed),
+                          },
+                          style: const TextStyle(color: kWhite),
+                          controller: passController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            labelText: "Password",
+                            labelStyle:
+                                TextStyle(color: kWhite.withOpacity(.5)),
+                            border: const OutlineInputBorder(),
+                            prefixIcon: Icon(CupertinoIcons.lock,
+                                color: kWhite.withOpacity(.5)),
+                            filled: true,
+                            fillColor: fieldColor,
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: kWhite),
+                            ),
+                            errorBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: kRed),
+                            ),
+                            suffixIcon: Icon(CupertinoIcons.eye,
+                                color: kWhite.withOpacity(.5)),
                           ),
                         ),
-                      ),
-                      kHeight15,
-                      TextFormField(
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Password required";
-                          } else if (value.length < 6) {
-                            return "Minimum length is 6 characters";
+                      ],
+                    ),
+                  ),
+                ),
+                kHeight30,
+                Container(),
+
+                //<<<<<Button>>>>>//
+                ElevatedButton(
+                  onPressed: () {
+                    print("ontap");
+                    if (_formKey.currentState!.validate()) {
+                      UserAuthServices.loginUser(
+                        email: emailController.text,
+                        password: passController.text.trim(),
+                      ).then(
+                        (value) {
+                          if (value == "success") {
+                            Get.offAll(const BottomNavBar());
+                            return;
+                          } else if (value.isNotEmpty) {
+                            getSnackBar(value);
+                            return;
                           }
-                          return null;
+                          getSnackBar("is empty");
                         },
-                        style: const TextStyle(color: kWhite),
-                        controller: passController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: "Password",
-                          labelStyle: TextStyle(color: kWhite.withOpacity(.5)),
-                          border: const OutlineInputBorder(),
-                          prefixIcon: Icon(CupertinoIcons.lock,
-                              color: kWhite.withOpacity(.5)),
-                          filled: true,
-                          fillColor: fieldColor,
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: kWhite),
-                          ),
-                          errorBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: kRed),
-                          ),
-                          suffixIcon: Icon(CupertinoIcons.eye,
-                              color: kWhite.withOpacity(.5)),
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: kWhite,
+                    shape: RoundedRectangleBorder(borderRadius: kRadius30),
+                    fixedSize: Size(size.width * .9, 50),
+                  ),
+                  child: const Text(
+                    "Sign In",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: kBlack,
+                    ),
+                  ),
+                ),
+                kHeight40,
+
+                //<<<<<Forget>>>>>//
+                const Text(
+                  "Forget the Password?",
+                  style: TextStyle(
+                    color: kWhite,
+                    fontSize: 16,
+                  ),
+                ),
+                kHeight30,
+
+                const TextInLine(text: "or", size: 18),
+                kHeight30,
+
+                //<<<<<OTP>>>>>//
+                RichText(
+                  text: TextSpan(
+                    text: "Login with ",
+                    style: GoogleFonts.philosopher(
+                      fontSize: 18,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: "OTP",
+                        style: GoogleFonts.philosopher(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline,
                         ),
+                        recognizer: TapGestureRecognizer()..onTap = () {},
                       ),
                     ],
                   ),
                 ),
-              ),
-              kHeight30,
-              Container(),
+                kHeight40,
 
-              //<<<<<Button>>>>>//
-              ElevatedButton(
-                onPressed: () {
-                  print("ontap");
-                  if (_formKey.currentState!.validate()) {
-                    UserAuthServices.loginUser(
-                      email: emailController.text,
-                      password: passController.text.trim(),
-                    ).then(
-                      (value) {
-                        if (value == "success") {
-                          Get.offAll(const BottomNavBar());
-                          return;
-                        } 
-                        else if (value.isNotEmpty) {
-                          getSnackBar(value);
-                          return;
-                        }
-                        getSnackBar("is empty");
-                      },
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: kWhite,
-                  shape: RoundedRectangleBorder(borderRadius: kRadius30),
-                  fixedSize: Size(size.width * .9, 50),
-                ),
-                child: const Text(
-                  "Sign In",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: kBlack,
-                  ),
-                ),
-              ),
-              kHeight40,
-
-              //<<<<<Forget>>>>>//
-              const Text(
-                "Forget the Password?",
-                style: TextStyle(
-                  color: kWhite,
-                  fontSize: 16,
-                ),
-              ),
-              kHeight30,
-
-              const TextInLine(text: "or", size: 18),
-              kHeight30,
-
-              //<<<<<OTP>>>>>//
-              RichText(
-                text: TextSpan(
-                  text: "Login with ",
-                  style: GoogleFonts.philosopher(
-                    fontSize: 18,
-                  ),
+                //<<<<<Already>>>>>//
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TextSpan(
-                      text: "OTP",
-                      style: GoogleFonts.philosopher(
+                    // ignore: prefer_const_constructors
+                    Text(
+                      "Don't have an account?",
+                      style: const TextStyle(
+                        color: kGrey,
+                        fontWeight: FontWeight.w100,
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline,
                       ),
-                      recognizer: TapGestureRecognizer()..onTap = () {},
+                    ),
+                    kWidth10,
+
+                    GestureDetector(
+                      onTap: () => Get.offAll(Signup()),
+                      child: const Text(
+                        "Sign Up",
+                        style: TextStyle(
+                          color: kWhite,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 18,
+                        ),
+                      ),
                     ),
                   ],
                 ),
-              ),
-              kHeight40,
-
-              //<<<<<Already>>>>>//
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // ignore: prefer_const_constructors
-                  Text(
-                    "Don't have an account?",
-                    style: const TextStyle(
-                      color: kGrey,
-                      fontWeight: FontWeight.w100,
-                      fontSize: 18,
-                    ),
-                  ),
-                  kWidth10,
-
-                  GestureDetector(
-                    onTap: () => Get.offAll(Signup()),
-                    child: Text(
-                      "Sign In",
-                      style: const TextStyle(
-                        color: kWhite,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
-          // AccountForm(
-          //   title: "Login to Your Account",
-          //   btnTxt: "Sign In",
-          //   forgetTxt: "Forget the Password?",
-          //   acStatus: "Don't have an account?",
-          //   signInorUp: "Sign Up",
-          //   logPage: () => Get.offAll(CreateAccount()),
-          //   page: () {
-          //     Get.off(BottomNavBar());
-          //   },
-          //   btnColor: kWhite,
-          //   btnTextColor: kBlack,
-          // ),
         ),
-      )),
+      ),
     );
   }
 }

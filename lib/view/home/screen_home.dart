@@ -301,7 +301,7 @@ class ScreenHome extends StatelessWidget {
   // ignore: non_constant_identifier_names
   SliverAppBar HomeSliverAppBar() {
     ProfileController profileController = Get.put(ProfileController());
-    ProfileModel? userData = profileController.profileModel.value;
+    // ProfileModel? userData = profileController.profileModel.value;
     // if(userData ==null){
     //   return "";
     // }
@@ -310,29 +310,37 @@ class ScreenHome extends StatelessWidget {
       floating: true,
       pinned: false,
       automaticallyImplyLeading: false,
-      title: Row(
-        children: [
-          const CircleAvatar(
-            backgroundColor: kWhite,
-            radius: 27,
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(
-                "https://i.pinimg.com/736x/f1/bf/bc/f1bfbce79fc3ce0fae1295e9af9109dd.jpg",
+      title: Obx(() {
+        ProfileModel? userData = profileController.profileModel.value;
+        if (userData!.name == null) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return Row(
+          children: [
+            const CircleAvatar(
+              backgroundColor: kWhite,
+              radius: 27,
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(
+                  "https://i.pinimg.com/736x/f1/bf/bc/f1bfbce79fc3ce0fae1295e9af9109dd.jpg",
+                ),
+                radius: 25,
               ),
-              radius: 25,
             ),
-          ),
-          kWidth15,
-          Text(
-            userData!.name!.capitalize!,
-            style: const TextStyle(
-              color: kText,
-              fontSize: 23,
-              fontWeight: FontWeight.bold,
+            kWidth15,
+            Text(
+              userData.name!.capitalize!,
+              style: const TextStyle(
+                color: kText,
+                fontSize: 23,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        );
+      }),
       actions: [
         GestureDetector(
           onTap: () => Get.to(const Wishlist()),
