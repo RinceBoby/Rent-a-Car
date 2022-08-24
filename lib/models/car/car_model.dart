@@ -1,12 +1,3 @@
-// To parse this JSON data, do
-//
-//     final carModel = carModelFromJson(jsonString);
-
-import 'dart:convert';
-
-CarModel carModelFromJson(String str) => CarModel.fromJson(json.decode(str));
-
-String carModelToJson(CarModel data) => json.encode(data.toJson());
 
 class CarModel {
   CarModel({
@@ -15,10 +6,12 @@ class CarModel {
 
   List<carDetails> data;
 
-  factory CarModel.fromJson(Map<String, dynamic> json) => CarModel(
+  factory CarModel.fromJson(Map<String, dynamic> json, String key) {
+    return CarModel(
         data: List<carDetails>.from(
-            json["data"].map((x) => carDetails.fromJson(x))),
+            json[key].map((x) => carDetails.fromJson(x))),
       );
+  }
 
   Map<String, dynamic> toJson() => {
         "data": List<dynamic>.from(data.map((x) => x.toJson())),

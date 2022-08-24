@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:carmarket/models/local_storage/local_storage.dart';
-import 'package:carmarket/services/dio_client.dart';
+import 'package:carmarket/services/dio/dio_client.dart';
 import 'package:carmarket/view/home/bottom_nav.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';

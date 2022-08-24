@@ -4,7 +4,7 @@ import 'package:carmarket/models/local_storage/local_storage.dart';
 import 'package:carmarket/models/signup/profile_model.dart';
 import 'package:dio/dio.dart';
 
-import 'dio_client.dart';
+import '../dio/dio_client.dart';
 
 class UserProfileService {
   static Dio dio = DioClient.dio;

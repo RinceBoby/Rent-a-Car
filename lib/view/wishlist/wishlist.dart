@@ -1,6 +1,6 @@
+import 'package:carmarket/controllers/wishlist_controller.dart';
+import 'package:carmarket/core/constants/colors.dart';
 import 'package:carmarket/core/constants/dimensions.dart';
-import 'package:carmarket/view/details/car_details.dart';
-import 'package:carmarket/view/widgets/car_card.dart';
 import 'package:carmarket/view/widgets/custom_appBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,45 +11,40 @@ class Wishlist extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final orientation = MediaQuery.of(context).orientation;
+    WishlistController wishlistController = Get.put(WishlistController());
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: kBlack,
+          title: const Text(
+            "Wishlist",
+            style: TextStyle(
+              color: kText,
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          actions: const [
+            Padding(
+              padding: EdgeInsets.only(right: 10),
+              child: Icon(
+                CupertinoIcons.search,
+                color: kText,
+                size: 30,
+              ),
+            ),
+          ],
+        ),
+        //
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               children: [
                 kHeight05,
-                //<<<<<App_Bar>>>>>//
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: CustomAppBar(
-                    leadIcon: CupertinoIcons.arrow_left,
-                    leadOnTap: () => Get.back(),
-                    title: "Wishlist",
-                    trailIcon: CupertinoIcons.search,
-                    trailOnTap: () {},
-                  ),
-                ),
 
-                //<<<<<Car_List>>>>>//
-                Padding(
-                  padding: const EdgeInsets.only(left: 5),
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: 12,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 1.1 / 1.75,
-                      crossAxisSpacing: 10,
-                      crossAxisCount:
-                          (orientation == Orientation.portrait) ? 2 : 4,
-                    ),
-                    itemBuilder: (context, index) {
-                      return Container();
-                    },
-                  ),
-                )
+                
+                
               ],
             ),
           ),

@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print
 
-import 'package:carmarket/services/car_services.dart';
+import 'package:carmarket/services/car/car_services.dart';
 import 'package:get/get.dart';
 
 import '../models/car/car_model.dart';
@@ -9,11 +9,11 @@ class CarController extends GetxController {
   List<carDetails> allCars = [];
 
   RxBool loading = true.obs;
-  Future<List<carDetails>> getCars(String url) async {
+  Future<List<carDetails>> getCars(String url, String key) async {
     loading.value = true;
 
     try {
-      var data = await CarServices.carDetailsService(url);
+      var data = await CarServices.carDetailsService(url,key);
       loading.value = false;
       return data!;
     } catch (e) {
@@ -26,7 +26,7 @@ class CarController extends GetxController {
 
   @override
   void onInit() {
-    getCars("/getcarData").then((value) => allCars = value);
+    getCars("/getcarData","data").then((value) => allCars = value);
     super.onInit();
     // update();
   }
