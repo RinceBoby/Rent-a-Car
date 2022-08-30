@@ -1,22 +1,27 @@
 import 'package:carmarket/controllers/car_controller.dart';
 import 'package:carmarket/controllers/car_details_controller.dart';
 import 'package:carmarket/models/car/car_model.dart';
+import 'package:carmarket/models/signup/profile_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../controllers/profile_controller.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/dimensions.dart';
 
 class BookingDetails extends StatelessWidget {
-  const BookingDetails({Key? key}) : super(key: key);
+  BookingDetails({Key? key, this.cars}) : super(key: key);
+  carDetails? cars;
 
   @override
   Widget build(BuildContext context) {
     CarController carController = Get.put(CarController());
     DetailsController detailsController = Get.put(DetailsController());
+    ProfileController profileController = Get.put(ProfileController());
     final size = MediaQuery.of(context).size;
+    ProfileModel? userData = profileController.profileModel.value;
 
     return SafeArea(
       child: Scaffold(
@@ -50,7 +55,6 @@ class BookingDetails extends StatelessWidget {
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -65,9 +69,9 @@ class BookingDetails extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       BookingDetailsField(
-                          " Car Name", "", CupertinoIcons.car_detailed),
-                      BookingDetailsField(
-                          "Customer Name", "Rince Boby", CupertinoIcons.person),
+                          "Car Name", cars!.brand, CupertinoIcons.car_detailed),
+                      BookingDetailsField("Customer Name",
+                          userData!.name!.capitalize!, CupertinoIcons.person),
                       BookingDetailsField(
                           "Trip Start",
                           DateFormat("dd-MM-yyyy")
@@ -80,7 +84,7 @@ class BookingDetails extends StatelessWidget {
                               .format(detailsController.dateRange.value.end)
                               .toString(),
                           CupertinoIcons.calendar_today),
-                      BookingDetailsField("Pickup Location", "Ernakulam",
+                      BookingDetailsField("Pickup Location", cars!.location,
                           CupertinoIcons.map_pin_ellipse),
                       BookingDetailsField("Our Helpline;", "+918606004313",
                           CupertinoIcons.phone),

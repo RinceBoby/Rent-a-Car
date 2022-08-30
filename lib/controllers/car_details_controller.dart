@@ -6,11 +6,10 @@ class DetailsController extends GetxController {
 
   var dateRange = DateTimeRange(
     start: DateTime.now(),
-    end: 
-    DateTime(
+    end: DateTime(
       DateTime.now().year,
       DateTime.now().month,
-      DateTime.now().day+1,
+      DateTime.now().day + 1,
     ),
   ).obs;
 

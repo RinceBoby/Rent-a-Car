@@ -48,12 +48,15 @@ class Wishlist extends StatelessWidget {
                 }
                 if (wishlistController.allWishlist.isEmpty) {
                   return const Center(
-                    child: Text(
-                      "No Item in Wishlist",
-                      style: TextStyle(
-                        color: kWhite,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 350),
+                      child: Text(
+                        "No Item in Wishlist",
+                        style: TextStyle(
+                          color: kWhite,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                        ),
                       ),
                     ),
                   );

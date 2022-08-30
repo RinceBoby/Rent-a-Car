@@ -43,31 +43,16 @@ class UserDetails extends StatelessWidget {
               child: Column(
                 children: [
                   kHeight10,
-                  Stack(
-                    children: const [
-                      CircleAvatar(
-                        radius: 80,
-                        backgroundColor: kWhite,
-                        child: CircleAvatar(
-                          backgroundColor: kBlack,
-                          radius: 75,
-                        ),
-                      ),
-                      Positioned(
-                        top: 115,
-                        left: 107,
-                        child: CircleAvatar(
-                          backgroundColor: kWhite,
-                          child: Icon(
-                            CupertinoIcons.camera_circle_fill,
-                            color: kText,
-                            size: 40,
-                          ),
-                        ),
-                      ),
-                    ],
+                  const CircleAvatar(
+                    radius: 80,
+                    backgroundColor: kWhite,
+                    child: CircleAvatar(
+                      backgroundColor: kBlack,
+                      backgroundImage: NetworkImage("https://i.pinimg.com/564x/20/5a/c8/205ac833d83d23c76ccb74f591cb6000.jpg"),
+                      radius: 75,
+                    ),
                   ),
-                  kHeight50,
+                  kHeight30,
 
                   profileDetailBox(
                       size, "Name", userData.name!.capitalize!, 0.6935),
@@ -100,7 +85,7 @@ class UserDetails extends StatelessWidget {
                   profileDetailBox(
                       size, "Address", userData.address!.capitalize!, 0.6935),
 
-                  kHeight20,
+                  kHeight30,
 
                   //<<<<<Edit_Button>>>>>//E
                   ElevatedButton(
@@ -176,9 +161,9 @@ class UserDetails extends StatelessWidget {
             child: Text(
               title,
               style: const TextStyle(
-                color: kWhite,
+                color: kGrey,
                 fontSize: 22,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w400,
               ),
             ),
           ),

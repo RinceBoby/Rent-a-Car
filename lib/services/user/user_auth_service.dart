@@ -127,6 +127,8 @@ class UserAuthServices {
       print(e.response!.data);
       print(e.response!.statusMessage);
 
+      Get.snackbar('Warning', e.response!.data['message']);
+
       if (e.type == DioErrorType.other) {
         print("no internet");
         return "no internet connection";

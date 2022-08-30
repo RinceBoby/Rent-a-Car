@@ -46,7 +46,7 @@ class Profile extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              kHeight20,
+              kHeight100,
               Center(
                 child: Column(
                   children: [
@@ -58,22 +58,22 @@ class Profile extends StatelessWidget {
                         radius: 85,
                         backgroundColor: Colors.black,
                         backgroundImage: NetworkImage(
-                          "https://i.pinimg.com/564x/2c/c2/38/2cc238bef60a8e147eb5cbcf313e3a40.jpg",
+                          "https://i.pinimg.com/564x/20/5a/c8/205ac833d83d23c76ccb74f591cb6000.jpg",
                         ),
                       ),
                     ),
                     kHeight15,
 
-                    //<<<<<Username>>>>>//
-                    const Text(
-                      "User Name",
-                      style: TextStyle(
-                        color: kText,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    kHeight20,
+                    // //<<<<<Username>>>>>//
+                    // const Text(
+                    //   "User Name",
+                    //   style: TextStyle(
+                    //     color: kText,
+                    //     fontSize: 24,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
+                    // kHeight20,
 
                     //<<<<<Details>>>>>//
                     Padding(

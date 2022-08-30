@@ -1,5 +1,6 @@
 import 'package:carmarket/controllers/car_controller.dart';
 import 'package:carmarket/controllers/profile_controller.dart';
+import 'package:carmarket/controllers/signup_controller.dart';
 import 'package:carmarket/controllers/wishlist_controller.dart';
 import 'package:carmarket/models/car/car_model.dart';
 import 'package:carmarket/models/signup/profile_model.dart';
@@ -21,6 +22,8 @@ class ScreenHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CarController carController = Get.put(CarController());
+    SignupController signupController = Get.put(SignupController());
+    final orientation = MediaQuery.of(context).orientation;
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -359,65 +362,87 @@ class ScreenHome extends StatelessWidget {
               labelBackgroundColor: kBlack,
               onTap: () {
                 showModalBottomSheet(
+                  backgroundColor: kBlack,
                   shape: RoundedRectangleBorder(
                     borderRadius: kRadius10,
                   ),
                   context: context,
-                  builder: (context) => Column(
-                    children: [
-                      kHeight10,
-                      Chip(
-                        backgroundColor: kBlack,
-                        label: const Text(
-                          "SORT BY DISTRICT",
-                          style: TextStyle(
-                            fontSize: 22,
+                  builder: (context) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      children: [
+                        kHeight10,
+                        Container(
+                          height: 40,
+                          width: 200,
+                          decoration: BoxDecoration(
                             color: kWhite,
+                            borderRadius: kRadius30,
+                          ),
+                          child: const Center(
+                            child: Text(
+                              "SORT BY DISTRICT",
+                              style: TextStyle(
+                                  fontSize: 22,
+                                  color: kBlack,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: kRadius05,
-                        ),
-                      ),
-                      kHeight15,
-                      //<<<<<Districts>>>>>//
+                        kHeight15,
 
-                      Expanded(
-                        child: ListView.separated(
-                          shrinkWrap: true,
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: 10,
-                          // controller.districtItems.length,
-                          separatorBuilder: (context, index) => kHeight10,
-                          itemBuilder: (context, index) => Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Container(
-                              height: 60,
-                              width: size.width * .9,
-                              decoration: BoxDecoration(
-                                color: fieldColor,
-                                borderRadius: kRadius10,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Text(
-                                    ".districtItems[index]",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: kWhite,
-                                      fontSize: 20,
+                        //<<<<<Filter_By_Districts>>>>>//
+                        Expanded(
+                          child: GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              childAspectRatio: 1 / .25,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              crossAxisCount:
+                                  (orientation == Orientation.portrait) ? 2 : 4,
+                            ),
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: signupController.districtItems.length,
+                            itemBuilder: (context, index) => Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: InkWell(
+                                onTap: () {
+                                  carController
+                                      .getCars("/searchdistrict", "location")
+                                      .then((value) =>
+                                          carController.allCars = value);
+                                  Get.back();
+                                },
+                                child: Container(
+                                  height: 60,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                    color: fieldColor,
+                                    borderRadius: kRadius30,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      signupController.districtItems[index]
+                                          .toUpperCase(),
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        color: kWhite,
+                                        fontSize: 20,
+                                      ),
                                     ),
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
 
-                      kHeight10,
-                    ],
+                        kHeight10,
+                      ],
+                    ),
                   ),
                 );
               },
@@ -461,7 +486,7 @@ class ScreenHome extends StatelessWidget {
               radius: 27,
               child: CircleAvatar(
                 backgroundImage: NetworkImage(
-                  "https://i.pinimg.com/736x/f1/bf/bc/f1bfbce79fc3ce0fae1295e9af9109dd.jpg",
+                  "https://i.pinimg.com/564x/20/5a/c8/205ac833d83d23c76ccb74f591cb6000.jpg",
                 ),
                 radius: 25,
               ),

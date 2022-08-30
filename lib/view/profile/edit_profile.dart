@@ -114,161 +114,161 @@ class EditUserProfile extends StatelessWidget {
                       kHeight15,
 
                       //<<<<<Age_Gender_District>>>>>//
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          //<<<<<Age>>>>>//
-                          GetBuilder<SignupController>(
-                            init: SignupController(),
-                            builder: (controller) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                    color: fieldColor,
-                                    borderRadius: kRadius05),
-                                width: size.width * .29,
-                                child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<String>(
-                                    dropdownColor: fieldColor,
-                                    menuMaxHeight: 200,
-                                    hint: Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 10),
-                                      child: Text(
-                                        "Age",
-                                        style: GoogleFonts.philosopher(
-                                          color: kGrey,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
-                                    value: controller.ageSelectedValue,
-                                    style: const TextStyle(color: kWhite),
-                                    items: List.generate(
-                                      controller.ageItems.length,
-                                      (index) => DropdownMenuItem(
-                                        value: controller.ageItems[index]
-                                            .toString(),
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 10),
-                                          child: Text(
-                                            controller.ageItems[index]
-                                                .toString(),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    onChanged: (String? newValue) {
-                                      controller.dropdownValueChanging(
-                                          newValue!, "age");
-                                    },
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: [
+                      //     //<<<<<Age>>>>>//
+                      //     GetBuilder<SignupController>(
+                      //       init: SignupController(),
+                      //       builder: (controller) {
+                      //         return Container(
+                      //           decoration: BoxDecoration(
+                      //               color: fieldColor,
+                      //               borderRadius: kRadius05),
+                      //           width: size.width * .29,
+                      //           child: DropdownButtonHideUnderline(
+                      //             child: DropdownButton<String>(
+                      //               dropdownColor: fieldColor,
+                      //               menuMaxHeight: 200,
+                      //               hint: Padding(
+                      //                 padding:
+                      //                     const EdgeInsets.only(left: 10),
+                      //                 child: Text(
+                      //                   "Age",
+                      //                   style: GoogleFonts.philosopher(
+                      //                     color: kGrey,
+                      //                     fontSize: 16,
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //               value: controller.ageSelectedValue,
+                      //               style: const TextStyle(color: kWhite),
+                      //               items: List.generate(
+                      //                 controller.ageItems.length,
+                      //                 (index) => DropdownMenuItem(
+                      //                   value: controller.ageItems[index]
+                      //                       .toString(),
+                      //                   child: Padding(
+                      //                     padding:
+                      //                         const EdgeInsets.only(left: 10),
+                      //                     child: Text(
+                      //                       controller.ageItems[index]
+                      //                           .toString(),
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //               onChanged: (String? newValue) {
+                      //                 controller.dropdownValueChanging(
+                      //                     newValue!, "age");
+                      //               },
+                      //             ),
+                      //           ),
+                      //         );
+                      //       },
+                      //     ),
 
-                          //<<<<<Gender>>>>>//
-                          GetBuilder<SignupController>(
-                            init: SignupController(),
-                            builder: (controller) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                    color: fieldColor,
-                                    borderRadius: kRadius05),
-                                width: size.width * .29,
-                                child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<String>(
-                                    dropdownColor: fieldColor,
-                                    hint: Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 10),
-                                      child: Text(
-                                        "Gender",
-                                        style: GoogleFonts.philosopher(
-                                          color: kGrey,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
-                                    value: controller.genderSelectedValue,
-                                    style: GoogleFonts.philosopher(
-                                        color: kBlack),
-                                    items: List.generate(
-                                      controller.genderItems.length,
-                                      (index) => DropdownMenuItem(
-                                        value: controller.genderItems[index],
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 10),
-                                          child: Text(
-                                            controller.genderItems[index],
-                                            style: GoogleFonts.philosopher(
-                                                color: kWhite),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    onChanged: (String? newValue) {
-                                      controller.dropdownValueChanging(
-                                          newValue!, "gender");
-                                    },
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
+                      //     //<<<<<Gender>>>>>//
+                      //     GetBuilder<SignupController>(
+                      //       init: SignupController(),
+                      //       builder: (controller) {
+                      //         return Container(
+                      //           decoration: BoxDecoration(
+                      //               color: fieldColor,
+                      //               borderRadius: kRadius05),
+                      //           width: size.width * .29,
+                      //           child: DropdownButtonHideUnderline(
+                      //             child: DropdownButton<String>(
+                      //               dropdownColor: fieldColor,
+                      //               hint: Padding(
+                      //                 padding:
+                      //                     const EdgeInsets.only(left: 10),
+                      //                 child: Text(
+                      //                   "Gender",
+                      //                   style: GoogleFonts.philosopher(
+                      //                     color: kGrey,
+                      //                     fontSize: 16,
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //               value: controller.genderSelectedValue,
+                      //               style: GoogleFonts.philosopher(
+                      //                   color: kBlack),
+                      //               items: List.generate(
+                      //                 controller.genderItems.length,
+                      //                 (index) => DropdownMenuItem(
+                      //                   value: controller.genderItems[index],
+                      //                   child: Padding(
+                      //                     padding:
+                      //                         const EdgeInsets.only(left: 10),
+                      //                     child: Text(
+                      //                       controller.genderItems[index],
+                      //                       style: GoogleFonts.philosopher(
+                      //                           color: kWhite),
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //               onChanged: (String? newValue) {
+                      //                 controller.dropdownValueChanging(
+                      //                     newValue!, "gender");
+                      //               },
+                      //             ),
+                      //           ),
+                      //         );
+                      //       },
+                      //     ),
 
-                          //<<<<<District>>>>>//
-                          GetBuilder<SignupController>(
-                            init: SignupController(),
-                            builder: (controller) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                    color: fieldColor,
-                                    borderRadius: kRadius05),
-                                width: size.width * .29,
-                                child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<String>(
-                                    menuMaxHeight: 200,
-                                    value: controller.districtSelectedValue,
-                                    // focusColor: fieldColor,
-                                    dropdownColor: fieldColor,
-                                    hint: Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 10),
-                                      child: Text("District",
-                                          style: GoogleFonts.philosopher(
-                                              color: kGrey)),
-                                    ),
-                                    items: List.generate(
-                                      controller.districtItems.length,
-                                      (index) => DropdownMenuItem(
-                                        value:
-                                            controller.districtItems[index],
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 10),
-                                          child: Text(
-                                            controller.districtItems[index],
-                                            style: GoogleFonts.philosopher(
-                                                color: kWhite),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    onChanged: (String? newValue) {
-                                      controller.dropdownValueChanging(
-                                          newValue!, "district");
-                                    },
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+                      //     //<<<<<District>>>>>//
+                      //     GetBuilder<SignupController>(
+                      //       init: SignupController(),
+                      //       builder: (controller) {
+                      //         return Container(
+                      //           decoration: BoxDecoration(
+                      //               color: fieldColor,
+                      //               borderRadius: kRadius05),
+                      //           width: size.width * .29,
+                      //           child: DropdownButtonHideUnderline(
+                      //             child: DropdownButton<String>(
+                      //               menuMaxHeight: 200,
+                      //               value: controller.districtSelectedValue,
+                      //               // focusColor: fieldColor,
+                      //               dropdownColor: fieldColor,
+                      //               hint: Padding(
+                      //                 padding:
+                      //                     const EdgeInsets.only(left: 10),
+                      //                 child: Text("District",
+                      //                     style: GoogleFonts.philosopher(
+                      //                         color: kGrey)),
+                      //               ),
+                      //               items: List.generate(
+                      //                 controller.districtItems.length,
+                      //                 (index) => DropdownMenuItem(
+                      //                   value:
+                      //                       controller.districtItems[index],
+                      //                   child: Padding(
+                      //                     padding:
+                      //                         const EdgeInsets.only(left: 10),
+                      //                     child: Text(
+                      //                       controller.districtItems[index],
+                      //                       style: GoogleFonts.philosopher(
+                      //                           color: kWhite),
+                      //                       overflow: TextOverflow.ellipsis,
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //               onChanged: (String? newValue) {
+                      //                 controller.dropdownValueChanging(
+                      //                     newValue!, "district");
+                      //               },
+                      //             ),
+                      //           ),
+                      //         );
+                      //       },
+                      //     ),
+                      //   ],
+                      // ),
                       kHeight15,
                     ],
                   ),

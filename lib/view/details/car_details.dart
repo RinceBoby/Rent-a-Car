@@ -230,16 +230,19 @@ class DetailsPage extends StatelessWidget {
                                             borderRadius: kRadius20,
                                           ),
                                           child: Center(
-                                            child: Text(
-                                              DateFormat("dd-MM-yyyy")
-                                                  .format(detailsController
-                                                      .dateRange.value.end)
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                color: kWhite,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                            child: Obx( () {
+                                                return Text(
+                                                  DateFormat("dd-MM-yyyy")
+                                                      .format(detailsController
+                                                          .dateRange.value.end)
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                    color: kWhite,
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                );
+                                              }
                                             ),
                                           ),
                                         ),
@@ -257,13 +260,17 @@ class DetailsPage extends StatelessWidget {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
-                                      "Total Days: ${detailsController.totalDays()}",
-                                      style: const TextStyle(
-                                        color: kWhite,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                    Obx(
+                                       () {
+                                        return Text(
+                                          "Total Days: ${detailsController.totalDays()}",
+                                          style: const TextStyle(
+                                            color: kWhite,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        );
+                                      }
                                     ),
                                   ],
                                 ),
@@ -338,32 +345,35 @@ class DetailsPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Obx(
-                              () {
-                                return detailsController.isBooked.value != true
-                                    ? const Text(
-                                        "Rent per Day",
-                                        style: TextStyle(
-                                          color: kText,
-                                          fontSize: 16,
-                                        ),
-                                      )
-                                    : const Text(
-                                        "Total amount",
-                                        style: TextStyle(
-                                          color: kText,
-                                          fontSize: 16,
-                                        ),
-                                      );
-                              },
-                            ),
-                            Text(
-                              "₹ ${id.price * detailsController.totalDays()}",
-                              style: const TextStyle(
+                            // Obx(
+                            //   () {
+                            //     return detailsController.isBooked.value != true
+                            //         ? const Text(
+                            //             "Rent per Day",
+                            //             style: TextStyle(
+                            //               color: kText,
+                            //               fontSize: 16,
+                            //             ),
+                            //           )
+                            //         :
+                            const Text(
+                              "Total amount",
+                              style: TextStyle(
                                 color: kText,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 28,
+                                fontSize: 16,
                               ),
+                            ),
+
+                            Obx( () {
+                                return Text(
+                                  "₹ ${id.price * detailsController.totalDays()}",
+                                  style: const TextStyle(
+                                    color: kText,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 28,
+                                  ),
+                                );
+                              }
                             ),
                           ],
                         ),
@@ -371,7 +381,9 @@ class DetailsPage extends StatelessWidget {
 
                         //<<<<<Book_Now>>>>//
                         ElevatedButton(
-                          onPressed: () => Get.to(const BookingDetails()),
+                          onPressed: () => Get.to(BookingDetails(
+                            cars: id,
+                          )),
                           style: ElevatedButton.styleFrom(
                               primary: kWhite,
                               shape: RoundedRectangleBorder(
