@@ -1,9 +1,8 @@
-import 'dart:ui';
-
 import 'package:carmarket/controllers/profile_controller.dart';
 import 'package:carmarket/core/constants/colors.dart';
 import 'package:carmarket/core/constants/dimensions.dart';
 import 'package:carmarket/models/signup/profile_model.dart';
+import 'package:carmarket/view/profile/edit_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -105,7 +104,9 @@ class UserDetails extends StatelessWidget {
 
                   //<<<<<Edit_Button>>>>>//E
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(EditUserProfile());
+                    },
                     style: ElevatedButton.styleFrom(
                       primary: kWhite,
                       shape: RoundedRectangleBorder(borderRadius: kRadius05),

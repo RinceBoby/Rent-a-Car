@@ -1,7 +1,10 @@
-import 'package:carmarket/view/login/widgets/field_text.dart';
+import 'package:carmarket/controllers/car_controller.dart';
+import 'package:carmarket/controllers/car_details_controller.dart';
+import 'package:carmarket/models/car/car_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../core/constants/colors.dart';
 import '../../core/constants/dimensions.dart';
@@ -11,7 +14,10 @@ class BookingDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CarController carController = Get.put(CarController());
+    DetailsController detailsController = Get.put(DetailsController());
     final size = MediaQuery.of(context).size;
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -58,13 +64,21 @@ class BookingDetails extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      BookingDetailsField(" Car Name", "Lamborgini Urus",
-                          CupertinoIcons.car_detailed),
+                      BookingDetailsField(
+                          " Car Name", "", CupertinoIcons.car_detailed),
                       BookingDetailsField(
                           "Customer Name", "Rince Boby", CupertinoIcons.person),
-                      BookingDetailsField("Trip Start", "10/05/2022",
+                      BookingDetailsField(
+                          "Trip Start",
+                          DateFormat("dd-MM-yyyy")
+                              .format(detailsController.dateRange.value.start)
+                              .toString(),
                           CupertinoIcons.calendar_today),
-                      BookingDetailsField("Trip Ends", "23/08/2022",
+                      BookingDetailsField(
+                          "Trip Ends",
+                          DateFormat("dd-MM-yyyy")
+                              .format(detailsController.dateRange.value.end)
+                              .toString(),
                           CupertinoIcons.calendar_today),
                       BookingDetailsField("Pickup Location", "Ernakulam",
                           CupertinoIcons.map_pin_ellipse),

@@ -32,7 +32,6 @@ class SignupController extends GetxController {
     } else if (checkingValue == "district") {
       districtSelectedValue = value;
     }
-
     update();
   }
 }

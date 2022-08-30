@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:carmarket/models/local_storage/local_storage.dart';
+import 'package:carmarket/models/signup/profile_model.dart';
 import 'package:carmarket/services/dio/dio_client.dart';
 import 'package:carmarket/view/home/bottom_nav.dart';
 import 'package:dio/dio.dart';
@@ -36,9 +37,10 @@ class UserAuthServices {
       //<<<<<Dio_Error>>>>>//
     } on DioError catch (e) {
       print("Dio error");
-      print(e.error);
       print(e.response!.data);
       print(e.response!.statusMessage);
+
+      Get.snackbar('Warning', e.response!.data['message']);
 
       if (e.type == DioErrorType.other) {
         print("no internet");
@@ -48,37 +50,63 @@ class UserAuthServices {
       if (e.response != null) {
         return e.response!.data['message'];
       }
-      return "something";
-    } catch (e) {
-      print(e);
-      return "something went wrong";
+      return "";
     }
   }
 
   //<<<<<User_Signup>>>>>//
-  static Future<String> signupUser({
-    required String name,
-    required String email,
-    required int phone,
-    required int age,
-    required String gender,
-    required String address,
-    required String district,
-    required String password,
-    // required String isBlock,
-    // required String token,
-  }) async {
+  static Future<String> signupUser(ProfileModel profileModelData
+
+      //   {
+      //   required String name,
+      //   required String email,
+      //   required int phone,
+      //   required int age,
+      //   required String gender,
+      //   required String address,
+      //   required String district,
+      //   required String password,
+      //   // required String isBlock,
+      //   // required String token,
+      // }
+
+      ) async {
+    Map<String, dynamic> headers = {
+      "Content-type": "application/json",
+      "Accept": "application/json"
+    };
+
     try {
-      var response = await DioClient.dio.post("/signup", data: {
-        "name": name,
-        "email": email,
-        "phone": phone,
-        "age": age,
-        "gender": gender,
-        "address": address,
-        "district": district,
-        "password": password,
-      });
+      Map signupData = ProfileModel(
+        name: profileModelData.name,
+        email: profileModelData.email,
+        phone: profileModelData.phone,
+        age: profileModelData.age,
+        gender: profileModelData.gender,
+        address: profileModelData.address,
+        district: profileModelData.district,
+        password: profileModelData.password,
+      ).toJson();
+
+      // var response = await DioClient.dio.post("/signup", data: {
+      //   "name": name,
+      //   "email": email,
+      //   "phone": phone,
+      //   "age": age,
+      //   "gender": gender,
+      //   "address": address,
+      //   "district": district,
+      //   "password": password,
+      // });
+
+      final response = await DioClient.dio.post(
+        "/signup",
+        data: signupData,
+        options: Options(
+          followRedirects: false,
+          headers: headers,
+        ),
+      );
 
       //<<<<<Registering_User_Details>>>>>//
       Map<String, String> user = {
@@ -108,9 +136,6 @@ class UserAuthServices {
         return e.response!.data['message'];
       }
       return 'something went wrong';
-    } catch (e) {
-      print(e);
-      return "";
     }
   }
 }

@@ -1,4 +1,6 @@
 import 'package:carmarket/controllers/car_controller.dart';
+import 'package:carmarket/controllers/car_details_controller.dart';
+import 'package:carmarket/controllers/wishlist_controller.dart';
 import 'package:carmarket/core/constants/colors.dart';
 import 'package:carmarket/core/constants/dimensions.dart';
 import 'package:carmarket/models/car/car_model.dart';
@@ -10,25 +12,18 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:readmore/readmore.dart';
 
-import '../wishlist/wishlist.dart';
+import '../../models/local_storage/local_storage.dart';
 
-class DetailsPage extends StatefulWidget {
+class DetailsPage extends StatelessWidget {
   carDetails id;
-  DetailsPage({
-    required this.id,
-    Key? key,
-  }) : super(key: key);
+  DetailsPage({required this.id, Key? key}) : super(key: key);
 
-  @override
-  State<DetailsPage> createState() => _DetailsPageState();
-}
-
-class _DetailsPageState extends State<DetailsPage> {
-  TextEditingController dateController = TextEditingController();
+  WishlistController wishlistController = Get.put(WishlistController());
 
   @override
   Widget build(BuildContext context) {
-    CarController carController = Get.find<CarController>();
+    // CarController carController = Get.find<CarController>();
+    DetailsController detailsController = Get.put(DetailsController());
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -53,8 +48,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             decoration: BoxDecoration(
                               borderRadius: kRadius05,
                               image: DecorationImage(
-                                image:
-                                    NetworkImage(widget.id.imgUrl.toString()),
+                                image: NetworkImage(id.imgUrl.toString()),
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -62,9 +56,9 @@ class _DetailsPageState extends State<DetailsPage> {
                           kHeight20,
                           Row(
                             children: [
-                               Text(
-                                widget.id.brand,
-                                style:const TextStyle(
+                              Text(
+                                id.brand,
+                                style: const TextStyle(
                                   color: kText,
                                   fontSize: 28,
                                   fontWeight: FontWeight.bold,
@@ -85,16 +79,41 @@ class _DetailsPageState extends State<DetailsPage> {
                               kWidth20,
 
                               //<<<<<Fav_Icon>>>>>//
-                              GestureDetector(
-                                onTap: () => Get.to(const Wishlist()),
-                                child: CircleAvatar(
-                                  radius: 15,
-                                  backgroundColor: Colors.transparent,
-                                  child: Image.asset(
-                                    "assets/fav-icon.png",
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                              Obx(
+                                () {
+                                  final userId =
+                                      GetLocalStorage.getUserIdAndToken("uId");
+
+                                  return wishlistController.isWish.value != true
+                                      ? IconButton(
+                                          onPressed: () {
+                                            wishlistController
+                                                .addToWishlistItem(
+                                              carId: id.id,
+                                              uId: userId!,
+                                            );
+                                          },
+                                          icon: const Icon(
+                                            CupertinoIcons.heart,
+                                            color: kWhite,
+                                            size: 32,
+                                          ),
+                                        )
+                                      : IconButton(
+                                          onPressed: () {
+                                            wishlistController
+                                                .removeFromWishlistItem(
+                                              carId: id.id,
+                                              uId: userId!,
+                                            );
+                                          },
+                                          icon: const Icon(
+                                            CupertinoIcons.heart_solid,
+                                            color: kRed,
+                                            size: 32,
+                                          ),
+                                        );
+                                },
                               ),
                               // kWidth10,
                             ],
@@ -102,14 +121,10 @@ class _DetailsPageState extends State<DetailsPage> {
                           kHeight15,
 
                           //<<<<<Location_Number_Date>>>>>//
-                          VehicleDetailsCard(
-                              size, "Pick Up Location", widget.id.location),
+                          VehicleDetailsCard(size, "Vehicle Number", id.regNo),
                           kHeight15,
                           VehicleDetailsCard(
-                              size, "Vehicle Number", widget.id.regNo),
-                          kHeight15,
-                          VehicleDetailsCard(
-                              size, "Registred Date", widget.id.register),
+                              size, "Registred Date", id.register),
                           kHeight15,
 
                           //<<<<<Booking_Date>>>>>//
@@ -118,89 +133,133 @@ class _DetailsPageState extends State<DetailsPage> {
                             children: [
                               const TextInLine(
                                   text: "Choose Your Booking Date", size: 22),
-                              kHeight15,
+                              kHeight10,
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Expanded(
-                                    child: SizedBox(
-                                      width: size.width * .4,
-                                      child: DateField(
-                                        "Trip Start",
-                                        () async {
-                                          DateTime? pickedDate =
-                                              await showDatePicker(
-                                            context: context,
-                                            initialDate: DateTime.now(),
-                                            firstDate: DateTime(2000),
-                                            lastDate: DateTime(2100),
-                                          );
-                                          if (pickedDate != null) {
-                                            String formattedDate =
-                                                DateFormat('dd/mm/yyyy')
-                                                    .format(pickedDate);
-                                            setState(
-                                              () {
-                                                dateController.text =
-                                                    formattedDate;
-                                              },
-                                            );
-                                          }
+                                  //<<<<<From>>>>>//
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(left: 5),
+                                        child: Text(
+                                          "Start:",
+                                          style: TextStyle(
+                                            color: kGrey,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ),
+                                      kHeight05,
+                                      InkWell(
+                                        onTap: () {
+                                          detailsController
+                                              .chooseDateRangePicker();
                                         },
+                                        child: SizedBox(
+                                          width: size.width * .41,
+                                          child: Container(
+                                            height: 50,
+                                            decoration: BoxDecoration(
+                                              color: fieldColor,
+                                              borderRadius: kRadius20,
+                                            ),
+                                            child: Center(
+                                              child: Obx(
+                                                () {
+                                                  return Text(
+                                                    DateFormat("dd-MM-yyyy")
+                                                        .format(
+                                                            detailsController
+                                                                .dateRange
+                                                                .value
+                                                                .start)
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                      color: kWhite,
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+
+                                  //<<<<<To_Icon>>>>>//
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 20),
+                                    child: SizedBox(
+                                      width: size.width * .1,
+                                      child: const Icon(
+                                        CupertinoIcons.arrow_right_square_fill,
+                                        color: kWhite,
                                       ),
                                     ),
                                   ),
-                                  kWidth05,
-                                  const Text(
-                                    "to",
-                                    style: TextStyle(
-                                      color: kWhite,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  kWidth05,
-                                  Expanded(
-                                    child: SizedBox(
-                                      width: size.width * .4,
-                                      child: DateField(
-                                        "Trip End",
-                                        () async {
-                                          DateTime? pickedDate =
-                                              await showDatePicker(
-                                            context: context,
-                                            initialDate: DateTime.now(),
-                                            firstDate: DateTime(2000),
-                                            lastDate: DateTime(2100),
-                                          );
-                                          if (pickedDate != null) {
-                                            String formattedDate =
-                                                DateFormat('dd/mm/yyyy')
-                                                    .format(pickedDate);
-                                            setState(
-                                              () {
-                                                dateController.text =
-                                                    formattedDate;
-                                              },
-                                            );
-                                          }
-                                        },
+
+                                  //<<<<<Until>>>>>//
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(left: 5),
+                                        child: Text(
+                                          "End:",
+                                          style: TextStyle(
+                                            color: kGrey,
+                                            fontSize: 16,
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                      kHeight05,
+                                      SizedBox(
+                                        width: size.width * .41,
+                                        child: Container(
+                                          height: 50,
+                                          decoration: BoxDecoration(
+                                            color: fieldColor,
+                                            borderRadius: kRadius20,
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              DateFormat("dd-MM-yyyy")
+                                                  .format(detailsController
+                                                      .dateRange.value.end)
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                color: kWhite,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
                               kHeight15,
                               Container(
-                                height: 55,
+                                height: 50,
                                 width: size.width * .5,
                                 decoration: BoxDecoration(
-                                    color: fieldColor, borderRadius: kRadius30),
+                                    color: fieldColor, borderRadius: kRadius20),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
+                                  children: [
                                     Text(
-                                      "Total Days: 0 Days",
-                                      style: TextStyle(
+                                      "Total Days: ${detailsController.totalDays()}",
+                                      style: const TextStyle(
                                         color: kWhite,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
@@ -223,7 +282,7 @@ class _DetailsPageState extends State<DetailsPage> {
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children:  [
+                                children: [
                                   const Text(
                                     "Description",
                                     style: TextStyle(
@@ -234,17 +293,17 @@ class _DetailsPageState extends State<DetailsPage> {
                                   ),
                                   kHeight05,
                                   ReadMoreText(
-                                    widget.id.description,
+                                    id.description,
                                     trimLines: 3,
                                     trimMode: TrimMode.Line,
                                     trimCollapsedText: "Show more",
                                     trimExpandedText: "Show less",
-                                    style:const TextStyle(
+                                    style: const TextStyle(
                                       color: kText,
                                       fontSize: 18,
                                       fontWeight: FontWeight.w300,
                                     ),
-                                    moreStyle:const TextStyle(
+                                    moreStyle: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500,
                                       color: kText,
@@ -278,17 +337,29 @@ class _DetailsPageState extends State<DetailsPage> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children:  [
-                            const Text(
-                              "Rent per Day",
-                              style: TextStyle(
-                                color: kText,
-                                fontSize: 16,
-                              ),
+                          children: [
+                            Obx(
+                              () {
+                                return detailsController.isBooked.value != true
+                                    ? const Text(
+                                        "Rent per Day",
+                                        style: TextStyle(
+                                          color: kText,
+                                          fontSize: 16,
+                                        ),
+                                      )
+                                    : const Text(
+                                        "Total amount",
+                                        style: TextStyle(
+                                          color: kText,
+                                          fontSize: 16,
+                                        ),
+                                      );
+                              },
                             ),
                             Text(
-                              "₹ ${widget.id.price}",
-                              style:const TextStyle(
+                              "₹ ${id.price * detailsController.totalDays()}",
+                              style: const TextStyle(
                                 color: kText,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 28,
@@ -331,34 +402,7 @@ class _DetailsPageState extends State<DetailsPage> {
   //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Methods>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
   //
   //
-  //<<<<<Date_Field>>>>>//
-  DateField(
-    String label,
-    VoidCallback ontap,
-  ) {
-    return TextField(
-      controller: dateController,
-      onTap: ontap,
-      style: const TextStyle(
-        color: kWhite,
-        fontWeight: FontWeight.bold,
-      ),
-      decoration: InputDecoration(
-        labelText: label,
-        hintText: "dd/dd/yyyy",
-        hintStyle: const TextStyle(color: kGrey),
-        labelStyle: TextStyle(color: kWhite.withOpacity(.5)),
-        border: const OutlineInputBorder(),
-        prefixIcon:
-            Icon(CupertinoIcons.calendar_today, color: kWhite.withOpacity(.5)),
-        filled: true,
-        fillColor: fieldColor,
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: kWhite),
-        ),
-      ),
-    );
-  }
+
 }
 
 //Vehicle_Details_card//

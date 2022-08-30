@@ -1,11 +1,8 @@
-import 'dart:ui';
-
 import 'package:carmarket/controllers/car_controller.dart';
 import 'package:carmarket/controllers/profile_controller.dart';
-import 'package:carmarket/controllers/signup_controller.dart';
+import 'package:carmarket/controllers/wishlist_controller.dart';
 import 'package:carmarket/models/car/car_model.dart';
 import 'package:carmarket/models/signup/profile_model.dart';
-import 'package:carmarket/services/wishlist/wishlist_service.dart';
 import 'package:carmarket/view/login/widgets/line_text.dart';
 import 'package:carmarket/view/widgets/carousel.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,7 +12,6 @@ import 'package:get/get.dart';
 
 import '../../core/constants/colors.dart';
 import '../../core/constants/dimensions.dart';
-import '../../models/local_storage/local_storage.dart';
 import '../details/car_details.dart';
 import '../wishlist/wishlist.dart';
 
@@ -54,232 +50,176 @@ class ScreenHome extends StatelessWidget {
                     ),
                     kHeight20,
 
-                    // <<<<<Car_Card>>>>>//
-                    Obx(
-                      () {
-                        if (carController.loading.value) {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        }
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: carController.allCars.length,
-                          itemBuilder: (context, index) {
-                            const bool isWish = false;
-                            final data = carController.allCars[index];
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Get.to(
-                                    DetailsPage(id: data),
-                                  );
-                                },
-                                child: Container(
-                                  height: 340,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: kWhite),
-                                    color: fieldColor,
-                                    borderRadius: kRadius20,
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Stack(
-                                        children: [
-                                          Container(
-                                            height: 200,
-                                            width: size.width * .99,
-                                            decoration: BoxDecoration(
-                                              color: fieldColor,
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(20),
-                                                topRight: Radius.circular(20),
-                                              ),
-                                              image: DecorationImage(
-                                                image:
-                                                    NetworkImage(data.imgUrl),
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-
-                                            //<<<<<Fav_Icon>>>>>//
-                                            child: Align(
-                                              alignment: Alignment.topRight,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                  top: 10,
-                                                  right: 10,
-                                                ),
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    final userId =
-                                                        GetLocalStorage
-                                                            .getUserIdAndToken(
-                                                                "uId");
-                                                    // WishlistServices
-                                                    //     .addToWishlist(
-                                                    //         carId: data.id,
-                                                    //         uId: userId!);
-                                                    if (isWish == true) {
-                                                      WishlistServices
-                                                          .removeFromWishlist(
-                                                              carId: data.id,
-                                                              uId: userId!);
-                                                    } else {
-                                                      WishlistServices
-                                                          .addToWishlist(
-                                                              carId: data.id,
-                                                              uId: userId!);
-                                                    }
-                                                  },
-                                                  child: isWish == true
-                                                      ? Image.asset(
-                                                          "assets/fav-icon-red-f.png",
-                                                          height: 25,
-                                                        )
-                                                      : Image.asset(
-                                                          "assets/fav-icon.png",
-                                                          height: 25,
-                                                        ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                    //<<<<<Car_Card>>>>>//
+                    Obx(() {
+                      if (carController.loading.value) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: carController.allCars.length,
+                        itemBuilder: (context, index) {
+                          final data = carController.allCars[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.to(
+                                  DetailsPage(id: data),
+                                );
+                              },
+                              child: Container(
+                                height: 340,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: kWhite),
+                                  color: fieldColor,
+                                  borderRadius: kRadius20,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      height: 200,
+                                      width: size.width * .99,
+                                      decoration: BoxDecoration(
+                                        color: fieldColor,
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(20),
+                                        ),
+                                        image: DecorationImage(
+                                          image: NetworkImage(data.imgUrl),
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
-                                      kHeight10,
+                                    ),
+                                    kHeight10,
 
-                                      //<<<<<Bottom>>>>>//
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          //<<<<<Car_Name>>>>>//
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 20),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  data.brand,
+                                    //<<<<<Bottom>>>>>//
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        //<<<<<Car_Name>>>>>//
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                data.brand,
+                                                style: const TextStyle(
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: kText,
+                                                  letterSpacing: 1,
+                                                ),
+                                              ),
+
+                                              //<<<<<Price>>>>>//
+                                              Chip(
+                                                avatar: const Icon(Icons
+                                                    .currency_rupee_rounded),
+                                                label: Text(
+                                                  "${data.price} / day",
                                                   style: const TextStyle(
-                                                    fontSize: 24,
+                                                    color: kBlack,
                                                     fontWeight: FontWeight.bold,
-                                                    color: kText,
-                                                    letterSpacing: 1,
+                                                    fontSize: 18,
                                                   ),
                                                 ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        kHeight05,
 
-                                                //<<<<<Price>>>>>//
-                                                Chip(
-                                                  avatar: const Icon(Icons
-                                                      .currency_rupee_rounded),
-                                                  label: Text(
-                                                    "${data.price} / day",
-                                                    style: const TextStyle(
-                                                      color: kBlack,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 18,
-                                                    ),
+                                        //<<<<<Divider>>>>>//
+                                        const Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: Divider(
+                                            thickness: 1,
+                                            color: kWhite,
+                                          ),
+                                        ),
+                                        kHeight05,
+
+                                        //<<<<<Details>>>>>//
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: SizedBox(
+                                            height: 45,
+                                            child: ListView.separated(
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const BouncingScrollPhysics(),
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: 1,
+                                              separatorBuilder:
+                                                  (context, index) => kWidth05,
+                                              itemBuilder: (context, index) =>
+                                                  Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  //
+                                                  //<<<<Seats>>>>//
+                                                  DetailChip(
+                                                    data,
+                                                    data.seats.toString(),
+                                                    Icons
+                                                        .airline_seat_recline_extra_sharp,
                                                   ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          kHeight05,
+                                                  kWidth10,
 
-                                          //<<<<<Divider>>>>>//
-                                          const Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 10),
-                                            child: Divider(
-                                              thickness: 1,
-                                              color: kWhite,
-                                            ),
-                                          ),
-                                          kHeight05,
+                                                  //<<<<<Fuel>>>>>//
+                                                  DetailChip(
+                                                    data,
+                                                    data.fueltype.name,
+                                                    Icons
+                                                        .local_gas_station_rounded,
+                                                  ),
+                                                  kWidth10,
 
-                                          //<<<<<Details>>>>>//
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10),
-                                            child: SizedBox(
-                                              height: 45,
-                                              child: ListView.separated(
-                                                shrinkWrap: true,
-                                                physics:
-                                                    const BouncingScrollPhysics(),
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                itemCount: 1,
-                                                separatorBuilder:
-                                                    (context, index) =>
-                                                        kWidth05,
-                                                itemBuilder: (context, index) =>
-                                                    Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    //
-                                                    //<<<<Seats>>>>//
-                                                    DetailChip(
-                                                      data,
-                                                      data.seats.toString(),
-                                                      Icons
-                                                          .airline_seat_recline_extra_sharp,
-                                                    ),
-                                                    kWidth10,
+                                                  //<<<<<Mileage>>>>>//
+                                                  DetailChip(
+                                                    data,
+                                                    "${data.mileage} / Km",
+                                                    CupertinoIcons.drop_fill,
+                                                  ),
+                                                  kWidth10,
 
-                                                    //<<<<<Fuel>>>>>//
-                                                    DetailChip(
-                                                      data,
-                                                      data.fueltype.name,
-                                                      Icons
-                                                          .local_gas_station_rounded,
-                                                    ),
-                                                    kWidth10,
-
-                                                    //<<<<<Mileage>>>>>//
-                                                    DetailChip(
-                                                      data,
-                                                      "${data.mileage} / Km",
-                                                      CupertinoIcons.drop_fill,
-                                                    ),
-                                                    kWidth10,
-
-                                                    //<<<<<Location>>>>>//
-                                                    DetailChip(
-                                                      data,
-                                                      data.location,
-                                                      CupertinoIcons
-                                                          .map_pin_ellipse,
-                                                    ),
-                                                    kWidth10,
-                                                  ],
-                                                ),
+                                                  //<<<<<Location>>>>>//
+                                                  DetailChip(
+                                                    data,
+                                                    data.location,
+                                                    CupertinoIcons
+                                                        .map_pin_ellipse,
+                                                  ),
+                                                  kWidth10,
+                                                ],
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
                                 ),
                               ),
-                            );
-                          },
-                        );
-                      },
-                    ),
+                            ),
+                          );
+                        },
+                      );
+                    }),
                   ],
                 ),
               ),

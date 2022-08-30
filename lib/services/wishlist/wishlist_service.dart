@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 
-import 'package:carmarket/models/local_storage/local_storage.dart';
 import 'package:carmarket/models/wishlist/wishlist_model.dart';
 import 'package:carmarket/services/dio/dio_client.dart';
 import 'package:dio/dio.dart';
@@ -18,11 +17,10 @@ class WishlistServices {
       var response = await DioClient.dio
           .post("/dataTowishlist/$carId", data: {"USERID": uId});
       print(response.data);
+      return response;
     } on DioError catch (e) {
-      print("Dio Error");
       print(e.error);
       print(e.response!.data);
-
       print(e.response!.statusMessage);
     }
   }
@@ -36,8 +34,8 @@ class WishlistServices {
       var response = await DioClient.dio
           .post("/removefromwishlist/$carId", data: {"USERID": uId});
       print(response.data);
+      return response;
     } on DioError catch (e) {
-      print("Dio Error");
       print(e.error);
       print(e.response);
       print(e.response!.statusMessage);
@@ -49,17 +47,20 @@ class WishlistServices {
       {required String userId}) async {
     try {
       var response = await DioClient.dio
-          .post("/getdatafromwishlist", data: {"USERID": userId});
-      print(response.data);
+          .post("/getallwishlistdata", data: {"USERID": userId});
+     
+       print("function called");
 
-      List<WishlistModel> wishlistDetails =
-          wishlistModelFromJson(jsonEncode(response.data));
+
+      String json = jsonEncode(response.data);
+    List<WishlistModel> wishlistDetails =
+          wishlistModelFromJson(json);
       return wishlistDetails;
       
     } on DioError catch (e) {
       print("Dio Error");
       print(e.error);
-      print(e.response!.data);
+      print(e.response!.statusMessage);
     }
     return null;
   }

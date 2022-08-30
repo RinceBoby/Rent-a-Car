@@ -1,7 +1,11 @@
+// ignore_for_file: avoid_print
+
 import 'package:carmarket/controllers/signup_controller.dart';
 import 'package:carmarket/core/constants/colors.dart';
+import 'package:carmarket/models/signup/profile_model.dart';
 import 'package:carmarket/services/user/user_auth_service.dart';
 import 'package:carmarket/view/login/login_account.dart';
+import 'package:carmarket/view/profile/user_details.dart';
 import 'package:carmarket/view/signup/widget/signup_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,14 +14,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/constants/dimensions.dart';
 
-class Signup extends StatefulWidget {
+class Signup extends StatelessWidget {
   Signup({Key? key}) : super(key: key);
 
-  @override
-  State<Signup> createState() => _SignupState();
-}
-
-class _SignupState extends State<Signup> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
@@ -332,9 +331,11 @@ class _SignupState extends State<Signup> {
                 ElevatedButton(
                   onPressed: () {
                     SignupController controller = Get.find<SignupController>();
+
                     print("ontap");
+
                     if (_formKey.currentState!.validate()) {
-                      UserAuthServices.signupUser(
+                      final ProfileModel profileModel = ProfileModel(
                         name: nameController.text,
                         email: emailController.text,
                         phone: int.parse(phoneController.text),
@@ -344,19 +345,9 @@ class _SignupState extends State<Signup> {
                         district: controller.districtSelectedValue!,
                         password: passController.text,
                       );
+
+                      UserAuthServices.signupUser(profileModel);
                       Get.offAll(LoginAccount());
-                      // .then(
-                      //   (value) {
-                      //     if (value == "success") {
-                      //       Get.offAll(const BottomNavBar());
-                      //       return;
-                      //     } else if (value.isNotEmpty) {
-                      //       getSnackBar(value);
-                      //       return;
-                      //     }
-                      //     getSnackBar("is empty");
-                      //   },
-                      // );
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -373,45 +364,6 @@ class _SignupState extends State<Signup> {
                   ),
                 ),
                 kHeight15,
-
-                //<<<<<Forget>>>>>//
-                const Text(
-                  "",
-                  style: TextStyle(
-                    color: kWhite,
-                    fontSize: 16,
-                  ),
-                ),
-                kHeight15,
-
-                //<<<<<Already>>>>>//
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // ignore: prefer_const_constructors
-                    Text(
-                      "Already have an account?",
-                      style: const TextStyle(
-                        color: kGrey,
-                        fontWeight: FontWeight.w100,
-                        fontSize: 18,
-                      ),
-                    ),
-                    kWidth10,
-
-                    GestureDetector(
-                      onTap: () => Get.to(LoginAccount()),
-                      child: const Text(
-                        "Sign In",
-                        style: TextStyle(
-                          color: kWhite,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               ],
             ),
           ),
