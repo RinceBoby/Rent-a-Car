@@ -64,17 +64,6 @@ class Profile extends StatelessWidget {
                     ),
                     kHeight15,
 
-                    // //<<<<<Username>>>>>//
-                    // const Text(
-                    //   "User Name",
-                    //   style: TextStyle(
-                    //     color: kText,
-                    //     fontSize: 24,
-                    //     fontWeight: FontWeight.bold,
-                    //   ),
-                    // ),
-                    // kHeight20,
-
                     //<<<<<Details>>>>>//
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -83,11 +72,8 @@ class Profile extends StatelessWidget {
                         child: Column(
                           children: [
                             kHeight20,
-                            ProfileDetails(
-                                size,
-                                CupertinoIcons.person,
-                                "User Details",
-                                () => Get.to(const UserDetails())),
+                            ProfileDetails(size, CupertinoIcons.person,
+                                "User Details", () => Get.to(UserDetails())),
                             kHeight15,
                             ProfileDetails(
                               size,
