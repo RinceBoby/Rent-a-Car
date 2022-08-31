@@ -1,4 +1,3 @@
-import 'package:carmarket/controllers/car_controller.dart';
 import 'package:carmarket/controllers/car_details_controller.dart';
 import 'package:carmarket/controllers/wishlist_controller.dart';
 import 'package:carmarket/core/constants/colors.dart';
@@ -56,27 +55,35 @@ class DetailsPage extends StatelessWidget {
                           kHeight20,
                           Row(
                             children: [
-                              Text(
-                                id.brand,
-                                style: const TextStyle(
-                                  color: kText,
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold,
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      id.brand,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        color: kText,
+                                        fontSize: 28,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 1,
+                                      ),
+                                    ),
+                                    kWidth05,
+                                    Flexible(
+                                      child: Text(
+                                        id.model,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          color: kText,
+                                          fontSize: 28,
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 1,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              kHeight10,
-                              const Spacer(),
-
-                              //<<<<<Review>>>>>//
-                              GestureDetector(
-                                onTap: () {},
-                                child: const Icon(
-                                  CupertinoIcons.chat_bubble_text,
-                                  color: kText,
-                                  size: 32,
-                                ),
-                              ),
-                              kWidth20,
 
                               //<<<<<Fav_Icon>>>>>//
                               Obx(
@@ -115,7 +122,6 @@ class DetailsPage extends StatelessWidget {
                                         );
                                 },
                               ),
-                              // kWidth10,
                             ],
                           ),
                           kHeight15,
@@ -230,20 +236,19 @@ class DetailsPage extends StatelessWidget {
                                             borderRadius: kRadius20,
                                           ),
                                           child: Center(
-                                            child: Obx( () {
-                                                return Text(
-                                                  DateFormat("dd-MM-yyyy")
-                                                      .format(detailsController
-                                                          .dateRange.value.end)
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                    color: kWhite,
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                );
-                                              }
-                                            ),
+                                            child: Obx(() {
+                                              return Text(
+                                                DateFormat("dd-MM-yyyy")
+                                                    .format(detailsController
+                                                        .dateRange.value.end)
+                                                    .toString(),
+                                                style: const TextStyle(
+                                                  color: kWhite,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              );
+                                            }),
                                           ),
                                         ),
                                       ),
@@ -260,18 +265,16 @@ class DetailsPage extends StatelessWidget {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Obx(
-                                       () {
-                                        return Text(
-                                          "Total Days: ${detailsController.totalDays()}",
-                                          style: const TextStyle(
-                                            color: kWhite,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        );
-                                      }
-                                    ),
+                                    Obx(() {
+                                      return Text(
+                                        "Total Days: ${detailsController.totalDays()}",
+                                        style: const TextStyle(
+                                          color: kWhite,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      );
+                                    }),
                                   ],
                                 ),
                               ),
@@ -364,17 +367,16 @@ class DetailsPage extends StatelessWidget {
                               ),
                             ),
 
-                            Obx( () {
-                                return Text(
-                                  "₹ ${id.price * detailsController.totalDays()}",
-                                  style: const TextStyle(
-                                    color: kText,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 28,
-                                  ),
-                                );
-                              }
-                            ),
+                            Obx(() {
+                              return Text(
+                                "₹ ${id.price * detailsController.totalDays()}",
+                                style: const TextStyle(
+                                  color: kText,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 28,
+                                ),
+                              );
+                            }),
                           ],
                         ),
                         const Spacer(),

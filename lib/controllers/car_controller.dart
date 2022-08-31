@@ -13,7 +13,7 @@ class CarController extends GetxController {
     loading.value = true;
 
     try {
-      var data = await CarServices.carDetailsService(url,key);
+      var data = await CarServices.carDetailsService(url, key);
       loading.value = false;
       return data!;
     } catch (e) {
@@ -26,7 +26,7 @@ class CarController extends GetxController {
 
   @override
   void onInit() {
-    getCars("/getcarData","data").then((value) => allCars = value);
+    getCars("/getcarData", "data").then((value) => allCars = value);
     super.onInit();
     // update();
   }

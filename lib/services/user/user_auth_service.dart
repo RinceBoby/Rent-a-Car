@@ -118,6 +118,7 @@ class UserAuthServices {
       print("Success");
       print(response.data);
 
+      Get.snackbar("Success", response.data["messagge"]);
       return "success";
       //
       //<<<<<Dio_Error>>>>>//
