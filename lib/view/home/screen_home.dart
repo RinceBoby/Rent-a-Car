@@ -3,10 +3,13 @@ import 'package:carmarket/controllers/profile_controller.dart';
 import 'package:carmarket/controllers/signup_controller.dart';
 import 'package:carmarket/models/car/car_model.dart';
 import 'package:carmarket/models/signup/profile_model.dart';
+import 'package:carmarket/view/home/widget/details_tile.dart';
 import 'package:carmarket/view/login/widgets/line_text.dart';
 import 'package:carmarket/view/widgets/carousel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:get/get.dart';
 
 import '../../core/constants/colors.dart';
@@ -24,6 +27,7 @@ class ScreenHome extends StatelessWidget {
     SignupController signupController = Get.put(SignupController());
     final orientation = MediaQuery.of(context).orientation;
     final size = MediaQuery.of(context).size;
+    bool isExpanded = true;
     return SafeArea(
       child: Scaffold(
         body: NestedScrollView(
@@ -74,7 +78,7 @@ class ScreenHome extends StatelessWidget {
                                 );
                               },
                               child: Container(
-                                height: 340,
+                                // height: 440,
                                 decoration: BoxDecoration(
                                   border: Border.all(color: kWhite),
                                   color: fieldColor,
@@ -117,7 +121,7 @@ class ScreenHome extends StatelessWidget {
                                                     Text(
                                                       data.brand,
                                                       style: const TextStyle(
-                                                        fontSize: 24,
+                                                        fontSize: 22,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         color: kText,
@@ -131,7 +135,7 @@ class ScreenHome extends StatelessWidget {
                                                         overflow: TextOverflow
                                                             .ellipsis,
                                                         style: const TextStyle(
-                                                          fontSize: 24,
+                                                          fontSize: 22,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           color: kText,
@@ -145,8 +149,10 @@ class ScreenHome extends StatelessWidget {
 
                                               //<<<<<Price>>>>>//
                                               Chip(
-                                                avatar: const Icon(Icons
-                                                    .currency_rupee_rounded),
+                                                avatar: const Icon(
+                                                    Icons
+                                                        .currency_rupee_rounded,
+                                                    size: 18),
                                                 label: Text(
                                                   "${data.price} / day",
                                                   style: const TextStyle(
@@ -172,66 +178,152 @@ class ScreenHome extends StatelessWidget {
                                         ),
                                         kHeight05,
 
-                                        //<<<<<Details>>>>>//
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 10),
-                                          child: SizedBox(
-                                            height: 45,
-                                            child: ListView.separated(
-                                              shrinkWrap: true,
-                                              physics:
-                                                  const BouncingScrollPhysics(),
-                                              scrollDirection: Axis.horizontal,
-                                              itemCount: 1,
-                                              separatorBuilder:
-                                                  (context, index) => kWidth05,
-                                              itemBuilder: (context, index) =>
-                                                  Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  //
-                                                  //<<<<Seats>>>>//
-                                                  DetailChip(
-                                                    data,
-                                                    data.seats.toString(),
-                                                    Icons
-                                                        .airline_seat_recline_extra_sharp,
-                                                  ),
-                                                  kWidth10,
-
-                                                  //<<<<<Fuel>>>>>//
-                                                  DetailChip(
-                                                    data,
-                                                    data.fueltype.name,
-                                                    Icons
-                                                        .local_gas_station_rounded,
-                                                  ),
-                                                  kWidth10,
-
-                                                  //<<<<<Mileage>>>>>//
-                                                  DetailChip(
-                                                    data,
-                                                    "${data.mileage} / Km",
-                                                    CupertinoIcons.drop_fill,
-                                                  ),
-                                                  kWidth10,
-
-                                                  //<<<<<Location>>>>>//
-                                                  DetailChip(
-                                                    data,
-                                                    data.location,
-                                                    CupertinoIcons
-                                                        .map_pin_ellipse,
-                                                  ),
-                                                  kWidth10,
-                                                ],
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.white70
+                                                  .withOpacity(.8),
+                                              borderRadius: kRadius10,
+                                            ),
+                                            child: ExpansionTile(
+                                              trailing: CircleAvatar(
+                                                backgroundColor: kWhite,
+                                                child: Center(
+                                                  child: isExpanded == true
+                                                      ? const Icon(
+                                                          CupertinoIcons
+                                                              .chevron_down,
+                                                          color: kBlack,
+                                                        )
+                                                      : const Icon(
+                                                          CupertinoIcons
+                                                              .chevron_up,
+                                                          color: kBlack,
+                                                        ),
+                                                ),
                                               ),
+                                              title: const Text(
+                                                "Details",
+                                                style: TextStyle(
+                                                  color: kBlack,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 18,
+                                                  decoration: TextDecoration.underline,
+                                                ),
+                                              ),
+                                              children: [
+                                                DetailsTileWidget(
+                                                  data: data,
+                                                  title: "Location",
+                                                  subTitle: data.location,
+                                                  leadIcon: CupertinoIcons
+                                                      .map_pin_ellipse,
+                                                  tailIcon: CupertinoIcons
+                                                      .paperplane_fill,
+                                                ),
+                                                DetailsTileWidget(
+                                                    data: data,
+                                                    title: "Seats",
+                                                    subTitle:
+                                                        data.seats.toString(),
+                                                    leadIcon: Icons
+                                                        .airline_seat_recline_extra_sharp),
+                                                DetailsTileWidget(
+                                                    data: data,
+                                                    title: "Petrol",
+                                                    subTitle: data.fueltype.name
+                                                        .toString(),
+                                                    leadIcon: Icons
+                                                        .local_gas_station_rounded),
+                                                DetailsTileWidget(
+                                                    data: data,
+                                                    title: "Mileage",
+                                                    subTitle:
+                                                        "${data.mileage} kmpl",
+                                                    leadIcon: CupertinoIcons
+                                                        .drop_fill),
+                                                DetailsTileWidget(
+                                                    data: data,
+                                                    title: "Vehicel no",
+                                                    subTitle:
+                                                        data.regNo.toString(),
+                                                    leadIcon: CupertinoIcons
+                                                        .number_circle),
+                                                DetailsTileWidget(
+                                                    data: data,
+                                                    title: "Registred Date",
+                                                    subTitle: data.register
+                                                        .toString(),
+                                                    leadIcon: CupertinoIcons
+                                                        .calendar_today),
+                                              ],
                                             ),
                                           ),
                                         ),
+                                        kHeight10,
+
+                                        // //<<<<<Details>>>>>//
+                                        // Padding(
+                                        //   padding: const EdgeInsets.symmetric(
+                                        //       horizontal: 10),
+                                        //   child: SizedBox(
+                                        //     height: 45,
+                                        //     child: ListView.separated(
+                                        //       shrinkWrap: true,
+                                        //       physics:
+                                        //           const BouncingScrollPhysics(),
+                                        //       scrollDirection: Axis.horizontal,
+                                        //       itemCount: 1,
+                                        //       separatorBuilder:
+                                        //           (context, index) => kWidth05,
+                                        //       itemBuilder: (context, index) =>
+                                        //           Row(
+                                        //         mainAxisAlignment:
+                                        //             MainAxisAlignment
+                                        //                 .spaceBetween,
+                                        //         children: [
+                                        //           //
+                                        //           //<<<<<Location>>>>>//
+                                        //           DetailChip(
+                                        //             data,
+                                        //             data.location,
+                                        //             CupertinoIcons
+                                        //                 .map_pin_ellipse,
+                                        //           ),
+                                        //           kWidth10,
+
+                                        //           //<<<<Seats>>>>//
+                                        //           DetailChip(
+                                        //             data,
+                                        //             data.seats.toString(),
+                                        // Icons
+                                        //     .airline_seat_recline_extra_sharp,
+                                        //           ),
+                                        //           kWidth10,
+
+                                        //           //<<<<<Fuel>>>>>//
+                                        //           DetailChip(
+                                        //             data,
+                                        //             data.fueltype.name,
+                                        // Icons
+                                        //     .local_gas_station_rounded,
+                                        //           ),
+                                        //           kWidth10,
+
+                                        //           //<<<<<Mileage>>>>>//
+                                        //           DetailChip(
+                                        //             data,
+                                        //             "${data.mileage} / Km",
+                                        //             CupertinoIcons.drop_fill,
+                                        //           ),
+                                        //           kWidth10,
+                                        //         ],
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // ),
                                       ],
                                     )
                                   ],

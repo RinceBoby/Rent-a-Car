@@ -40,7 +40,7 @@ class BookingDetails extends StatelessWidget {
             style: TextStyle(
               color: kText,
               fontSize: 26,
-              fontWeight: FontWeight.bold,
+              // fontWeight: FontWeight.bold,
             ),
           ),
           actions: const [
@@ -146,7 +146,7 @@ class BookingDetails extends StatelessWidget {
                   Text(
                     title.toUpperCase(),
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: FontWeight.w600,
                       color: kGrey,
                     ),
@@ -155,7 +155,7 @@ class BookingDetails extends StatelessWidget {
                   Text(
                     subTitle,
                     style: const TextStyle(
-                      fontSize: 22,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: kBlack,
                     ),

@@ -3,6 +3,7 @@
 import 'package:carmarket/controllers/profile_controller.dart';
 import 'package:carmarket/core/constants/colors.dart';
 import 'package:carmarket/core/constants/dimensions.dart';
+import 'package:carmarket/models/local_storage/local_storage.dart';
 import 'package:carmarket/models/signup/profile_model.dart';
 import 'package:carmarket/view/profile/edit_profile.dart';
 import 'package:flutter/cupertino.dart';
@@ -122,8 +123,8 @@ class UserDetails extends StatelessWidget {
                           validator: (value) {
                             if (value!.isEmpty) {
                               return "Password required";
-                            } else if (value.length < 6) {
-                              return "Minimum 6 characters required";
+                            } else if (nPassController.text!=cnPassController.text) {
+                              return "Passwords doesn't match";
                             } else {
                               return null;
                             }
@@ -171,7 +172,10 @@ class UserDetails extends StatelessWidget {
                               ),
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            String? userId = GetLocalStorage.getUserIdAndToken("uId");
+                            ProfileModel profileModel = ProfileModel();
+                          },
                           child: const Text(
                             "Update",
                             style: TextStyle(

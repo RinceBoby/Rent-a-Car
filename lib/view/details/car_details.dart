@@ -63,8 +63,8 @@ class DetailsPage extends StatelessWidget {
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
                                         color: kText,
-                                        fontSize: 28,
-                                        fontWeight: FontWeight.bold,
+                                        fontSize: 26,
+                                        // fontWeight: FontWeight.bold,
                                         letterSpacing: 1,
                                       ),
                                     ),
@@ -75,8 +75,8 @@ class DetailsPage extends StatelessWidget {
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
                                           color: kText,
-                                          fontSize: 28,
-                                          fontWeight: FontWeight.bold,
+                                          fontSize: 26,
+                                          // fontWeight: FontWeight.bold,
                                           letterSpacing: 1,
                                         ),
                                       ),
@@ -126,162 +126,6 @@ class DetailsPage extends StatelessWidget {
                           ),
                           kHeight15,
 
-                          //<<<<<Location_Number_Date>>>>>//
-                          VehicleDetailsCard(size, "Vehicle Number", id.regNo),
-                          kHeight15,
-                          VehicleDetailsCard(
-                              size, "Registred Date", id.register),
-                          kHeight15,
-
-                          //<<<<<Booking_Date>>>>>//
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const TextInLine(
-                                  text: "Choose Your Booking Date", size: 22),
-                              kHeight10,
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  //<<<<<From>>>>>//
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Padding(
-                                        padding: EdgeInsets.only(left: 5),
-                                        child: Text(
-                                          "Start:",
-                                          style: TextStyle(
-                                            color: kGrey,
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                      ),
-                                      kHeight05,
-                                      InkWell(
-                                        onTap: () {
-                                          detailsController
-                                              .chooseDateRangePicker();
-                                        },
-                                        child: SizedBox(
-                                          width: size.width * .41,
-                                          child: Container(
-                                            height: 50,
-                                            decoration: BoxDecoration(
-                                              color: fieldColor,
-                                              borderRadius: kRadius20,
-                                            ),
-                                            child: Center(
-                                              child: Obx(
-                                                () {
-                                                  return Text(
-                                                    DateFormat("dd-MM-yyyy")
-                                                        .format(
-                                                            detailsController
-                                                                .dateRange
-                                                                .value
-                                                                .start)
-                                                        .toString(),
-                                                    style: const TextStyle(
-                                                      color: kWhite,
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-
-                                  //<<<<<To_Icon>>>>>//
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 20),
-                                    child: SizedBox(
-                                      width: size.width * .1,
-                                      child: const Icon(
-                                        CupertinoIcons.arrow_right_square_fill,
-                                        color: kWhite,
-                                      ),
-                                    ),
-                                  ),
-
-                                  //<<<<<Until>>>>>//
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Padding(
-                                        padding: EdgeInsets.only(left: 5),
-                                        child: Text(
-                                          "End:",
-                                          style: TextStyle(
-                                            color: kGrey,
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                      ),
-                                      kHeight05,
-                                      SizedBox(
-                                        width: size.width * .41,
-                                        child: Container(
-                                          height: 50,
-                                          decoration: BoxDecoration(
-                                            color: fieldColor,
-                                            borderRadius: kRadius20,
-                                          ),
-                                          child: Center(
-                                            child: Obx(() {
-                                              return Text(
-                                                DateFormat("dd-MM-yyyy")
-                                                    .format(detailsController
-                                                        .dateRange.value.end)
-                                                    .toString(),
-                                                style: const TextStyle(
-                                                  color: kWhite,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              );
-                                            }),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              kHeight15,
-                              Container(
-                                height: 50,
-                                width: size.width * .5,
-                                decoration: BoxDecoration(
-                                    color: fieldColor, borderRadius: kRadius20),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Obx(() {
-                                      return Text(
-                                        "Total Days: ${detailsController.totalDays()}",
-                                        style: const TextStyle(
-                                          color: kWhite,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      );
-                                    }),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          kHeight15,
-
                           //<<<<<Description>>>>>//
                           Container(
                             decoration: BoxDecoration(
@@ -322,6 +166,157 @@ class DetailsPage extends StatelessWidget {
                                 ],
                               ),
                             ),
+                          ),
+                          kHeight25,
+
+                          //<<<<<Booking_Date>>>>>//
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const TextInLine(
+                                  text: "Choose Your Booking Date", size: 22),
+                              kHeight20,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  //<<<<<From>>>>>//
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(left: 5),
+                                        child: Text(
+                                          "Start :",
+                                          style: TextStyle(
+                                            color: kGrey,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                      kHeight05,
+                                      InkWell(
+                                        onTap: () {
+                                          detailsController
+                                              .chooseDateRangePicker();
+                                        },
+                                        child: SizedBox(
+                                          width: size.width * .41,
+                                          child: Container(
+                                            height: 50,
+                                            decoration: BoxDecoration(
+                                              color: fieldColor,
+                                              borderRadius: kRadius20,
+                                            ),
+                                            child: Center(
+                                              child: Obx(
+                                                () {
+                                                  return Text(
+                                                    DateFormat("dd-MM-yyyy")
+                                                        .format(
+                                                            detailsController
+                                                                .dateRange
+                                                                .value
+                                                                .start)
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                      color: kWhite,
+                                                      fontSize: 20,
+                                                      // fontWeight:
+                                                      //     FontWeight.bold,
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+
+                                  //<<<<<To_Icon>>>>>//
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 20),
+                                    child: SizedBox(
+                                      width: size.width * .1,
+                                      child: const Icon(
+                                        CupertinoIcons.arrow_right_square_fill,
+                                        color: kWhite,
+                                      ),
+                                    ),
+                                  ),
+
+                                  //<<<<<Until>>>>>//
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(left: 5),
+                                        child: Text(
+                                          "End :",
+                                          style: TextStyle(
+                                            color: kGrey,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                      kHeight05,
+                                      SizedBox(
+                                        width: size.width * .41,
+                                        child: Container(
+                                          height: 50,
+                                          decoration: BoxDecoration(
+                                            color: fieldColor,
+                                            borderRadius: kRadius20,
+                                          ),
+                                          child: Center(
+                                            child: Obx(() {
+                                              return Text(
+                                                DateFormat("dd-MM-yyyy")
+                                                    .format(detailsController
+                                                        .dateRange.value.end)
+                                                    .toString(),
+                                                style: const TextStyle(
+                                                  color: kWhite,
+                                                  fontSize: 20,
+                                                  // fontWeight: FontWeight.bold,
+                                                ),
+                                              );
+                                            }),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              kHeight25,
+                              Container(
+                                height: 50,
+                                width: size.width * .5,
+                                decoration: BoxDecoration(
+                                    color: fieldColor, borderRadius: kRadius20),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Obx(() {
+                                      return Text(
+                                        "Total Days: ${detailsController.totalDays()}",
+                                        style: const TextStyle(
+                                          color: kWhite,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      );
+                                    }),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                           kHeight15,
                         ],
@@ -410,15 +405,13 @@ class DetailsPage extends StatelessWidget {
       ),
     );
   }
-
-  //
-  //
-  //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Methods>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
-  //
-  //
-
 }
 
+//
+//
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Methods>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+//
+//
 //Vehicle_Details_card//
 VehicleDetailsCard(
   Size size,
@@ -429,7 +422,7 @@ VehicleDetailsCard(
     height: 50,
     decoration: BoxDecoration(
       color: fieldColor,
-      borderRadius: kRadius30,
+      borderRadius: kRadius10,
     ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -456,15 +449,14 @@ VehicleDetailsCard(
           ),
         ),
         SizedBox(
-          width: size.width * .4,
+          width: size.width * .42,
           child: Text(
             ans,
             style: const TextStyle(
-              fontSize: 22,
+              fontSize: 18,
               color: kWhite,
-              fontWeight: FontWeight.bold,
+              // fontWeight: FontWeight.bold,
             ),
-            textAlign: TextAlign.center,
           ),
         ),
       ],

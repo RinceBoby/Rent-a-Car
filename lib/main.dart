@@ -17,14 +17,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String? token = GetLocalStorage.getUserIdAndToken("token");
-    
 
     return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.black,
-        textTheme: GoogleFonts.robotoFlexTextTheme(Theme.of(context).textTheme),
+        textTheme: GoogleFonts.montserratTextTheme(Theme.of(context).textTheme),
+        // textTheme: GoogleFonts.robotoFlexTextTheme(Theme.of(context).textTheme),
       ),
       home: token == null ? const OnBoardingPage() : const BottomNavBar(),
     );

@@ -140,3 +140,16 @@ class EnumValues<T> {
     return reverseMap!;
   }
 }
+
+
+class Employee {
+  Employee({
+    this.body,
+    this.header,
+    this.isExpanded,
+  });
+
+  String? body;
+  String? header;
+  bool? isExpanded;
+}
