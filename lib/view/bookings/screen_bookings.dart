@@ -1,5 +1,7 @@
 import 'package:carmarket/core/constants/colors.dart';
 import 'package:carmarket/core/constants/dimensions.dart';
+import 'package:carmarket/view/bookings/tabs/cancelled_bookings.dart';
+import 'package:carmarket/view/bookings/tabs/pending_bookings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,7 +26,7 @@ class Bookings extends StatelessWidget {
             style: TextStyle(
               color: kText,
               fontSize: 26,
-              fontWeight: FontWeight.bold,
+              // fontWeight: FontWeight.bold,
             ),
           ),
           actions: const [
@@ -40,7 +42,7 @@ class Bookings extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 5),
             labelStyle: GoogleFonts.philosopher(
               color: kText,
-              fontSize: 18,
+              fontSize: 21,
               fontWeight: FontWeight.bold,
             ),
             tabs: const [
@@ -52,15 +54,23 @@ class Bookings extends StatelessWidget {
         ),
         body: const TabBarView(
           children: [
-            Center(
-              child: Text(
-                "No Pending Trips",
-                style: TextStyle(
-                  color: kText,
-                  fontSize: 20,
-                ),
-              ),
-            ),
+            //
+            //<<<<<Pending>>>>>//
+            PendingBookings(),
+
+            // Center(
+            //   child: Text(
+            //     "No Pending Trips",
+            //     style: TextStyle(
+            //       color: kText,
+            //       fontSize: 20,
+            //     ),
+            //   ),
+            // ),
+
+            //<<<<<Completed>>>>>//
+            // CompletedBookings(),
+
             Center(
               child: Text(
                 "No Completed Trips",
@@ -70,15 +80,19 @@ class Bookings extends StatelessWidget {
                 ),
               ),
             ),
-            Center(
-              child: Text(
-                "No Cancelled Trips",
-                style: TextStyle(
-                  color: kText,
-                  fontSize: 20,
-                ),
-              ),
-            ),
+
+            //<<<<<Cancelled>>>>>//
+            CancelledBooking(),
+
+            // Center(
+            //   child: Text(
+            //     "No Cancelled Trips",
+            //     style: TextStyle(
+            //       color: kText,
+            //       fontSize: 20,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

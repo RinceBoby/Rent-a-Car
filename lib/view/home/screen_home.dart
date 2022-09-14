@@ -1,15 +1,14 @@
 import 'package:carmarket/controllers/car_controller.dart';
+import 'package:carmarket/controllers/home_controller.dart';
 import 'package:carmarket/controllers/profile_controller.dart';
 import 'package:carmarket/controllers/signup_controller.dart';
 import 'package:carmarket/models/car/car_model.dart';
-import 'package:carmarket/models/signup/profile_model.dart';
+import 'package:carmarket/models/profile/profile_model.dart';
 import 'package:carmarket/view/home/widget/details_tile.dart';
 import 'package:carmarket/view/login/widgets/line_text.dart';
 import 'package:carmarket/view/widgets/carousel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:get/get.dart';
 
 import '../../core/constants/colors.dart';
@@ -25,8 +24,12 @@ class ScreenHome extends StatelessWidget {
   Widget build(BuildContext context) {
     CarController carController = Get.put(CarController());
     SignupController signupController = Get.put(SignupController());
+
+    TextEditingController searchController = TextEditingController();
+
     final orientation = MediaQuery.of(context).orientation;
     final size = MediaQuery.of(context).size;
+
     bool isExpanded = true;
     return SafeArea(
       child: Scaffold(
@@ -56,6 +59,81 @@ class ScreenHome extends StatelessWidget {
                     ),
                     kHeight20,
 
+                    //<<<<<Search_Box>>>>>//
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          height: 50,
+                          width: size.width * .76,
+                          child: TextField(
+                            controller: searchController,
+                            // focusNode: fn1,
+                            autofocus: false,
+
+                            style: const TextStyle(color: kWhite),
+                            focusNode: FocusNode(),
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: fieldColor,
+                              hintText: "Search",
+                              hintStyle: const TextStyle(color: kGrey),
+                              border:
+                                  OutlineInputBorder(borderRadius: kRadius15),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(color: kWhite),
+                                borderRadius: kRadius15,
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(color: kWhite),
+                                borderRadius: kRadius15,
+                              ),
+                              focusColor: kWhite,
+                              suffixIcon: GestureDetector(
+                                      onTap: () {
+                                        searchController.clear();
+                                        carController
+                                            .getCars("/getcarData", "data")
+                                            .then((value) => carController
+                                                .allCars.value = value);
+                                      },
+                                      child: const Icon(
+                                        CupertinoIcons.clear_thick_circled,
+                                        color: kGrey,
+                                      ),
+                                    ),
+                            ),
+                            textCapitalization: TextCapitalization.words,
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            carController
+                                .getCars("/search", "data",
+                                    isSearch: true,
+                                    brand: searchController.text)
+                                .then((value) =>
+                                    carController.allCars.value = value);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: fieldColor,
+                            fixedSize: Size(size.width * .15, 50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: kRadius15,
+                            ),
+                            side: const BorderSide(color: kWhite),
+                          ),
+                          child: const Icon(
+                            CupertinoIcons.search,
+                            color: kGrey,
+                            size: 30,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    kHeight20,
+
                     //<<<<<Car_Card>>>>>//
                     Obx(() {
                       if (carController.loading.value) {
@@ -74,7 +152,7 @@ class ScreenHome extends StatelessWidget {
                             child: GestureDetector(
                               onTap: () {
                                 Get.to(
-                                  DetailsPage(id: data),
+                                  DetailsPage(id: data, carId: data.id),
                                 );
                               },
                               child: Container(
@@ -102,38 +180,24 @@ class ScreenHome extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    kHeight10,
-
-                                    //<<<<<Bottom>>>>>//
+                                    kHeight05,
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+                                        //
                                         //<<<<<Car_Name>>>>>//
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
-                                              horizontal: 20),
+                                              horizontal: 10),
                                           child: Row(
                                             children: [
                                               Expanded(
                                                 child: Row(
                                                   children: [
-                                                    Text(
-                                                      data.brand,
-                                                      style: const TextStyle(
-                                                        fontSize: 22,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: kText,
-                                                        letterSpacing: 1,
-                                                      ),
-                                                    ),
-                                                    kWidth05,
                                                     Flexible(
                                                       child: Text(
-                                                        data.model,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
+                                                        "${data.brand} ${data.model}",
                                                         style: const TextStyle(
                                                           fontSize: 22,
                                                           fontWeight:
@@ -141,6 +205,8 @@ class ScreenHome extends StatelessWidget {
                                                           color: kText,
                                                           letterSpacing: 1,
                                                         ),
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
                                                       ),
                                                     ),
                                                   ],
@@ -149,12 +215,8 @@ class ScreenHome extends StatelessWidget {
 
                                               //<<<<<Price>>>>>//
                                               Chip(
-                                                avatar: const Icon(
-                                                    Icons
-                                                        .currency_rupee_rounded,
-                                                    size: 18),
                                                 label: Text(
-                                                  "${data.price} / day",
+                                                  "₹ ${data.price} / day",
                                                   style: const TextStyle(
                                                     color: kBlack,
                                                     fontWeight: FontWeight.bold,
@@ -165,7 +227,6 @@ class ScreenHome extends StatelessWidget {
                                             ],
                                           ),
                                         ),
-                                        kHeight05,
 
                                         //<<<<<Divider>>>>>//
                                         const Padding(
@@ -178,6 +239,7 @@ class ScreenHome extends StatelessWidget {
                                         ),
                                         kHeight05,
 
+                                        //<<<<<Details>>>>>//
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 10),
@@ -208,9 +270,8 @@ class ScreenHome extends StatelessWidget {
                                                 "Details",
                                                 style: TextStyle(
                                                   color: kBlack,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 18,
-                                                  decoration: TextDecoration.underline,
+                                                  fontWeight: FontWeight.w900,
+                                                  fontSize: 20,
                                                 ),
                                               ),
                                               children: [
@@ -263,67 +324,6 @@ class ScreenHome extends StatelessWidget {
                                           ),
                                         ),
                                         kHeight10,
-
-                                        // //<<<<<Details>>>>>//
-                                        // Padding(
-                                        //   padding: const EdgeInsets.symmetric(
-                                        //       horizontal: 10),
-                                        //   child: SizedBox(
-                                        //     height: 45,
-                                        //     child: ListView.separated(
-                                        //       shrinkWrap: true,
-                                        //       physics:
-                                        //           const BouncingScrollPhysics(),
-                                        //       scrollDirection: Axis.horizontal,
-                                        //       itemCount: 1,
-                                        //       separatorBuilder:
-                                        //           (context, index) => kWidth05,
-                                        //       itemBuilder: (context, index) =>
-                                        //           Row(
-                                        //         mainAxisAlignment:
-                                        //             MainAxisAlignment
-                                        //                 .spaceBetween,
-                                        //         children: [
-                                        //           //
-                                        //           //<<<<<Location>>>>>//
-                                        //           DetailChip(
-                                        //             data,
-                                        //             data.location,
-                                        //             CupertinoIcons
-                                        //                 .map_pin_ellipse,
-                                        //           ),
-                                        //           kWidth10,
-
-                                        //           //<<<<Seats>>>>//
-                                        //           DetailChip(
-                                        //             data,
-                                        //             data.seats.toString(),
-                                        // Icons
-                                        //     .airline_seat_recline_extra_sharp,
-                                        //           ),
-                                        //           kWidth10,
-
-                                        //           //<<<<<Fuel>>>>>//
-                                        //           DetailChip(
-                                        //             data,
-                                        //             data.fueltype.name,
-                                        // Icons
-                                        //     .local_gas_station_rounded,
-                                        //           ),
-                                        //           kWidth10,
-
-                                        //           //<<<<<Mileage>>>>>//
-                                        //           DetailChip(
-                                        //             data,
-                                        //             "${data.mileage} / Km",
-                                        //             CupertinoIcons.drop_fill,
-                                        //           ),
-                                        //           kWidth10,
-                                        //         ],
-                                        //       ),
-                                        //     ),
-                                        //   ),
-                                        // ),
                                       ],
                                     )
                                   ],
@@ -392,24 +392,16 @@ class ScreenHome extends StatelessWidget {
               style: const TextStyle(
                 color: kText,
                 fontSize: 23,
-                fontWeight: FontWeight.bold,
               ),
             ),
           ],
         );
       }),
       actions: [
-        IconButton(
-          onPressed: () {},
-          icon: Icon(
-            CupertinoIcons.search,
-            color: kWhite.withOpacity(.8),
-            size: 32,
-          ),
-        ),
-        kWidth05,
         GestureDetector(
-          onTap: () => Get.to(const Wishlist()),
+          onTap: () {
+            Get.to(const Wishlist());
+          },
           child: CircleAvatar(
             radius: 15,
             backgroundColor: Colors.transparent,

@@ -3,39 +3,39 @@
 import 'package:carmarket/models/local_storage/local_storage.dart';
 import 'package:carmarket/models/wishlist/wishlist_model.dart';
 import 'package:carmarket/services/wishlist/wishlist_service.dart';
-import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
 class WishlistController extends GetxController {
-  List<WishlistModel> allWishlist = [];
+  List<String> wishlistCar = [];
+
+  String? userId = GetLocalStorage.getUserIdAndToken('uId');
 
   RxBool loading = true.obs;
-  RxBool isWish = false.obs;
+  // RxBool isWish = false.obs;
   //
   //<<<<<Add_To_Wishlist>>>>>//
-  Future addToWishlistItem({required String carId, required String uId}) async {
+  Future addToWishlistItem(String carId, String uId) async {
     try {
-      var data = await WishlistServices.addToWishlist(carId: carId, uId: uId);
-      isWish.value = true;
-      return data!;
+      var response =
+          await WishlistServices.addToWishlist(carId: carId, uId: uId);
+      // isWish.value = true;
+      return response;
     } catch (e) {
       print(e);
-      isWish.value = false;
+      // isWish.value = false;
     }
-    return allWishlist;
   }
 
   //<<<<<Remove_From_Wishlist>>>>>//
-  Future removeFromWishlistItem(
-      {required String carId, required String uId}) async {
-    //  isWish.value = true;
+  Future removeFromWishlistItem(String carId, String uId) async {
+    // isWish.value = true;
     try {
-      var data =
+      var response =
           await WishlistServices.removeFromWishlist(carId: carId, uId: uId);
-      isWish.value = false;
-      return data;
+      // isWish.value = false;
+      return response;
     } catch (e) {
-      isWish.value = true;
+      // isWish.value = true;
       print(e);
     }
   }
@@ -48,27 +48,33 @@ class WishlistController extends GetxController {
       loading.value = false;
       print(data);
       return data!;
-    } on DioError catch (e) {
-      print("Dio Error");
-      print(e.error);
-      print(e.response!.data);
+    } catch (e) {
+      print(e);
       loading.value = false;
 
       return [];
     }
   }
 
-  @override
-  void onInit() {
-    var value = GetLocalStorage.getUserIdAndToken("uId");
-    getWishListData(value!).then((value) {
-      print("abcd");
-      print(value);
-      allWishlist = value;
-    });
-    print("all wish list");
-    print(allWishlist);
-    super.onInit();
-    update();
+  Future getWishListDetails({required String userId}) async {
+    try {
+      var wishListData = await WishlistServices.getWishListData(userId: userId);
+    } catch (e) {
+      print(e);
+    }
   }
+
+  // @override
+  // void onInit() {
+  //   var value = GetLocalStorage.getUserIdAndToken("uId");
+  //   getWishListData(value!).then((value) {
+  //     print("abcd");
+  //     print(value);
+  //     allWishlist = value;
+  //   });
+  //   print("all wish list");
+  //   print(allWishlist);
+  //   super.onInit();
+  //   update();
+  // }
 }

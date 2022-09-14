@@ -1,4 +1,3 @@
-
 import 'package:carmarket/controllers/car_controller.dart';
 import 'package:carmarket/controllers/signup_controller.dart';
 import 'package:carmarket/core/constants/colors.dart';
@@ -66,9 +65,8 @@ class fab_SpeedDial extends StatelessWidget {
                       //<<<<<L2H>>>>>//
                       ElevatedButton.icon(
                         onPressed: () {
-                          carController
-                              .getCars("/lowtohigh", "sort")
-                              .then((value) => carController.allCars = value);
+                          carController.getCars("/lowtohigh", "sort").then(
+                              (value) => carController.allCars.value = value);
                           Get.back();
                         },
                         style: ElevatedButton.styleFrom(
@@ -96,9 +94,8 @@ class fab_SpeedDial extends StatelessWidget {
                       //<<<<<H2L>>>>>//
                       ElevatedButton.icon(
                         onPressed: () {
-                          carController
-                              .getCars("/hightolow", "sorttwo")
-                              .then((value) => carController.allCars = value);
+                          carController.getCars("/hightolow", "sorttwo").then(
+                              (value) => carController.allCars.value = value);
                           Get.back();
                         },
                         style: ElevatedButton.styleFrom(
@@ -185,12 +182,17 @@ class fab_SpeedDial extends StatelessWidget {
                         itemCount: signupController.districtItems.length,
                         itemBuilder: (context, index) => Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
+                          
                           child: InkWell(
                             onTap: () {
+                              
+                              // var place = signupController.dropdownValueChanging(newValue!, checkingValue);
+                              // carController.sortCarData(place: place);
+
                               carController
                                   .getCars("/searchdistrict", "place")
-                                  .then(
-                                      (value) => carController.allCars = value);
+                                  .then((value) =>
+                                      carController.allCars.value = value);
                               Get.back();
                             },
                             child: Container(

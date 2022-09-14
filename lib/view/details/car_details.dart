@@ -2,7 +2,9 @@ import 'package:carmarket/controllers/car_details_controller.dart';
 import 'package:carmarket/controllers/wishlist_controller.dart';
 import 'package:carmarket/core/constants/colors.dart';
 import 'package:carmarket/core/constants/dimensions.dart';
+import 'package:carmarket/models/booking/booking_model.dart';
 import 'package:carmarket/models/car/car_model.dart';
+import 'package:carmarket/services/booking/booking_service.dart';
 import 'package:carmarket/view/bookings/booking_details.dart';
 import 'package:carmarket/view/login/widgets/line_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,14 +17,18 @@ import '../../models/local_storage/local_storage.dart';
 
 class DetailsPage extends StatelessWidget {
   carDetails id;
-  DetailsPage({required this.id, Key? key}) : super(key: key);
+  String carId;
+  DetailsPage({required this.id, required this.carId, Key? key})
+      : super(key: key);
 
   WishlistController wishlistController = Get.put(WishlistController());
 
   @override
   Widget build(BuildContext context) {
     // CarController carController = Get.find<CarController>();
-    DetailsController detailsController = Get.put(DetailsController());
+
+    DetailsController detailsController =
+        Get.put(DetailsController(carId: carId));
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -53,25 +59,16 @@ class DetailsPage extends StatelessWidget {
                             ),
                           ),
                           kHeight20,
+
+                          //<<<<<Car_Name>>>>>//
                           Row(
                             children: [
                               Expanded(
                                 child: Row(
                                   children: [
-                                    Text(
-                                      id.brand,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                        color: kText,
-                                        fontSize: 26,
-                                        // fontWeight: FontWeight.bold,
-                                        letterSpacing: 1,
-                                      ),
-                                    ),
-                                    kWidth05,
                                     Flexible(
                                       child: Text(
-                                        id.model,
+                                        "${id.brand} ${id.model}",
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
                                           color: kText,
@@ -88,38 +85,39 @@ class DetailsPage extends StatelessWidget {
                               //<<<<<Fav_Icon>>>>>//
                               Obx(
                                 () {
-                                  final userId =
-                                      GetLocalStorage.getUserIdAndToken("uId");
+                                  List wishList =
+                                      detailsController.wishlistId!.value;
 
-                                  return wishlistController.isWish.value != true
-                                      ? IconButton(
-                                          onPressed: () {
-                                            wishlistController
-                                                .addToWishlistItem(
-                                              carId: id.id,
-                                              uId: userId!,
-                                            );
-                                          },
-                                          icon: const Icon(
+                                  bool isWish = wishList
+                                      .any((element) => element == carId);
+
+                                  return IconButton(
+                                    onPressed: () {
+                                      String? userId =
+                                          GetLocalStorage.getUserIdAndToken(
+                                              'uId');
+
+                                      if (!isWish) {
+                                        wishlistController.addToWishlistItem(
+                                            id.id, userId!);
+                                      } else {
+                                        wishlistController
+                                            .removeFromWishlistItem(
+                                                id.id, userId!);
+                                      }
+                                    },
+                                    icon: isWish
+                                        ? const Icon(
+                                            CupertinoIcons.heart_solid,
+                                            color: kRed,
+                                            size: 32,
+                                          )
+                                        : const Icon(
                                             CupertinoIcons.heart,
                                             color: kWhite,
                                             size: 32,
                                           ),
-                                        )
-                                      : IconButton(
-                                          onPressed: () {
-                                            wishlistController
-                                                .removeFromWishlistItem(
-                                              carId: id.id,
-                                              uId: userId!,
-                                            );
-                                          },
-                                          icon: const Icon(
-                                            CupertinoIcons.heart_solid,
-                                            color: kRed,
-                                            size: 32,
-                                          ),
-                                        );
+                                  );
                                 },
                               ),
                             ],
@@ -169,7 +167,7 @@ class DetailsPage extends StatelessWidget {
                           ),
                           kHeight25,
 
-                          //<<<<<Booking_Date>>>>>//
+                          //<<<<<Booking_Dates>>>>>//
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -179,6 +177,7 @@ class DetailsPage extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
+                                  //
                                   //<<<<<From>>>>>//
                                   Column(
                                     crossAxisAlignment:
@@ -223,8 +222,6 @@ class DetailsPage extends StatelessWidget {
                                                     style: const TextStyle(
                                                       color: kWhite,
                                                       fontSize: 20,
-                                                      // fontWeight:
-                                                      //     FontWeight.bold,
                                                     ),
                                                   );
                                                 },
@@ -283,7 +280,6 @@ class DetailsPage extends StatelessWidget {
                                                 style: const TextStyle(
                                                   color: kWhite,
                                                   fontSize: 20,
-                                                  // fontWeight: FontWeight.bold,
                                                 ),
                                               );
                                             }),
@@ -295,6 +291,8 @@ class DetailsPage extends StatelessWidget {
                                 ],
                               ),
                               kHeight25,
+
+                              //<<<<<Total_Days>>>>>//
                               Container(
                                 height: 50,
                                 width: size.width * .5,
@@ -338,22 +336,11 @@ class DetailsPage extends StatelessWidget {
                     height: 60,
                     child: Row(
                       children: [
-                        //<<<<<Rent_Per_day>>>>>//
+                        //<<<<<Total_Amount>>>>>//
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Obx(
-                            //   () {
-                            //     return detailsController.isBooked.value != true
-                            //         ? const Text(
-                            //             "Rent per Day",
-                            //             style: TextStyle(
-                            //               color: kText,
-                            //               fontSize: 16,
-                            //             ),
-                            //           )
-                            //         :
                             const Text(
                               "Total amount",
                               style: TextStyle(
@@ -361,7 +348,6 @@ class DetailsPage extends StatelessWidget {
                                 fontSize: 16,
                               ),
                             ),
-
                             Obx(() {
                               return Text(
                                 "₹ ${id.price * detailsController.totalDays()}",
@@ -378,14 +364,43 @@ class DetailsPage extends StatelessWidget {
 
                         //<<<<<Book_Now>>>>//
                         ElevatedButton(
-                          onPressed: () => Get.to(BookingDetails(
-                            cars: id,
-                          )),
                           style: ElevatedButton.styleFrom(
-                              primary: kWhite,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: kRadius30),
-                              fixedSize: Size(size.width * .5, 50)),
+                            primary: kWhite,
+                            shape:
+                                RoundedRectangleBorder(borderRadius: kRadius30),
+                            fixedSize: Size(size.width * .5, 50),
+                          ),
+                          onPressed: () {
+                            if (detailsController.totalDays() == 0) {
+                              Get.snackbar(
+                                "Warning",
+                                "Pick a date to book.",
+                                backgroundColor: kWhite,
+                              );
+                              return;
+                            }
+                            carDetails carModel =
+                                detailsController.carDetail.value!;
+                            var date = detailsController.dateRange.value;
+                            BookingServices.bookCarService(
+                              carModel.id,
+                              "${date.start}",
+                              "${date.end}",
+                            );
+
+                            BookingModel bookingModelDetails = BookingModel(
+                              carName: "${carModel.brand}${carModel.model}",
+                              id: carModel.id,
+                              tripStart: "${date.start}",
+                              tripEnd: "${date.end}",
+                              amount:
+                                  "${carModel.price * detailsController.totalDays()}",
+                              location: carModel.location,
+                            );
+
+                            Get.to(BookingDetails(
+                                bookingModel: bookingModelDetails));
+                          },
                           child: const Text(
                             "Book Now",
                             style: TextStyle(

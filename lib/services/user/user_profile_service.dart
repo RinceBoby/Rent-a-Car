@@ -1,7 +1,9 @@
 // ignore_for_file: avoid_print
 
+import 'package:carmarket/controllers/profile_controller.dart';
+import 'package:carmarket/core/constants/colors.dart';
 import 'package:carmarket/models/local_storage/local_storage.dart';
-import 'package:carmarket/models/signup/profile_model.dart';
+import 'package:carmarket/models/profile/profile_model.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
@@ -11,8 +13,8 @@ class UserProfileService {
   static Dio dio = DioClient.dio;
 
   //<<<<<Fetch_User_Details>>>>>//
-  static Future<ProfileModel?> getUserProfileData() async {
-    String? userId = GetLocalStorage.getUserIdAndToken("uId");
+  static Future<ProfileModel?> getUserProfileData(String userId) async {
+    // String? userId = GetLocalStorage.getUserIdAndToken("uId");
 
     try {
       var response = await dio.get("/getprofileuserdata/$userId");
@@ -27,10 +29,11 @@ class UserProfileService {
     }
   }
 
-  //<<<<<Edit_Profile_Datas>>>>>//
+  //<<<<<Edit_Profile_Data>>>>>//
   static Future<ProfileModel?> updateUserProfileData(
-      ProfileModel profileModelData) async {
-    String? userId = GetLocalStorage.getUserIdAndToken('uId');
+      ProfileModel profileModelData, String userId) async {
+    ProfileController profileController = Get.find<ProfileController>();
+    // String? userId = GetLocalStorage.getUserIdAndToken('uId');
 
     Map<String, dynamic> headers = {
       "Content-type": "application/json",
@@ -54,9 +57,13 @@ class UserProfileService {
         options: Options(followRedirects: false, headers: headers),
       );
 
-      ProfileModel updatedProfileModel = ProfileModel.fromJson(response.data);
+      ProfileModel? updatedProfileModel = await profileController.getUserProfileData(userId);
 
-      Get.snackbar("Success", response.data['message']);
+      Get.snackbar(
+        "Success",
+        response.data['message'],
+        backgroundColor: kWhite,
+      );
       return updatedProfileModel;
       //
     } on DioError catch (e) {
@@ -64,7 +71,11 @@ class UserProfileService {
       print(e.error);
       print(e.response!.statusMessage);
 
-      Get.snackbar("Warning", e.response!.data['message']);
+      Get.snackbar(
+        "Warning",
+        e.response!.data['message'],
+        backgroundColor: kWhite,
+      );
       return null;
     }
   }
@@ -85,11 +96,15 @@ class UserProfileService {
         data: {'password': newPassword},
         options: Options(followRedirects: false, headers: headers),
       );
+      print(response.data);
+      Get.snackbar(
+        "Success",
+        response.data['message'],
+        backgroundColor: kWhite,
+      );
 
-      Get.snackbar("Success", response.data['message']);
+      // return response.data;
 
-      return response.data;
-      
     } on DioError catch (e) {
       print(e);
       print(e.response!.statusMessage);

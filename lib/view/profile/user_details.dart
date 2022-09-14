@@ -4,7 +4,8 @@ import 'package:carmarket/controllers/profile_controller.dart';
 import 'package:carmarket/core/constants/colors.dart';
 import 'package:carmarket/core/constants/dimensions.dart';
 import 'package:carmarket/models/local_storage/local_storage.dart';
-import 'package:carmarket/models/signup/profile_model.dart';
+import 'package:carmarket/models/profile/profile_model.dart';
+import 'package:carmarket/services/user/user_profile_service.dart';
 import 'package:carmarket/view/profile/edit_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class UserDetails extends StatelessWidget {
     TextEditingController nPassController = TextEditingController();
     TextEditingController cnPassController = TextEditingController();
     ProfileController profileController = Get.put(ProfileController());
+    ProfileModel? userData = profileController.profileModel.value;
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -29,7 +31,6 @@ class UserDetails extends StatelessWidget {
           style: TextStyle(
             color: kText,
             fontSize: 26,
-            fontWeight: FontWeight.bold,
           ),
         ),
         actions: [
@@ -63,11 +64,12 @@ class UserDetails extends StatelessWidget {
             ],
             onSelected: (value) {
               if (value == 0) {
-                print("Edit profile clicked");
+                print("Edit profile clicked"); //<<<<<Edit_Profile>>>>>//
                 //
-                Get.to(EditUserProfile());
+                Get.to(EditUserProfile(fieldDetail: userData!));
+                //
               } else if (value == 1) {
-                print("Reset Password clicked");
+                print("Reset Password clicked"); //<<<<<Password>>>>>//
                 //
                 Get.defaultDialog(
                   barrierDismissible: false,
@@ -123,7 +125,8 @@ class UserDetails extends StatelessWidget {
                           validator: (value) {
                             if (value!.isEmpty) {
                               return "Password required";
-                            } else if (nPassController.text!=cnPassController.text) {
+                            } else if (nPassController.text !=
+                                cnPassController.text) {
                               return "Passwords doesn't match";
                             } else {
                               return null;
@@ -173,8 +176,15 @@ class UserDetails extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            String? userId = GetLocalStorage.getUserIdAndToken("uId");
-                            ProfileModel profileModel = ProfileModel();
+                            String? userId =
+                                GetLocalStorage.getUserIdAndToken("uId");
+                            ProfileModel profileModel =
+                                ProfileModel(password: nPassController.text);
+                            print(profileModel.password);
+                            UserProfileService.resetPassword(
+                                profileModel, nPassController.text);
+
+                            Get.back();
                           },
                           child: const Text(
                             "Update",
@@ -318,7 +328,7 @@ class UserDetails extends StatelessWidget {
               title,
               style: const TextStyle(
                 color: kGrey,
-                fontSize: 22,
+                fontSize: 20,
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -340,7 +350,6 @@ class UserDetails extends StatelessWidget {
               style: const TextStyle(
                 color: kWhite,
                 fontSize: 22,
-                fontWeight: FontWeight.bold,
               ),
             ),
           ),

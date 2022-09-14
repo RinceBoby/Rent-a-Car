@@ -1,7 +1,7 @@
 import 'package:carmarket/core/constants/colors.dart';
-import 'package:carmarket/view/chat/chats.dart';
+import 'package:carmarket/view/chat/screen_chats.dart';
 import 'package:carmarket/view/home/screen_home.dart';
-import 'package:carmarket/view/profile/screen_profile.dart';
+import 'package:carmarket/view/settings/screen_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';

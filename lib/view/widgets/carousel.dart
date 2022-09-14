@@ -59,7 +59,8 @@ class _CarCarouselState extends State<CarCarousel> {
   ) =>
       Container(
         width: size.width * .95,
-        color: kGrey,
+        decoration: BoxDecoration(borderRadius: kRadius05),
+        // color: kGrey,
         child: Image.network(
           urlImage,
           fit: BoxFit.cover,

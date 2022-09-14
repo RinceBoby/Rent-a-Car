@@ -24,7 +24,7 @@ class Inbox extends StatelessWidget {
             style: TextStyle(
               color: kText,
               fontSize: 26,
-              fontWeight: FontWeight.bold,
+              // fontWeight: FontWeight.bold,
             ),
           ),
           actions: const [

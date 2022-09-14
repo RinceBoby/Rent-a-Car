@@ -1,6 +1,12 @@
+import 'package:carmarket/controllers/car_details_controller.dart';
 import 'package:carmarket/controllers/wishlist_controller.dart';
 import 'package:carmarket/core/constants/colors.dart';
 import 'package:carmarket/core/constants/dimensions.dart';
+import 'package:carmarket/models/car/car_model.dart';
+import 'package:carmarket/models/local_storage/local_storage.dart';
+import 'package:carmarket/models/wishlist/wishlist_model.dart';
+import 'package:carmarket/services/wishlist/wishlist_service.dart';
+import 'package:carmarket/view/details/car_details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +17,7 @@ class Wishlist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
+    String? userId = GetLocalStorage.getUserIdAndToken('uId');
     WishlistController wishlistController = Get.put(WishlistController());
     return SafeArea(
       child: Scaffold(
@@ -21,7 +28,6 @@ class Wishlist extends StatelessWidget {
             style: TextStyle(
               color: kText,
               fontSize: 26,
-              fontWeight: FontWeight.bold,
             ),
           ),
           actions: const [
@@ -39,6 +45,7 @@ class Wishlist extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Obx(
               () {
                 if (wishlistController.loading.value) {
@@ -46,7 +53,7 @@ class Wishlist extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   );
                 }
-                if (wishlistController.allWishlist.isEmpty) {
+                if (wishlistController.wishlistCar.isEmpty) {
                   return const Center(
                     child: Padding(
                       padding: EdgeInsets.only(top: 350),
@@ -62,7 +69,7 @@ class Wishlist extends StatelessWidget {
                   );
                 }
                 return GridView.builder(
-                  itemCount: 10,
+                  itemCount: wishlistController.wishlistCar.length,
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -73,6 +80,10 @@ class Wishlist extends StatelessWidget {
                         (orientation == Orientation.portrait) ? 2 : 4,
                   ),
                   itemBuilder: (context, index) {
+                    WishlistModel wishItems = WishlistModel();
+
+                    var wishData = wishlistController.wishlistCar[index];
+
                     return Container(
                       height: 200,
                       decoration: BoxDecoration(
@@ -90,9 +101,7 @@ class Wishlist extends StatelessWidget {
                                 topRight: Radius.circular(10),
                               ),
                               image: DecorationImage(
-                                image: NetworkImage(
-                                  wishlistController.allWishlist[index].imgUrl!,
-                                ),
+                                image: NetworkImage(wishItems.imgUrl!),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -101,7 +110,7 @@ class Wishlist extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 10),
                             child: Text(
-                              wishlistController.allWishlist[index].brand!,
+                              wishItems.brand!,
                               style: const TextStyle(
                                 color: kWhite,
                                 fontWeight: FontWeight.bold,
@@ -116,7 +125,7 @@ class Wishlist extends StatelessWidget {
                               ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
-                                  fixedSize: const Size(75, 40),
+                                  fixedSize: const Size(72, 40),
                                 ),
                                 child: const Text(
                                   "VIEW",
@@ -128,10 +137,20 @@ class Wishlist extends StatelessWidget {
                               kWidth05,
                               //<<<<<Remove>>>>>//
                               ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  String? userId =
+                                      GetLocalStorage.getUserIdAndToken('uId');
+                                  wishlistController.removeFromWishlistItem(
+                                      wishItems.id!, userId!);
+                                  Get.snackbar(
+                                    "Message",
+                                    "Removed successfully",
+                                    backgroundColor: kWhite,
+                                  );
+                                },
                                 style: ElevatedButton.styleFrom(
                                   primary: kRed,
-                                  fixedSize: const Size(90, 40),
+                                  fixedSize: const Size(92, 40),
                                 ),
                                 child: const Text(
                                   "REMOVE",

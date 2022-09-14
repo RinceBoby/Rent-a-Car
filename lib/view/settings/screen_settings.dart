@@ -27,7 +27,7 @@ class Profile extends StatelessWidget {
           style: TextStyle(
             color: kText,
             fontSize: 26,
-            fontWeight: FontWeight.bold,
+            // fontWeight: FontWeight.bold,
           ),
         ),
         actions: const [
@@ -117,7 +117,7 @@ class Profile extends StatelessWidget {
                                           "Logout",
                                           style: TextStyle(
                                             color: kRed,
-                                            fontSize: 22,
+                                            fontSize: 20,
                                           ),
                                         ),
                                       ],
@@ -170,19 +170,19 @@ class Profile extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: size.width * .5,
+            width: size.width * .52,
             child: Text(
               text,
               style: const TextStyle(
                 color: kText,
-                fontSize: 22,
+                fontSize: 20,
               ),
             ),
           ),
           GestureDetector(
             onTap: trailOnTap,
             child: SizedBox(
-              width: size.width * .15,
+              width: size.width * .13,
               child: const Icon(
                 CupertinoIcons.chevron_forward,
                 color: kText,

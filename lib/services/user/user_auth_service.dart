@@ -1,7 +1,8 @@
 // ignore_for_file: avoid_print
 
+import 'package:carmarket/core/constants/colors.dart';
 import 'package:carmarket/models/local_storage/local_storage.dart';
-import 'package:carmarket/models/signup/profile_model.dart';
+import 'package:carmarket/models/profile/profile_model.dart';
 import 'package:carmarket/services/dio/dio_client.dart';
 import 'package:carmarket/view/home/bottom_nav.dart';
 import 'package:dio/dio.dart';
@@ -32,6 +33,11 @@ class UserAuthServices {
       GetLocalStorage.saveToken(user);
 
       Get.offAll(const BottomNavBar());
+      Get.snackbar(
+        "Success",
+        "Succefully logged in.",
+        backgroundColor: kWhite,
+      );
       return "success";
 
       //<<<<<Dio_Error>>>>>//
@@ -40,9 +46,18 @@ class UserAuthServices {
       print(e.response!.data);
       print(e.response!.statusMessage);
 
-      Get.snackbar('Warning', e.response!.data['message']);
+      Get.snackbar(
+        'Warning',
+        e.response!.data['message'],
+        backgroundColor: kWhite,
+      );
 
       if (e.type == DioErrorType.other) {
+        Get.snackbar(
+          'Warning',
+          'No internet connection.',
+          backgroundColor: kWhite,
+        );
         print("no internet");
         return "No internet connection";
       }
@@ -118,7 +133,11 @@ class UserAuthServices {
       print("Success");
       print(response.data);
 
-      Get.snackbar("Success", response.data["messagge"]);
+      Get.snackbar(
+        "Success",
+        response.data["messagge"],
+        backgroundColor: kWhite,
+      );
       return "success";
       //
       //<<<<<Dio_Error>>>>>//
@@ -128,7 +147,11 @@ class UserAuthServices {
       print(e.response!.data);
       print(e.response!.statusMessage);
 
-      Get.snackbar('Warning', e.response!.data['message']);
+      Get.snackbar(
+        'Warning',
+        e.response!.data['message'],
+        backgroundColor: kWhite,
+      );
 
       if (e.type == DioErrorType.other) {
         print("no internet");
