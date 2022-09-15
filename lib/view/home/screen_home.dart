@@ -90,18 +90,18 @@ class ScreenHome extends StatelessWidget {
                               ),
                               focusColor: kWhite,
                               suffixIcon: GestureDetector(
-                                      onTap: () {
-                                        searchController.clear();
-                                        carController
-                                            .getCars("/getcarData", "data")
-                                            .then((value) => carController
-                                                .allCars.value = value);
-                                      },
-                                      child: const Icon(
-                                        CupertinoIcons.clear_thick_circled,
-                                        color: kGrey,
-                                      ),
-                                    ),
+                                onTap: () {
+                                  searchController.clear();
+                                  carController
+                                      .getCars("/getcarData", "data")
+                                      .then((value) =>
+                                          carController.allCars.value = value);
+                                },
+                                child: const Icon(
+                                  CupertinoIcons.clear_thick_circled,
+                                  color: kGrey,
+                                ),
+                              ),
                             ),
                             textCapitalization: TextCapitalization.words,
                           ),
@@ -250,22 +250,22 @@ class ScreenHome extends StatelessWidget {
                                               borderRadius: kRadius10,
                                             ),
                                             child: ExpansionTile(
-                                              trailing: CircleAvatar(
-                                                backgroundColor: kWhite,
-                                                child: Center(
-                                                  child: isExpanded == true
-                                                      ? const Icon(
-                                                          CupertinoIcons
-                                                              .chevron_down,
-                                                          color: kBlack,
-                                                        )
-                                                      : const Icon(
-                                                          CupertinoIcons
-                                                              .chevron_up,
-                                                          color: kBlack,
-                                                        ),
-                                                ),
-                                              ),
+                                              // trailing: CircleAvatar(
+                                              //   backgroundColor: kWhite,
+                                              //   child: Center(
+                                              //     child: isExpanded == true
+                                              //         ? const Icon(
+                                              //             CupertinoIcons
+                                              //                 .chevron_down,
+                                              //             color: kBlack,
+                                              //           )
+                                              //         : const Icon(
+                                              //             CupertinoIcons
+                                              //                 .chevron_up,
+                                              //             color: kBlack,
+                                              //           ),
+                                              //   ),
+                                              // ),
                                               title: const Text(
                                                 "Details",
                                                 style: TextStyle(

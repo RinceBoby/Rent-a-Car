@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 
 import '../../models/local_storage/local_storage.dart';
 
-class PaymetService {
+class PaymentService {
   static Future razorpayService() async {
     String? userId = GetLocalStorage.getUserIdAndToken('uId');
 
@@ -23,6 +23,7 @@ class PaymetService {
     }
   }
 
+  //<<<<<Razorpay_Success>>>>>//
   static Future razorpaySuccess(BookingModel bookingModel) async {
     String? userId = GetLocalStorage.getUserIdAndToken('uId');
     String? userName = GetLocalStorage.getUserIdAndToken('name');
@@ -34,16 +35,19 @@ class PaymetService {
       'USERNAME': userName,
       'amount': bookingModel.amount,
       'carName': bookingModel.carName,
-      'start': bookingModel.tripStart,
       'end': bookingModel.tripEnd,
+      'start': bookingModel.tripStart,
     };
 
     try {
       var response = await DioClient.dio.post(
-        '/razorpaysucess/${bookingModel.id}',
+        '/razorpaysuccess/${bookingModel.id!}',
         data: jsonEncode(payload),
       );
+      print("sdhfgbjkhsbdfvkasv");
+
       Get.offAll(const BottomNavBar());
+
       return response.data;
     } on DioError catch (e) {
       print(e.error);

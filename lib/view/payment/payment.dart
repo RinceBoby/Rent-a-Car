@@ -16,19 +16,19 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'razor_credentials.dart' as razorCredentials;
 
-class PaymentScreen extends StatefulWidget {
-  PaymentScreen({required this.bookingModel, Key? key}) : super(key: key);
+class RazorPay extends StatefulWidget {
+  RazorPay({required this.bookingModel, Key? key}) : super(key: key);
 
   BookingModel bookingModel;
 
   @override
-  State<PaymentScreen> createState() => _PaymentScreenState();
+  State<RazorPay> createState() => _RazorPayState();
 }
 
-ProfileController profileController = Get.find<ProfileController>();
+ProfileController profileController = Get.put(ProfileController());
 
-class _PaymentScreenState extends State<PaymentScreen> {
-  carDetails? id;
+class _RazorPayState extends State<RazorPay> {
+  // carDetails? id;
 
   final _razorpay = Razorpay();
 
@@ -49,29 +49,26 @@ class _PaymentScreenState extends State<PaymentScreen> {
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     // Do something when payment succeeds
     print(response);
+    print("Payment Success");
     //On success we'll verify signature for authenticity//
-    BookingModel bookingModel = BookingModel(
+    BookingModel bookingDetails = BookingModel(
       id: widget.bookingModel.id,
       carName: widget.bookingModel.carName,
-      // customer: widget.bookingModel.customer,
       tripStart: widget.bookingModel.tripStart,
       tripEnd: widget.bookingModel.tripEnd,
-      location: widget.bookingModel.location,
       amount: widget.bookingModel.amount,
     );
+    print(bookingDetails);
+
     //
-    PaymetService.razorpaySuccess(bookingModel);
-    //
-    // verifySignature(
-    //   signature: response.signature,
-    //   paymentId: response.paymentId,
-    //   orderId: response.orderId,
-    // );
+    PaymentService.razorpaySuccess(bookingDetails);
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
     // Do something when payment fails
+    print("Errorod error");
     print(response);
+
     Get.snackbar("Warning", response.message ?? '', backgroundColor: kWhite);
   }
 
@@ -91,9 +88,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
     //Secret code from razorpay setting//
     //API required basic auth user and password//
 
+    int price = int.parse(widget.bookingModel.amount) * 100;
+
     Map<String, dynamic> body = {
-      "amount": (int.parse(widget.bookingModel.amount) * 100).toString(),
-      "currency": 'INR',
+      "amount": price.toString(),
+      // price.toString(),
+      "currency": "INR",
       "receipt": "rcptid_11"
       //Amount in it's lowest currency unit//
       //INR it's paisa, Rs 1 = 100 ps//
@@ -104,12 +104,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
           "api.razorpay.com", "v1/orders"), //https://api.razorpay.com/v1/orders
       headers: <String, String>{
         "Contet-Type": "application/json",
-        "authorization": basicAuth,
+        'authorization': basicAuth,
       },
-      body: jsonEncode(body),
+      body: body,
+      // jsonEncode(body),
     );
 
     if (response.statusCode == 200) {
+      print(response.body);
       //in response of create order you'll get order id and pass it to checkout//
       openGateway(jsonDecode(response.body)['id']);
     }
@@ -117,62 +119,26 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
   openGateway(String orderId) {
-    String? email = GetLocalStorage.getUserIdAndToken('email');
+    String? userEmail = GetLocalStorage.getUserIdAndToken('email');
+    int price = int.parse(widget.bookingModel.amount) * 100;
     var options = {
       'key': razorCredentials.keyId, //keyId from razorpay//
-      'amount': (int.parse(widget.bookingModel.amount) * 100).toString(),
+      'amount': price.toString(),
       'name': widget.bookingModel.customer,
-      'order_id': orderId, //Generate orderId using Orders API//
+      // 'order_id': orderId, //Generate orderId using Orders API//
       'description': "${widget.bookingModel.carName} is Booked",
       'timeout': 60 * 5, //in seconds//5 minutes//
       'prefill': {
-        'contact': '9123456789',
-        'email': email,
+        'contact': '9895711946',
+        'email': userEmail,
       }
     };
     _razorpay.open(options); //Open payment gateway for checkout//
   }
 
-  // verifySignature({
-  //   String? signature,
-  //   String? paymentId,
-  //   String? orderId,
-  // }) async {
-  //   Map<String, dynamic> body = {
-  //     'razorpay_signature': signature,
-  //     'razorpay_payment_id': paymentId,
-  //     'razorpay_order_id': orderId,
-  //   };
-
-  //   var parts = [];
-  //   body.forEach(
-  //     (key, value) {
-  //       parts.add(
-  //         '${Uri.encodeQueryComponent(key)}='
-  //         '${Uri.encodeQueryComponent(value)}',
-  //       );
-  //     },
-  //   );
-  //   var formData = parts.join('&');
-  //   var response = await http.post(
-  //     Uri.http(
-  //       "10.0.2.2",
-  //       "razorpay_signature_verify.php",
-  //     ),
-  //     headers: {
-  //       "Content_Type": "application/x-www-form-urlrencoded",
-  //     },
-  //     body: formData,
-  //   );
-  //   print(response.body);
-  //   if (response.statusCode == 200) {
-  //     Get.snackbar("Success", response.body);
-  //   }
-  // }
-
+  // Removes all listeners
   @override
   void dispose() {
-    // Removes all listeners
     _razorpay.clear();
     super.dispose();
   }

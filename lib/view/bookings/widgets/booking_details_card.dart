@@ -5,12 +5,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BookingDetailsCard extends StatelessWidget {
-  const BookingDetailsCard({
+  BookingDetailsCard({
     Key? key,
     required this.size,
+    required this.carname,
+    required this.start,
+    required this.end,
+    required this.amount,
+    this.snackbar,
+    this.button,
   }) : super(key: key);
 
   final Size size;
+  String carname;
+  String start;
+  String end;
+  int amount;
+  VoidCallback? button;
+  SnackbarController? snackbar;
 
   @override
   Widget build(BuildContext context) {
@@ -26,32 +38,32 @@ class BookingDetailsCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Car: " + "Car Name",
-              style: TextStyle(
+            Text(
+              "Car: $carname",
+              style: const TextStyle(
                 color: kBlack,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
             kHeight10,
-            const Text(
-              "Trip Starts: " + "Start Date",
-              style: TextStyle(
+            Text(
+              "Trip Starts: $start",
+              style: const TextStyle(
                 fontSize: 20,
               ),
             ),
             kHeight10,
-            const Text(
-              "Trip Ends: " + "End Date",
-              style: TextStyle(
+            Text(
+              "Trip Ends: $end",
+              style: const TextStyle(
                 fontSize: 20,
               ),
             ),
             kHeight15,
-            const Text(
-              "Rent: " + "Total Amount",
-              style: TextStyle(
+            Text(
+              "Rent: $amount",
+              style: const TextStyle(
                 fontSize: 20,
               ),
             ),
@@ -80,7 +92,8 @@ class BookingDetailsCard extends StatelessWidget {
                 color: kRed,
               ),
               onPressed: () {
-                Get.back();
+                button;
+                snackbar;
               },
             ),
           ],

@@ -3,7 +3,7 @@ class BookingModel {
   String? customer;
   String tripStart;
   String tripEnd;
-  String location;
+  String? location;
   String amount;
   String? id;
   BookingModel({
@@ -11,7 +11,7 @@ class BookingModel {
     this.customer,
     required this.tripStart,
     required this.tripEnd,
-    required this.location,
+    this.location,
     required this.amount,
     this.id,
   });

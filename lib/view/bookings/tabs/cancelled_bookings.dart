@@ -1,12 +1,13 @@
+import 'package:carmarket/controllers/bookings_controller.dart';
 import 'package:carmarket/core/constants/colors.dart';
 import 'package:carmarket/core/constants/dimensions.dart';
-import 'package:carmarket/view/bookings/widgets/booking_details_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CancelledBooking extends StatelessWidget {
-  const CancelledBooking({Key? key}) : super(key: key);
+  CancelledBooking({Key? key}) : super(key: key);
+
+  BookingsController bookingsController = Get.find<BookingsController>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class CancelledBooking extends StatelessWidget {
             ListView.builder(
               shrinkWrap: true,
               physics: const BouncingScrollPhysics(),
-              itemCount: 2,
+              itemCount: bookingsController.cancelledTrips.length,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 10),

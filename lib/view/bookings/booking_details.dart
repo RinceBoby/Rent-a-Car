@@ -1,14 +1,10 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:carmarket/controllers/booking_controller.dart';
 import 'package:carmarket/models/booking/booking_model.dart';
-import 'package:carmarket/models/profile/profile_model.dart';
 import 'package:carmarket/view/payment/payment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import '../../controllers/profile_controller.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/dimensions.dart';
 
@@ -19,11 +15,6 @@ class BookingDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProfileController profileController = Get.put(ProfileController());
-    BookingController bookingController = Get.put(BookingController());
-
-    ProfileModel? userData = profileController.profileModel.value;
-
     final size = MediaQuery.of(context).size;
 
     return SafeArea(
@@ -68,8 +59,6 @@ class BookingDetails extends StatelessWidget {
                           bookingModel.carName,
                           CupertinoIcons.car_detailed,
                         ),
-                        // BookingDetailsField("Customer Name",
-                        //     bookingModel.customer!.capitalize!, CupertinoIcons.person,),
                         BookingDetailsField(
                           "Trip Start",
                           bookingModel.tripStart,
@@ -82,16 +71,16 @@ class BookingDetails extends StatelessWidget {
                         ),
                         BookingDetailsField(
                           "Pickup Location",
-                          bookingModel.location,
+                          bookingModel.location!,
                           CupertinoIcons.map_pin_ellipse,
                         ),
                         BookingDetailsField(
                           "Amount",
-                          bookingModel.amount,
+                          "₹ ${bookingModel.amount}.",
                           CupertinoIcons.creditcard,
                         ),
                         BookingDetailsField(
-                          "Our Helpline;",
+                          "Contact No",
                           "+918606004313",
                           CupertinoIcons.phone,
                         ),
@@ -102,7 +91,7 @@ class BookingDetails extends StatelessWidget {
                 kHeight30,
 
                 //<<<<<Payment>>>>>//
-                PaymentScreen(bookingModel: bookingModel),
+                RazorPay(bookingModel: bookingModel),
 
                 kHeight30,
               ],
