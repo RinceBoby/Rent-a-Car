@@ -4,6 +4,8 @@ import 'package:carmarket/core/constants/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../widgets/completed_cancel_card.dart';
+
 class CancelledBooking extends StatelessWidget {
   CancelledBooking({Key? key}) : super(key: key);
 
@@ -23,6 +25,7 @@ class CancelledBooking extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               itemCount: bookingsController.cancelledTrips.length,
               itemBuilder: (context, index) {
+                var data = bookingsController.cancelledTrips[index];
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Container(
@@ -34,63 +37,14 @@ class CancelledBooking extends StatelessWidget {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Car: " + "Car Name",
-                            style: TextStyle(
-                              color: kBlack,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          kHeight10,
-                          const Text(
-                            "Trip Starts: " + "Start Date",
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          ),
-                          kHeight10,
-                          const Text(
-                            "Trip Ends: " + "End Date",
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          ),
-                          kHeight15,
-                          const Text(
-                            "Rent: " + "Total Amount",
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          ),
-                          kHeight15,
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: kGrey,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: kRadius10,
-                                side: const BorderSide(
-                                  color: kRed,
-                                  width: 2,
-                                ),
-                              ),
-                            ),
-                            child: const Text(
-                              "Cancelled",
-                              style: TextStyle(
-                                color: kRed,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            onPressed: () {
-                              Get.back();
-                            },
-                          ),
-                        ],
+                      child: CompletedCancelledCard(
+                        carName: data.carname!,
+                        sDate: data.startDate!,
+                        eDate: data.endDate!,
+                        amt: data.payedAmount!,
+                        status: "Cancelled",
+                        btnClr: kRed,
+                        txtClr: kRed,
                       ),
                     ),
                   ),

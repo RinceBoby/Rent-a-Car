@@ -59,7 +59,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(tab.title,
-                                style: GoogleFonts.kaushanScript(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: kWhite,
                                   fontSize: 30,
@@ -68,7 +68,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                             kHeight30,
                             Text(
                               tab.subTitle,
-                              style: GoogleFonts.marckScript(
+                              style: const TextStyle(
                                 fontSize: 25,
                                 color: kGrey,
                               ),

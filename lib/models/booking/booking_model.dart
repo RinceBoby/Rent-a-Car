@@ -11,7 +11,7 @@ class BookingModel {
     this.customer,
     required this.tripStart,
     required this.tripEnd,
-    this.location,
+     this.location,
     required this.amount,
     this.id,
   });

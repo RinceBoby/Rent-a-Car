@@ -76,14 +76,14 @@ class BookingDetails extends StatelessWidget {
                         ),
                         BookingDetailsField(
                           "Amount",
-                          "₹ ${bookingModel.amount}.",
+                          bookingModel.amount.toString(),
                           CupertinoIcons.creditcard,
                         ),
-                        BookingDetailsField(
-                          "Contact No",
-                          "+918606004313",
-                          CupertinoIcons.phone,
-                        ),
+                        // BookingDetailsField(
+                        //   "Contact No",
+                        //   "+918606004313",
+                        //   CupertinoIcons.phone,
+                        // ),
                       ],
                     ),
                   ),

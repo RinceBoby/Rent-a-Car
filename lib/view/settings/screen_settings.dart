@@ -102,7 +102,7 @@ class Profile extends StatelessWidget {
                                       horizontal: 10),
                                   child: GestureDetector(
                                     onTap: () {
-                                      GetLocalStorage.removeUser('token');
+                                      GetLocalStorage.removeUserTokenAndUid();
                                       Get.to(LoginAccount());
                                     },
                                     child: Row(

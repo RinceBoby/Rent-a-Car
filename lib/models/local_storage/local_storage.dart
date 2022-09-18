@@ -9,6 +9,8 @@ class GetLocalStorage {
   static saveToken(Map<String, String> user) {
     storage.write("uId", user['uId']);
     storage.write("token", user['token']);
+    storage.write('name', user['name']);
+    storage.write('email', user['email']);
   }
 
   //<<<<<Get_User_Details>>>>>//
@@ -18,7 +20,10 @@ class GetLocalStorage {
   }
 
   //<<<<<Remove_User_Details>>>>>//
-  static removeUser(String key) {
-    Future<void> user = storage.remove(key);
+  static removeUserTokenAndUid() {
+    storage.remove("uId");
+    storage.remove("token");
+    storage.remove('name');
+    storage.remove('email');
   }
 }

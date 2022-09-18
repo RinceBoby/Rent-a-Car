@@ -1,6 +1,7 @@
 import 'package:carmarket/core/constants/colors.dart';
 import 'package:carmarket/core/constants/dimensions.dart';
 import 'package:carmarket/view/bookings/tabs/cancelled_bookings.dart';
+import 'package:carmarket/view/bookings/tabs/completed_bookings.dart';
 import 'package:carmarket/view/bookings/tabs/pending_bookings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -52,47 +53,11 @@ class Bookings extends StatelessWidget {
             ],
           ),
         ),
-        body:  TabBarView(
+        body: TabBarView(
           children: [
-            //
-            //<<<<<Pending>>>>>//
             PendingBookings(),
-
-            // Center(
-            //   child: Text(
-            //     "No Pending Trips",
-            //     style: TextStyle(
-            //       color: kText,
-            //       fontSize: 20,
-            //     ),
-            //   ),
-            // ),
-
-            //<<<<<Completed>>>>>//
-            // CompletedBookings(),
-
-            Center(
-              child: Text(
-                "No Completed Trips",
-                style: TextStyle(
-                  color: kText,
-                  fontSize: 20,
-                ),
-              ),
-            ),
-
-            //<<<<<Cancelled>>>>>//
+            CompletedBooking(),
             CancelledBooking(),
-
-            // Center(
-            //   child: Text(
-            //     "No Cancelled Trips",
-            //     style: TextStyle(
-            //       color: kText,
-            //       fontSize: 20,
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),

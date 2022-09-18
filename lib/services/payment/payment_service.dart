@@ -28,6 +28,7 @@ class PaymentService {
     String? userId = GetLocalStorage.getUserIdAndToken('uId');
     String? userName = GetLocalStorage.getUserIdAndToken('name');
     String? userEmail = GetLocalStorage.getUserIdAndToken('email');
+    print(bookingModel.id);
 
     Map payload = {
       'USERMAIL': userEmail,

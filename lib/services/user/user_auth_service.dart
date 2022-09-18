@@ -29,6 +29,8 @@ class UserAuthServices {
       Map<String, String> user = {
         "uId": response.data['_id'],
         "token": response.data['token'],
+        "email": response.data['email'],
+        "name" : response.data['name']
       };
       GetLocalStorage.saveToken(user);
 
@@ -127,6 +129,8 @@ class UserAuthServices {
       Map<String, String> user = {
         "uId": response.data['user'],
         "token": response.data['token'],
+        "email": response.data['email'],
+        "name" : response.data['name']
       };
       GetLocalStorage.saveToken(user);
 

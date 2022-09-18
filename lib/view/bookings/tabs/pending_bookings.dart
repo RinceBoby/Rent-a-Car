@@ -29,17 +29,17 @@ class PendingBookings extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: bookingDetailsCard(
-                        size,
-                        data.carname!,
-                        data.startDate!,
-                        data.endDate!,
-                        data.payedAmount!,
-                        () {
+                        size: size,
+                        carname: data.carname!,
+                        start: data.startDate!,
+                        end: data.endDate!,
+                        amount: data.payedAmount!,
+                        onPressed: () {
                           BookingsController bookingsController =
                               Get.find<BookingsController>();
                           bookingsController.cancelTripData(data.sId!);
+                          Get.snackbar("Message", "Booking Cancelled!");
                         },
-                        Get.snackbar("Message", "Booking Cancelled!"),
                       ),
                     );
                   },
@@ -51,20 +51,19 @@ class PendingBookings extends StatelessWidget {
       ),
     );
   }
-
   //
-  //-------------------------------------------------------------------------------------METHIOD--------------------------------------------------------------------------------------//
+  /////////////////////
+  //-----WIDGET-----//
+  /////////////////////
   //
-  //<<<<<BookingCard>>>>>//
-  bookingDetailsCard(
-    Size size,
-    String carname,
-    String start,
-    String end,
-    int amount,
-    VoidCallback button,
-    SnackbarController snackbar,
-  ) {
+  bookingDetailsCard({
+    required Size size,
+    required String carname,
+    required String start,
+    required String end,
+    required int amount,
+    required VoidCallback onPressed,
+  }) {
     return Container(
       height: 215,
       width: size.width,
@@ -130,10 +129,7 @@ class PendingBookings extends StatelessWidget {
                 CupertinoIcons.clear_circled,
                 color: kRed,
               ),
-              onPressed: () {
-                button;
-                snackbar;
-              },
+              onPressed: onPressed,
             ),
           ],
         ),

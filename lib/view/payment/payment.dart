@@ -7,7 +7,6 @@ import 'package:carmarket/controllers/profile_controller.dart';
 import 'package:carmarket/core/constants/colors.dart';
 import 'package:carmarket/core/constants/dimensions.dart';
 import 'package:carmarket/models/booking/booking_model.dart';
-import 'package:carmarket/models/car/car_model.dart';
 import 'package:carmarket/models/local_storage/local_storage.dart';
 import 'package:carmarket/services/payment/payment_service.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +27,6 @@ class RazorPay extends StatefulWidget {
 ProfileController profileController = Get.put(ProfileController());
 
 class _RazorPayState extends State<RazorPay> {
-  // carDetails? id;
-
   final _razorpay = Razorpay();
 
   //<<<<<Event_Listerners>>>>>//
@@ -49,6 +46,7 @@ class _RazorPayState extends State<RazorPay> {
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     // Do something when payment succeeds
     print(response);
+
     print("Payment Success");
     //On success we'll verify signature for authenticity//
     BookingModel bookingDetails = BookingModel(
@@ -59,7 +57,6 @@ class _RazorPayState extends State<RazorPay> {
       amount: widget.bookingModel.amount,
     );
     print(bookingDetails);
-
     //
     PaymentService.razorpaySuccess(bookingDetails);
   }
@@ -87,12 +84,10 @@ class _RazorPayState extends State<RazorPay> {
     //Key id from razorpay setting//
     //Secret code from razorpay setting//
     //API required basic auth user and password//
-
-    int price = int.parse(widget.bookingModel.amount) * 100;
-
+    int price = (int.parse(widget.bookingModel.amount) * 100);
     Map<String, dynamic> body = {
       "amount": price.toString(),
-      // price.toString(),
+      // num.parse((widget.bookingModel.amount) * 100),
       "currency": "INR",
       "receipt": "rcptid_11"
       //Amount in it's lowest currency unit//
@@ -111,7 +106,6 @@ class _RazorPayState extends State<RazorPay> {
     );
 
     if (response.statusCode == 200) {
-      print(response.body);
       //in response of create order you'll get order id and pass it to checkout//
       openGateway(jsonDecode(response.body)['id']);
     }
@@ -120,12 +114,13 @@ class _RazorPayState extends State<RazorPay> {
 
   openGateway(String orderId) {
     String? userEmail = GetLocalStorage.getUserIdAndToken('email');
-    int price = int.parse(widget.bookingModel.amount) * 100;
+    int price = (int.parse(widget.bookingModel.amount) * 100);
+
     var options = {
       'key': razorCredentials.keyId, //keyId from razorpay//
       'amount': price.toString(),
+      //num.parse((widget.bookingModel.amount) * 100),
       'name': widget.bookingModel.customer,
-      // 'order_id': orderId, //Generate orderId using Orders API//
       'description': "${widget.bookingModel.carName} is Booked",
       'timeout': 60 * 5, //in seconds//5 minutes//
       'prefill': {
@@ -133,7 +128,11 @@ class _RazorPayState extends State<RazorPay> {
         'email': userEmail,
       }
     };
-    _razorpay.open(options); //Open payment gateway for checkout//
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      print(e.toString());
+    } //Open payment gateway for checkout//
   }
 
   // Removes all listeners
