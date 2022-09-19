@@ -24,7 +24,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final _pages = [
     const ScreenHome(),
     const Bookings(),
-    const Inbox(),
+    Inbox(),
     const Profile(),
   ];
 

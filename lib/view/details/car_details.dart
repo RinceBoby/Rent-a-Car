@@ -114,7 +114,7 @@ class DetailsPage extends StatelessWidget {
                                           )
                                         : const Icon(
                                             CupertinoIcons.heart,
-                                            color: kWhite,
+                                            color: kRed,
                                             size: 32,
                                           ),
                                   );

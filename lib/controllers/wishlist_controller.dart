@@ -11,31 +11,29 @@ class WishlistController extends GetxController {
   String? userId = GetLocalStorage.getUserIdAndToken('uId');
 
   RxBool loading = true.obs;
-  // RxBool isWish = false.obs;
+
   //
   //<<<<<Add_To_Wishlist>>>>>//
   Future addToWishlistItem(String carId, String uId) async {
     try {
       var response =
           await WishlistServices.addToWishlist(carId: carId, uId: uId);
-      // isWish.value = true;
+          
       return response;
     } catch (e) {
       print(e);
-      // isWish.value = false;
     }
   }
 
   //<<<<<Remove_From_Wishlist>>>>>//
   Future removeFromWishlistItem(String carId, String uId) async {
-    // isWish.value = true;
     try {
       var response =
           await WishlistServices.removeFromWishlist(carId: carId, uId: uId);
-      // isWish.value = false;
+      print(response);
+      update();
       return response;
     } catch (e) {
-      // isWish.value = true;
       print(e);
     }
   }
@@ -47,6 +45,7 @@ class WishlistController extends GetxController {
       var data = await WishlistServices.getDataFromWishList(userId: userId);
       loading.value = false;
       print(data);
+      update();
       return data!;
     } catch (e) {
       print(e);
@@ -59,6 +58,7 @@ class WishlistController extends GetxController {
   Future getWishListDetails({required String userId}) async {
     try {
       var wishListData = await WishlistServices.getWishListData(userId: userId);
+      update();
     } catch (e) {
       print(e);
     }
