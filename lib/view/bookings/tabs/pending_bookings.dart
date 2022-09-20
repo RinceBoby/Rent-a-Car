@@ -18,39 +18,57 @@ class PendingBookings extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Obx(
           () {
-            return Column(
-              children: [
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: pendingController.pendingTrips.length,
-                  itemBuilder: (context, index) {
-                    var data = pendingController.pendingTrips[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: bookingDetailsCard(
-                        size: size,
-                        carname: data.carname!,
-                        start: data.startDate!,
-                        end: data.endDate!,
-                        amount: data.payedAmount!,
-                        onPressed: () {
-                          BookingsController bookingsController =
-                              Get.find<BookingsController>();
-                          bookingsController.cancelTripData(data.sId!);
-                          Get.snackbar("Message", "Booking Cancelled!");
-                        },
-                      ),
-                    );
-                  },
-                ),
-              ],
-            );
+            return pendingController.loading.value
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : pendingController.pendingTrips.isEmpty
+                    ? const Center(
+                        child: Text(
+                          "No pending trips!",
+                          style: TextStyle(
+                            color: kWhite,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                      )
+                    : Column(
+                        children: [
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: pendingController.pendingTrips.length,
+                            itemBuilder: (context, index) {
+                              var data = pendingController.pendingTrips[index];
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: bookingDetailsCard(
+                                  size: size,
+                                  carname: data.carname!,
+                                  start: data.startDate!,
+                                  end: data.endDate!,
+                                  amount: data.payedAmount!,
+                                  onPressed: () {
+                                    BookingsController bookingsController =
+                                        Get.find<BookingsController>();
+                                    bookingsController
+                                        .cancelTripData(data.sId!);
+                                    Get.snackbar(
+                                        "Message", "Booking Cancelled!");
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      );
           },
         ),
       ),
     );
   }
+
   //
   /////////////////////
   //-----WIDGET-----//

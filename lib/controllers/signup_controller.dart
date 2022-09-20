@@ -4,6 +4,7 @@ class SignupController extends GetxController {
   String? ageSelectedValue;
   String? genderSelectedValue;
   String? districtSelectedValue;
+  
 
   List<int> ageItems = List.generate(20, (index) => 18 + index);
   List<String> genderItems = ['Male', 'Female'];

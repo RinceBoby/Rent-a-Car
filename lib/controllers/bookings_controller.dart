@@ -5,6 +5,7 @@ import 'package:carmarket/services/booking/bookings_service.dart';
 import 'package:get/get.dart';
 
 class BookingsController extends GetxController {
+  final loading = false.obs;
   RxList<BookingData> pendingTrips = <BookingData>[].obs;
   RxList<BookingData> completedTrips = <BookingData>[].obs;
   RxList<BookingData> cancelledTrips = <BookingData>[].obs;

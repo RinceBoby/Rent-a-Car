@@ -18,7 +18,7 @@ class WishlistController extends GetxController {
     try {
       var response =
           await WishlistServices.addToWishlist(carId: carId, uId: uId);
-          
+
       return response;
     } catch (e) {
       print(e);
@@ -63,18 +63,4 @@ class WishlistController extends GetxController {
       print(e);
     }
   }
-
-  // @override
-  // void onInit() {
-  //   var value = GetLocalStorage.getUserIdAndToken("uId");
-  //   getWishListData(value!).then((value) {
-  //     print("abcd");
-  //     print(value);
-  //     allWishlist = value;
-  //   });
-  //   print("all wish list");
-  //   print(allWishlist);
-  //   super.onInit();
-  //   update();
-  // }
 }

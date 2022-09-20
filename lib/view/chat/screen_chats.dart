@@ -69,7 +69,7 @@ class Inbox extends StatelessWidget {
                       children: [
                         Container(
                           // height: 10,
-                          width: size.width * .7,
+                          width: size.width * .72,
                           decoration: const BoxDecoration(
                             color: kGrey,
                             borderRadius: BorderRadius.only(
@@ -88,7 +88,7 @@ class Inbox extends StatelessWidget {
                                 child: Text(
                                   "Hi ${userData!.name!.capitalize!},\nI am Jane . \nYour Personal Chat Assistant.",
                                   style: const TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -98,7 +98,7 @@ class Inbox extends StatelessWidget {
                         ),
                         kHeight05,
                         Container(
-                          width: size.width * .55,
+                          width: size.width * .6,
                           decoration: const BoxDecoration(
                             color: kGrey,
                             borderRadius: BorderRadius.only(
@@ -112,7 +112,7 @@ class Inbox extends StatelessWidget {
                             child: Text(
                               "What's your problem?",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -187,7 +187,7 @@ class BotQuestion extends StatelessWidget {
         ),
         kWidth05,
         Container(
-          width: size.width * .6,
+          width: size.width * .65,
           decoration: const BoxDecoration(
             color: kGrey,
             borderRadius: BorderRadius.only(
@@ -200,7 +200,7 @@ class BotQuestion extends StatelessWidget {
             title: Text(
               question,
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -210,7 +210,7 @@ class BotQuestion extends StatelessWidget {
                 child: Text(
                   answer,
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1,
                   ),

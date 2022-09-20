@@ -133,39 +133,43 @@ class LoginAccount extends StatelessWidget {
                 Container(),
 
                 //<<<<<Button>>>>>//
-                ElevatedButton(
-                  onPressed: () {
-                    print("ontap");
-                    if (_formKey.currentState!.validate()) {
-                      UserAuthServices.loginUser(
-                        email: emailController.text,
-                        password: passController.text.trim(),
-                      ).then(
-                        (value) {
-                          if (value == "success") {
-                            Get.offAll(const BottomNavBar());
-                            return;
-                          } else if (value.isNotEmpty) {
-                            getSnackBar(value);
-                            return;
-                          }
-                          getSnackBar("is empty");
-                        },
-                      );
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: kWhite,
-                    shape: RoundedRectangleBorder(borderRadius: kRadius30),
-                    fixedSize: Size(size.width * .9, 50),
-                  ),
-                  child: const Text(
-                    "Sign In",
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: kBlack,
-                    ),
-                  ),
+                Obx(
+                  () {
+                    return ElevatedButton(
+                      onPressed: () {
+                        print("ontap");
+                        if (_formKey.currentState!.validate()) {
+                          UserAuthServices.loginUser(
+                            email: emailController.text,
+                            password: passController.text.trim(),
+                          ).then(
+                            (value) {
+                              if (value == "success") {
+                                Get.offAll(const BottomNavBar());
+                                return;
+                              } else if (value.isNotEmpty) {
+                                getSnackBar(value);
+                                return;
+                              }
+                              getSnackBar("is empty");
+                            },
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: kWhite,
+                        shape: RoundedRectangleBorder(borderRadius: kRadius30),
+                        fixedSize: Size(size.width * .9, 50),
+                      ),
+                      child: const Text(
+                        "Sign In",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: kBlack,
+                        ),
+                      ),
+                    );
+                  }
                 ),
                 kHeight40,
 
