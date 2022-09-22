@@ -1,3 +1,4 @@
+import 'package:carmarket/controllers/login_controller.dart';
 import 'package:carmarket/core/constants/colors.dart';
 import 'package:carmarket/services/user/user_auth_service.dart';
 import 'package:carmarket/view/functions/functions.dart';
@@ -17,6 +18,8 @@ class LoginAccount extends StatelessWidget {
   LoginAccount({Key? key}) : super(key: key);
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
+
+  LoginController loginController = Get.put(LoginController());
 
   final _formKey = GlobalKey<FormState>();
 
@@ -136,40 +139,47 @@ class LoginAccount extends StatelessWidget {
                 Obx(
                   () {
                     return ElevatedButton(
-                      onPressed: () {
-                        print("ontap");
-                        if (_formKey.currentState!.validate()) {
-                          UserAuthServices.loginUser(
-                            email: emailController.text,
-                            password: passController.text.trim(),
-                          ).then(
-                            (value) {
-                              if (value == "success") {
-                                Get.offAll(const BottomNavBar());
-                                return;
-                              } else if (value.isNotEmpty) {
-                                getSnackBar(value);
-                                return;
+                      onPressed: loginController.loginLoading.value
+                          ? null
+                          : () {
+                              if (_formKey.currentState!.validate()) {
+                                loginController.userLogin(
+                                  emailController.text,
+                                  passController.text.trim(),
+                                );
+                                // UserAuthServices.loginUser(
+                                //   email: emailController.text,
+                                //   password: passController.text.trim(),
+                                // ).then(
+                                //   (value) {
+                                //     if (value == "success") {
+                                //       Get.offAll(const BottomNavBar());
+                                //       return;
+                                //     } else if (value.isNotEmpty) {
+                                //       getSnackBar(value);
+                                //       return;
+                                //     }
+                                //     getSnackBar("is empty");
+                                //   },
+                                // );
                               }
-                              getSnackBar("is empty");
                             },
-                          );
-                        }
-                      },
                       style: ElevatedButton.styleFrom(
-                        primary: kWhite,
+                        backgroundColor: kWhite,
                         shape: RoundedRectangleBorder(borderRadius: kRadius30),
                         fixedSize: Size(size.width * .9, 50),
                       ),
-                      child: const Text(
-                        "Sign In",
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: kBlack,
-                        ),
-                      ),
+                      child: loginController.loginLoading.value
+                          ? const CircularProgressIndicator()
+                          : const Text(
+                              "Sign In",
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: kBlack,
+                              ),
+                            ),
                     );
-                  }
+                  },
                 ),
                 kHeight40,
 

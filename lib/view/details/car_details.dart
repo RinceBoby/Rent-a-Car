@@ -101,6 +101,11 @@ class DetailsPage extends StatelessWidget {
                                         wishlistController.addToWishlistItem(
                                             id.id, userId!);
                                       } else {
+                                      //   else if(detailsController.carId==wishList){
+                                      //   wishlistController
+                                      //       .removeFromWishlistItem(
+                                      //           id.id, userId!);
+                                      // }
                                         wishlistController
                                             .removeFromWishlistItem(
                                                 id.id, userId!);

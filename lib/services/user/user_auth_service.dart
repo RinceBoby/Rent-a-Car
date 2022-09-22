@@ -37,7 +37,7 @@ class UserAuthServices {
       Get.offAll(const BottomNavBar());
       Get.snackbar(
         "Success",
-        "Succefully logged in.",
+        "Successfully logged in.",
         backgroundColor: kWhite,
       );
       return "success";
