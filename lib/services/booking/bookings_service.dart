@@ -61,7 +61,7 @@ class BookingsServices {
     }
   }
 
-  //<<<<<Cancell_Trip>>>>>//
+  //<<<<<Cancel_Trip>>>>>//
   static Future cancelTripService(String carId) async {
     try {
       BookingsController bookingsController = Get.find<BookingsController>();

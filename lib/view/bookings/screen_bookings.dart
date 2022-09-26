@@ -1,5 +1,5 @@
-import 'package:carmarket/core/constants/colors.dart';
-import 'package:carmarket/core/constants/dimensions.dart';
+import 'package:carmarket/view/constants/styles/colors.dart';
+import 'package:carmarket/view/constants/spaces/dimensions.dart';
 import 'package:carmarket/view/bookings/tabs/cancelled_bookings.dart';
 import 'package:carmarket/view/bookings/tabs/completed_bookings.dart';
 import 'package:carmarket/view/bookings/tabs/pending_bookings.dart';

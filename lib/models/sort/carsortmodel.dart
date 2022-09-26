@@ -10,6 +10,7 @@ class SortModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['place'] = this.place;
+    
     return data;
   }
 }

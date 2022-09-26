@@ -1,6 +1,6 @@
 import 'package:carmarket/controllers/bookings_controller.dart';
-import 'package:carmarket/core/constants/colors.dart';
-import 'package:carmarket/core/constants/dimensions.dart';
+import 'package:carmarket/view/constants/styles/colors.dart';
+import 'package:carmarket/view/constants/spaces/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

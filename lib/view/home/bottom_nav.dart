@@ -1,4 +1,4 @@
-import 'package:carmarket/core/constants/colors.dart';
+import 'package:carmarket/view/constants/styles/colors.dart';
 import 'package:carmarket/view/chat/screen_chats.dart';
 import 'package:carmarket/view/home/screen_home.dart';
 import 'package:carmarket/view/settings/screen_settings.dart';

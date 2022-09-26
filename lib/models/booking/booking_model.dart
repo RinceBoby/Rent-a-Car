@@ -6,6 +6,7 @@ class BookingModel {
   String? location;
   String amount;
   String? id;
+  
   BookingModel({
     required this.carName,
     this.customer,

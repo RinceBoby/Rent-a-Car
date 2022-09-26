@@ -15,7 +15,6 @@ class ProfileController extends GetxController {
     try {
       var data =
           await UserProfileService.updateUserProfileData(profileData, userId);
-      // return data;
       
       print(data);
       profileModel.value = data;

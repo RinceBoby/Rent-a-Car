@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final signup = signupFromJson(jsonString);
-
 import 'dart:convert';
 
 ProfileModel profileModelFromJson(String str) =>

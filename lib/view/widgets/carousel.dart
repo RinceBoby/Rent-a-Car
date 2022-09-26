@@ -2,8 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../core/constants/colors.dart';
-import '../../core/constants/dimensions.dart';
+import '../constants/styles/colors.dart';
+import '../constants/spaces/dimensions.dart';
 
 class CarCarousel extends StatefulWidget {
   const CarCarousel({Key? key}) : super(key: key);

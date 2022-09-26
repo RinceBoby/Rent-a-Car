@@ -62,7 +62,6 @@ class BookingsController extends GetxController {
     pendingTripData().then((value) => pendingTrips.value = value);
     completedTripData().then((value) => completedTrips.value = value);
     cancelledTripsData().then((value) => cancelledTrips.value = value);
-
     super.onInit();
   }
 }

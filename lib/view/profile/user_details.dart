@@ -1,8 +1,8 @@
 // ignore_for_file: avoid_print
 
 import 'package:carmarket/controllers/profile_controller.dart';
-import 'package:carmarket/core/constants/colors.dart';
-import 'package:carmarket/core/constants/dimensions.dart';
+import 'package:carmarket/view/constants/styles/colors.dart';
+import 'package:carmarket/view/constants/spaces/dimensions.dart';
 import 'package:carmarket/models/local_storage/local_storage.dart';
 import 'package:carmarket/models/profile/profile_model.dart';
 import 'package:carmarket/services/user/user_profile_service.dart';

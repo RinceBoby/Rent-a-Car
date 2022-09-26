@@ -1,5 +1,5 @@
 import 'package:carmarket/controllers/login_controller.dart';
-import 'package:carmarket/core/constants/colors.dart';
+import 'package:carmarket/view/constants/styles/colors.dart';
 import 'package:carmarket/services/user/user_auth_service.dart';
 import 'package:carmarket/view/functions/functions.dart';
 import 'package:carmarket/view/home/bottom_nav.dart';
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../core/constants/dimensions.dart';
+import '../constants/spaces/dimensions.dart';
 import '../signup/signup.dart';
 import 'widgets/line_text.dart';
 

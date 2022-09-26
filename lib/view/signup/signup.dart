@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:carmarket/controllers/signup_controller.dart';
-import 'package:carmarket/core/constants/colors.dart';
+import 'package:carmarket/view/constants/styles/colors.dart';
 import 'package:carmarket/models/profile/profile_model.dart';
 import 'package:carmarket/services/user/user_auth_service.dart';
 import 'package:carmarket/view/login/login_account.dart';
@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../core/constants/dimensions.dart';
+import '../constants/spaces/dimensions.dart';
 
 class Signup extends StatelessWidget {
   Signup({Key? key}) : super(key: key);

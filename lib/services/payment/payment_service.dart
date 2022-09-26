@@ -48,8 +48,8 @@ class PaymentService {
       print("sdhfgbjkhsbdfvkasv");
 
       Get.offAll(const BottomNavBar());
-
       return response.data;
+
     } on DioError catch (e) {
       print(e.error);
       print(e.response!.statusMessage);

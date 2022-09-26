@@ -11,8 +11,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../core/constants/colors.dart';
-import '../../core/constants/dimensions.dart';
+import '../constants/styles/colors.dart';
+import '../constants/spaces/dimensions.dart';
 import '../details/car_details.dart';
 import '../wishlist/wishlist.dart';
 import 'widget/home_FAB.dart';

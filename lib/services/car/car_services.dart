@@ -14,7 +14,6 @@ class CarServices {
 
       //<<<<<Json_Decode>>>>>//
       CarModel allCarDetails = CarModel.fromJson(response.data, key);
-      // print(allCarDetails.data);
       return allCarDetails.data;
     } on DioError catch (e) {
       print(e.error);

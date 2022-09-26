@@ -57,19 +57,19 @@ class DetailsController extends GetxController {
     carDetail.value = await CarServices.getSingleCarDetails(carId: carId);
   }
 
-  //<<<<<Wishlist_Data>>>>>//
-  Future<void> getWishListId({required String uId}) async {
-    try {
-      var response = await WishlistServices.getDataFromWishList(userId: uId);
-      wishlistId!.value = response!;
-    } catch (e) {
-      print(e);
-    }
-  }
+  // //<<<<<Wishlist_Data>>>>>//
+  // Future<void> getWishListId({required String uId}) async {
+  //   try {
+  //     var response = await WishlistServices.getDataFromWishList(userId: uId);
+  //     wishlistId!.value = response!;
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   @override
   void onInit() {
-    getWishListId(uId: userId!);
+    // getWishListId(uId: userId!);
     getSingleCarDetails(carId!);
     super.onInit();
   }

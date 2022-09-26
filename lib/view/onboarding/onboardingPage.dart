@@ -1,5 +1,5 @@
-import 'package:carmarket/core/constants/colors.dart';
-import 'package:carmarket/core/constants/dimensions.dart';
+import 'package:carmarket/view/constants/styles/colors.dart';
+import 'package:carmarket/view/constants/spaces/dimensions.dart';
 import 'package:carmarket/view/login/login_account.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

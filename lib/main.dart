@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.black,
         textTheme: GoogleFonts.montserratTextTheme(Theme.of(context).textTheme),
-        // textTheme: GoogleFonts.robotoFlexTextTheme(Theme.of(context).textTheme),
       ),
       home: token == null ? const OnBoardingPage() : const BottomNavBar(),
     );

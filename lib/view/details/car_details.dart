@@ -1,7 +1,7 @@
 import 'package:carmarket/controllers/car_details_controller.dart';
 import 'package:carmarket/controllers/wishlist_controller.dart';
-import 'package:carmarket/core/constants/colors.dart';
-import 'package:carmarket/core/constants/dimensions.dart';
+import 'package:carmarket/view/constants/styles/colors.dart';
+import 'package:carmarket/view/constants/spaces/dimensions.dart';
 import 'package:carmarket/models/booking/booking_model.dart';
 import 'package:carmarket/models/car/car_model.dart';
 import 'package:carmarket/services/booking/booking_service.dart';
@@ -86,7 +86,7 @@ class DetailsPage extends StatelessWidget {
                               Obx(
                                 () {
                                   List wishList =
-                                      detailsController.wishlistId!.value;
+                                      wishlistController.wishlistId!.value;
 
                                   bool isWish = wishList
                                       .any((element) => element == carId);

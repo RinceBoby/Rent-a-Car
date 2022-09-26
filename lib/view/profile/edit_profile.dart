@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/signup_controller.dart';
-import '../../core/constants/colors.dart';
-import '../../core/constants/dimensions.dart';
+import '../constants/styles/colors.dart';
+import '../constants/spaces/dimensions.dart';
 import '../signup/widget/signup_textfield.dart';
 
 class EditUserProfile extends StatelessWidget {

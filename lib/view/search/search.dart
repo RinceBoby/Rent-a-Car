@@ -1,4 +1,4 @@
-import 'package:carmarket/core/constants/colors.dart';
+import 'package:carmarket/view/constants/styles/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

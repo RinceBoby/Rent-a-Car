@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:carmarket/core/constants/colors.dart';
-import 'package:carmarket/core/constants/dimensions.dart';
+import 'package:carmarket/view/constants/styles/colors.dart';
+import 'package:carmarket/view/constants/spaces/dimensions.dart';
 import 'package:flutter/material.dart';
 
 import '../../../models/car/car_model.dart';

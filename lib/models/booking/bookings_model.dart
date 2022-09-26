@@ -6,9 +6,11 @@ class BookingsModel {
   BookingsModel.fromJson(Map<String, dynamic> json) {
     if (json['bookingData'] != null) {
       bookingData = <BookingData>[];
-      json['bookingData'].forEach((v) {
-        bookingData!.add(new BookingData.fromJson(v));
-      });
+      json['bookingData'].forEach(
+        (v) {
+          bookingData!.add(new BookingData.fromJson(v));
+        },
+      );
     }
   }
 

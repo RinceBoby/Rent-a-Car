@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+//<<<<<SnackBar>>>>>//
 getSnackBar(String value) {
   print(value);
   Get

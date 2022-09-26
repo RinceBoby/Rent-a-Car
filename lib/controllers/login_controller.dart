@@ -10,7 +10,6 @@ class LoginController extends GetxController{
     var response =
         await UserAuthServices.loginUser(email: email, password: password);
     loginLoading.value = false;
-    // Get.offAll(const BottomNavBar());
     return response;
   }
 }

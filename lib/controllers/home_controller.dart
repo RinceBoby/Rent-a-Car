@@ -5,8 +5,4 @@ class HomeController extends GetxController {
   late List<Employee> employee;
   RxBool isExpanded = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 }

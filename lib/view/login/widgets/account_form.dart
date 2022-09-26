@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/constants/colors.dart';
-import '../../../core/constants/dimensions.dart';
+import '../../constants/styles/colors.dart';
+import '../../constants/spaces/dimensions.dart';
 import 'line_text.dart';
 
 // ignore: must_be_immutable

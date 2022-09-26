@@ -5,8 +5,8 @@ import 'package:carmarket/view/payment/payment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/constants/colors.dart';
-import '../../core/constants/dimensions.dart';
+import '../constants/styles/colors.dart';
+import '../constants/spaces/dimensions.dart';
 
 class BookingDetails extends StatelessWidget {
   BookingDetails({required this.bookingModel, Key? key}) : super(key: key);

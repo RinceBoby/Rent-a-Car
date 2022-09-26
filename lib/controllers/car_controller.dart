@@ -47,6 +47,5 @@ class CarController extends GetxController {
   void onInit() {
     getCars("/getcarData", "data").then((value) => allCars.value = value);
     super.onInit();
-    // update();
   }
 }

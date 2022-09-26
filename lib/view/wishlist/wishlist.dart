@@ -1,7 +1,7 @@
 import 'package:carmarket/controllers/car_details_controller.dart';
 import 'package:carmarket/controllers/wishlist_controller.dart';
-import 'package:carmarket/core/constants/colors.dart';
-import 'package:carmarket/core/constants/dimensions.dart';
+import 'package:carmarket/view/constants/styles/colors.dart';
+import 'package:carmarket/view/constants/spaces/dimensions.dart';
 import 'package:carmarket/models/car/car_model.dart';
 import 'package:carmarket/models/local_storage/local_storage.dart';
 import 'package:carmarket/models/wishlist/wishlist_model.dart';

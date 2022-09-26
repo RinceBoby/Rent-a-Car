@@ -3,7 +3,8 @@
 import 'dart:convert';
 
 import 'package:carmarket/controllers/car_details_controller.dart';
-import 'package:carmarket/core/constants/colors.dart';
+import 'package:carmarket/controllers/wishlist_controller.dart';
+import 'package:carmarket/view/constants/styles/colors.dart';
 import 'package:carmarket/models/wishlist/wishlist_model.dart';
 import 'package:carmarket/services/dio/dio_client.dart';
 import 'package:dio/dio.dart';
@@ -17,11 +18,13 @@ class WishlistServices {
     try {
       DetailsController detailsController =
           Get.put(DetailsController(carId: carId));
+      WishlistController wishlistController = Get.put(WishlistController());
 
       var response = await DioClient.dio
           .post("/dataTowishlist/$carId", data: {"USERID": uId});
 
-      detailsController.getWishListId(uId: uId);
+      // detailsController.getWishListId(uId: uId);
+      wishlistController.getWishListId(uId: uId);
 
       print(response.data);
 
@@ -48,12 +51,14 @@ class WishlistServices {
       {required String carId, required String uId}) async {
     try {
       DetailsController detailsController = Get.find<DetailsController>();
+      WishlistController wishlistController = Get.put(WishlistController());
 
       var response = await DioClient.dio
           .post("/removefromwishlist/$carId", data: {"USERID": uId});
       print(response.data);
 
-      detailsController.getWishListId(uId: uId);
+      // detailsController.getWishListId(uId: uId);
+      wishlistController.getWishListId(uId: uId);
 
       Get.snackbar(
         "Success",

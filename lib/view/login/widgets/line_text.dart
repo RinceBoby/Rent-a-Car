@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/constants/colors.dart';
+import '../../constants/styles/colors.dart';
 
 class TextInLine extends StatelessWidget {
   const TextInLine({
