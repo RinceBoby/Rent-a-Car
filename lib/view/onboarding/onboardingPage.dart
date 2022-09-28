@@ -4,7 +4,6 @@ import 'package:carmarket/view/login/login_account.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
 class OnBoardingPage extends StatefulWidget {
@@ -62,14 +61,14 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: kWhite,
-                                  fontSize: 30,
+                                  fontSize: 28,
                                   fontStyle: FontStyle.italic,
                                 )),
                             kHeight30,
                             Text(
                               tab.subTitle,
                               style: const TextStyle(
-                                fontSize: 25,
+                                fontSize: 20,
                                 color: kGrey,
                               ),
                               textAlign: TextAlign.center,

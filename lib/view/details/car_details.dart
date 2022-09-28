@@ -93,22 +93,34 @@ class DetailsPage extends StatelessWidget {
 
                                   return IconButton(
                                     onPressed: () {
+                                      carDetails carModel =
+                                          detailsController.carDetail.value!;
+
+                                      print(
+                                          "*************************************${isWish}");
+                                      print(
+                                          "%%%%%%%%%%%%%%%%%%%%%%%%%%%%${wishList}");
+
                                       String? userId =
                                           GetLocalStorage.getUserIdAndToken(
                                               'uId');
 
                                       if (!isWish) {
                                         wishlistController.addToWishlistItem(
-                                            id.id, userId!);
+                                          carModel.id,
+                                          userId!,
+                                        );
                                       } else {
-                                      //   else if(detailsController.carId==wishList){
-                                      //   wishlistController
-                                      //       .removeFromWishlistItem(
-                                      //           id.id, userId!);
-                                      // }
+                                        //   else if(detailsController.carId==wishList){
+                                        //   wishlistController
+                                        //       .removeFromWishlistItem(
+                                        //           id.id, userId!);
+                                        // }
                                         wishlistController
                                             .removeFromWishlistItem(
-                                                id.id, userId!);
+                                          carModel.id,
+                                          userId!,
+                                        );
                                       }
                                     },
                                     icon: isWish

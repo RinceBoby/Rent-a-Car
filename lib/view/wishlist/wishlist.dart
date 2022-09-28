@@ -58,7 +58,7 @@ class Wishlist extends StatelessWidget {
                 }
                 List<WishlistModel>? wishListData = snapshot.data;
 
-                if (wishListData == null) {
+                if (wishListData!.isEmpty) {
                   return const Center(
                     child: Padding(
                       padding: EdgeInsets.only(top: 350),
@@ -66,8 +66,7 @@ class Wishlist extends StatelessWidget {
                         "No Item in Wishlist",
                         style: TextStyle(
                           color: kWhite,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
+                          fontSize: 22,
                         ),
                       ),
                     ),
@@ -151,9 +150,9 @@ class Wishlist extends StatelessWidget {
                                   //<<<<<Remove>>>>>//
                                   ElevatedButton(
                                     onPressed: () {
-                                      DetailsController detailsController =
-                                          Get.put(DetailsController(
-                                              carId: data.id));
+                                      // DetailsController detailsController =
+                                      //     Get.put(DetailsController(
+                                      //         carId: data.id));
                                       String? userId =
                                           GetLocalStorage.getUserIdAndToken(
                                               'uId');
@@ -161,7 +160,7 @@ class Wishlist extends StatelessWidget {
                                           data.id!, userId!);
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      primary: kRed,
+                                      backgroundColor: kRed,
                                       fixedSize: const Size(92, 40),
                                     ),
                                     child: const Text(

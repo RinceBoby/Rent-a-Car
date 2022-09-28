@@ -3,6 +3,8 @@ import 'package:carmarket/view/constants/spaces/dimensions.dart';
 import 'package:carmarket/models/local_storage/local_storage.dart';
 import 'package:carmarket/view/login/login_account.dart';
 import 'package:carmarket/view/profile/user_details.dart';
+import 'package:carmarket/view/settings/widgets/policy_dialog.dart';
+import 'package:carmarket/view/settings/widgets/terms_and_conditions_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -79,14 +81,26 @@ class Profile extends StatelessWidget {
                               size,
                               CupertinoIcons.lock,
                               "Privacy Policy",
-                              () {},
+                              () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => PrivacyPolicy(
+                                      mdFileName: 'privacy_policy.md'),
+                                );
+                              },
                             ),
                             kHeight15,
                             ProfileDetails(
                               size,
                               CupertinoIcons.square_line_vertical_square_fill,
                               "Terms and conditions",
-                              () {},
+                              () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => TermsAndConditions(
+                                      mdFileName: 'terms_and_conditions.md'),
+                                );
+                              },
                             ),
                             kHeight15,
                             Container(

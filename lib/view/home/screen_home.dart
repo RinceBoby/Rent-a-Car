@@ -64,7 +64,7 @@ class ScreenHome extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
-                          height: 50,
+                          // height: 48,
                           width: size.width * .76,
                           child: TextField(
                             controller: searchController,
@@ -116,8 +116,8 @@ class ScreenHome extends StatelessWidget {
                                     carController.allCars.value = value);
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: fieldColor,
-                            fixedSize: Size(size.width * .15, 50),
+                            backgroundColor: fieldColor,
+                            fixedSize: Size(size.width * .15, 60),
                             shape: RoundedRectangleBorder(
                               borderRadius: kRadius15,
                             ),

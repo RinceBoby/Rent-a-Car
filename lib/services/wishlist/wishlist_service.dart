@@ -16,17 +16,13 @@ class WishlistServices {
   static Future addToWishlist(
       {required String carId, required String uId}) async {
     try {
-      DetailsController detailsController =
-          Get.put(DetailsController(carId: carId));
       WishlistController wishlistController = Get.put(WishlistController());
 
       var response = await DioClient.dio
           .post("/dataTowishlist/$carId", data: {"USERID": uId});
-
-      // detailsController.getWishListId(uId: uId);
-      wishlistController.getWishListId(uId: uId);
-
       print(response.data);
+
+      wishlistController.getWishListData(userId: uId);
 
       Get.snackbar(
         "Success",
@@ -50,15 +46,13 @@ class WishlistServices {
   static Future removeFromWishlist(
       {required String carId, required String uId}) async {
     try {
-      DetailsController detailsController = Get.find<DetailsController>();
       WishlistController wishlistController = Get.put(WishlistController());
 
       var response = await DioClient.dio
           .post("/removefromwishlist/$carId", data: {"USERID": uId});
       print(response.data);
 
-      // detailsController.getWishListId(uId: uId);
-      wishlistController.getWishListId(uId: uId);
+      wishlistController.getWishListData(userId: uId);
 
       Get.snackbar(
         "Success",
