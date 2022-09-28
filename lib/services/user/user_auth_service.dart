@@ -30,7 +30,7 @@ class UserAuthServices {
         "uId": response.data['_id'],
         "token": response.data['token'],
         "email": response.data['email'],
-        "name" : response.data['name']
+        "name": response.data['name']
       };
       GetLocalStorage.saveToken(user);
 
@@ -72,22 +72,7 @@ class UserAuthServices {
   }
 
   //<<<<<User_Signup>>>>>//
-  static Future<String> signupUser(ProfileModel profileModelData
-
-      //   {
-      //   required String name,
-      //   required String email,
-      //   required int phone,
-      //   required int age,
-      //   required String gender,
-      //   required String address,
-      //   required String district,
-      //   required String password,
-      //   // required String isBlock,
-      //   // required String token,
-      // }
-
-      ) async {
+  static Future<String> signupUser(ProfileModel profileModelData) async {
     Map<String, dynamic> headers = {
       "Content-type": "application/json",
       "Accept": "application/json"
@@ -105,17 +90,6 @@ class UserAuthServices {
         password: profileModelData.password,
       ).toJson();
 
-      // var response = await DioClient.dio.post("/signup", data: {
-      //   "name": name,
-      //   "email": email,
-      //   "phone": phone,
-      //   "age": age,
-      //   "gender": gender,
-      //   "address": address,
-      //   "district": district,
-      //   "password": password,
-      // });
-
       final response = await DioClient.dio.post(
         "/signup",
         data: signupData,
@@ -130,7 +104,7 @@ class UserAuthServices {
         "uId": response.data['user'],
         "token": response.data['token'],
         "email": response.data['email'],
-        "name" : response.data['name']
+        "name": response.data['name']
       };
       GetLocalStorage.saveToken(user);
 
