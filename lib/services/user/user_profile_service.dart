@@ -33,7 +33,6 @@ class UserProfileService {
   static Future<ProfileModel?> updateUserProfileData(
       ProfileModel profileModelData, String userId) async {
     ProfileController profileController = Get.find<ProfileController>();
-    // String? userId = GetLocalStorage.getUserIdAndToken('uId');
 
     Map<String, dynamic> headers = {
       "Content-type": "application/json",

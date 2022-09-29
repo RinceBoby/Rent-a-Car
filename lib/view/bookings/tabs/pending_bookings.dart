@@ -23,16 +23,19 @@ class PendingBookings extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   )
                 : pendingController.pendingTrips.isEmpty
-                    ? const Center(
-                        child: Text(
-                          "No pending trips!",
-                          style: TextStyle(
-                            color: kWhite,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                    ?const Padding(
+                      padding: EdgeInsets.only(top: 300),
+                      child: Center(
+                          child: Text(
+                            "No pending trips!",
+                            style: TextStyle(
+                              color: kWhite,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
                           ),
                         ),
-                      )
+                    )
                     : Column(
                         children: [
                           ListView.builder(

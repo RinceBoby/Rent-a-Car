@@ -147,21 +147,6 @@ class LoginAccount extends StatelessWidget {
                                   emailController.text,
                                   passController.text.trim(),
                                 );
-                                // UserAuthServices.loginUser(
-                                //   email: emailController.text,
-                                //   password: passController.text.trim(),
-                                // ).then(
-                                //   (value) {
-                                //     if (value == "success") {
-                                //       Get.offAll(const BottomNavBar());
-                                //       return;
-                                //     } else if (value.isNotEmpty) {
-                                //       getSnackBar(value);
-                                //       return;
-                                //     }
-                                //     getSnackBar("is empty");
-                                //   },
-                                // );
                               }
                             },
                       style: ElevatedButton.styleFrom(

@@ -24,13 +24,16 @@ class CompletedBooking extends StatelessWidget {
                         child: CircularProgressIndicator(),
                       )
                     : completedController.completedTrips.isEmpty
-                        ? const Center(
-                            child: Text(
-                              "No cancelled trips!",
-                              style: TextStyle(
-                                color: kWhite,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
+                        ? const Padding(
+                            padding: EdgeInsets.only(top: 300),
+                            child: Center(
+                              child: Text(
+                                "No cancelled trips!",
+                                style: TextStyle(
+                                  color: kWhite,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
                               ),
                             ),
                           )
