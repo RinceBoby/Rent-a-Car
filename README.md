@@ -1,6 +1,6 @@
 # Rent to Ride
 
-A new Flutter project.
+A car rental application, Where we can book a car from you locality and schedule the timing and also make payment using razorpay online.
 
 ## Getting Started
 
